@@ -1,0 +1,34 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { networkFor, validateEndpoint } from "../packages/network.js";
+import {
+  makeOperation,
+  operationHash,
+  operationTypedData,
+} from "../packages/protocol.js";
+test("network profiles reject mainnet, wrong local RPC and insecure public RPC", () => {
+  assert.equal(networkFor(11155111).name, "Sepolia");
+  assert.throws(() => networkFor(1));
+  assert.throws(() => validateEndpoint(31337, "https://example.com"));
+  assert.throws(() => validateEndpoint(11155111, "http://example.com"));
+  assert.throws(() =>
+    validateEndpoint(11155111, "https://user:secret@example.com"),
+  );
+  validateEndpoint(31337, "http://127.0.0.1:18555");
+  validateEndpoint(11155111, "https://ethereum-sepolia-rpc.publicnode.com");
+});
+test("the same UserOperation has distinct Anvil and Sepolia domains", () => {
+  const address = "0x1111111111111111111111111111111111111111" as const;
+  const op = makeOperation(address, 0n, 1n, [
+    { target: address, value: 0n, data: "0x" },
+  ]);
+  assert.notEqual(
+    operationHash(op, address, 31337),
+    operationHash(op, address, 11155111),
+  );
+  assert.equal(
+    operationTypedData(op, address, 11155111).domain?.chainId,
+    11155111,
+  );
+  assert.equal(operationHash(op, address), operationHash(op, address, 31337));
+});

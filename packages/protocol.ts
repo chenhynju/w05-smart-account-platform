@@ -155,17 +155,25 @@ export function unpackOperation(op: PackedOp) {
     signature: op.signature,
   };
 }
-export function operationHash(op: PackedOp, entryPoint: Address): Hex {
+export function operationHash(
+  op: PackedOp,
+  entryPoint: Address,
+  domainChainId: number = chainId,
+): Hex {
   return getUserOperationHash({
-    chainId,
+    chainId: domainChainId,
     entryPointAddress: entryPoint,
     entryPointVersion: "0.8",
     userOperation: unpackOperation(op),
   });
 }
-export function operationTypedData(op: PackedOp, entryPoint: Address) {
+export function operationTypedData(
+  op: PackedOp,
+  entryPoint: Address,
+  domainChainId: number = chainId,
+) {
   return getUserOperationTypedData({
-    chainId,
+    chainId: domainChainId,
     entryPointAddress: entryPoint,
     userOperation: unpackOperation(op),
   });

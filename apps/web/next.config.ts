@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 const config: NextConfig = {
   poweredByHeader: false,
+  distDir:
+    process.env.NEXT_PUBLIC_W05_NETWORK === "sepolia"
+      ? ".next-sepolia"
+      : ".next",
   experimental: {},
   async headers() {
     return [

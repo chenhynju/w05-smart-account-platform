@@ -22,7 +22,7 @@ import {
   type Hex,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { anvil } from "viem/chains";
+import { networkFor, validateEndpoint } from "../packages/network.js";
 import { z } from "zod";
 import {
   accountAbi,
@@ -39,27 +39,43 @@ import {
   type PackedOp,
   type Action,
 } from "../packages/protocol.js";
+const target = process.env.W05_NETWORK ?? "local";
+if (target !== "local" && target !== "sepolia")
+  throw new Error("Invalid W05_NETWORK");
+const runtimeDir = target === "local" ? ".runtime" : ".runtime/sepolia";
+if (
+  target === "sepolia" &&
+  process.env.W05_PUBLIC_BROADCAST_AUTHORIZED !== "sepolia-11155111"
+)
+  throw new Error(
+    "Public signing/broadcast is disabled; obtain explicit user authorization before starting this profile",
+  );
 const config = JSON.parse(
-  readFileSync(".runtime/deployment.json", "utf8"),
+  readFileSync(`${runtimeDir}/deployment.json`, "utf8"),
 ) as Deployment;
-const keys = JSON.parse(readFileSync(".runtime/keys.json", "utf8")) as {
+const keys = JSON.parse(readFileSync(`${runtimeDir}/keys.json`, "utf8")) as {
   deployer: Hex;
   sponsor: Hex;
 };
-if (config.chainId !== 31337 || config.rpcUrl !== "http://127.0.0.1:18555")
-  throw new Error("Local configuration required");
+if (config.chainId !== (target === "local" ? 31337 : 11155111))
+  throw new Error("Profile/manifest chain mismatch");
+validateEndpoint(config.chainId, config.rpcUrl);
+const chain = networkFor(config.chainId);
+const enrollmentBudget = parseEther(target === "local" ? "0.5" : "0.25");
+const allocationCap = parseEther(target === "local" ? "5" : "0.5");
 const client = createPublicClient({
-  chain: anvil,
+  chain,
   transport: http(config.rpcUrl, { timeout: 15000, retryCount: 1 }),
 });
 const admin = privateKeyToAccount(keys.deployer),
   sponsor = privateKeyToAccount(keys.sponsor);
 const wallet = createWalletClient({
   account: admin,
-  chain: anvil,
+  chain,
   transport: http(config.rpcUrl),
 });
-if ((await client.getChainId()) !== 31337) throw new Error("Wrong chain");
+if ((await client.getChainId()) !== config.chainId)
+  throw new Error("Wrong chain");
 for (const [name, address] of Object.entries({
   entryPoint: config.entryPoint,
   factory: config.factory,
@@ -90,7 +106,7 @@ type Store = {
   allocated: string;
   operations: Record<string, OperationRecord>;
 };
-const storePath = `.runtime/service-state-${config.entryPoint.toLowerCase()}.json`;
+const storePath = `${runtimeDir}/service-state-${config.entryPoint.toLowerCase()}.json`;
 const state: Store = existsSync(storePath)
   ? (JSON.parse(readFileSync(storePath, "utf8")) as Store)
   : { accounts: [], allocated: "0", operations: {} };
@@ -104,7 +120,7 @@ function save() {
     closeSync(file);
   }
   renameSync(temporary, storePath);
-  const directory = openSync(".runtime", "r");
+  const directory = openSync(runtimeDir, "r");
   try {
     fsyncSync(directory);
   } finally {
@@ -207,7 +223,7 @@ async function addSponsorship(op: PackedOp): Promise<PackedOp> {
 }
 async function simulate(op: PackedOp) {
   allowedAccount(op.sender);
-  const hash = operationHash(op, config.entryPoint);
+  const hash = operationHash(op, config.entryPoint, config.chainId);
   const onchain = await client.readContract({
     address: config.entryPoint,
     abi: entryPointAbi,
@@ -344,7 +360,7 @@ async function reconcile(record: OperationRecord): Promise<OperationRecord> {
 
 async function submitOperation(op: PackedOp): Promise<OperationRecord> {
   return serial(async () => {
-    const hash = operationHash(op, config.entryPoint);
+    const hash = operationHash(op, config.entryPoint, config.chainId);
     const previous = state.operations[hash];
     if (previous?.transactionHash) {
       await reconcile(previous);
@@ -556,7 +572,7 @@ const server = createServer(async (req, res) => {
         .parse(await body(req));
       try {
         let result: unknown;
-        if (request.method === "eth_chainId") result = toHex(31337);
+        if (request.method === "eth_chainId") result = toHex(config.chainId);
         else if (request.method === "eth_supportedEntryPoints")
           result = [config.entryPoint];
         else if (
@@ -643,7 +659,11 @@ const server = createServer(async (req, res) => {
     if (req.method === "GET" && url.pathname === "/config") {
       reply(res, 200, {
         ...config,
-        scope: "Isolated local chain / allowlisted bundler",
+        rpcUrl: "/api/rpc",
+        scope:
+          target === "local"
+            ? "Isolated local chain / allowlisted bundler"
+            : "Ethereum Sepolia / allowlisted bundler",
         sponsorDeposit: await client.readContract({
           address: config.paymaster,
           abi: paymasterAbi,
@@ -669,7 +689,7 @@ const server = createServer(async (req, res) => {
       challenges.set(challenge, { owner, expires: Date.now() + 120000 });
       reply(res, 200, {
         challenge,
-        message: `W05 account enrollment\nchain:31337\nfactory:${config.factory}\nowner:${owner}\nchallenge:${challenge}`,
+        message: `W05 account enrollment\nchain:${config.chainId}\nfactory:${config.factory}\nowner:${owner}\nchallenge:${challenge}`,
       });
       return;
     }
@@ -691,7 +711,7 @@ const server = createServer(async (req, res) => {
         challenge.owner.toLowerCase() !== data.owner.toLowerCase()
       )
         throw new Error("Expired or unknown enrollment challenge");
-      const message = `W05 account enrollment\nchain:31337\nfactory:${config.factory}\nowner:${data.owner}\nchallenge:${data.challenge}`;
+      const message = `W05 account enrollment\nchain:${config.chainId}\nfactory:${config.factory}\nowner:${data.owner}\nchallenge:${data.challenge}`;
       if (
         (
           await recoverMessageAddress({ message, signature: data.signature })
@@ -708,7 +728,7 @@ const server = createServer(async (req, res) => {
         if (state.accounts.includes(address)) return address;
         if (
           state.accounts.length >= 10 ||
-          BigInt(state.allocated) + parseEther("0.5") > parseEther("5")
+          BigInt(state.allocated) + enrollmentBudget > allocationCap
         )
           throw new Error("Local sponsorship enrollment cap reached");
         const hash = await wallet.writeContract({
@@ -724,7 +744,7 @@ const server = createServer(async (req, res) => {
           address: config.paymaster,
           abi: paymasterAbi,
           functionName: "setQuota",
-          args: [address, parseEther("0.5")],
+          args: [address, enrollmentBudget],
         });
         if (
           (await client.waitForTransactionReceipt({ hash: quota })).status !==
@@ -732,14 +752,15 @@ const server = createServer(async (req, res) => {
         )
           throw new Error("Quota failed");
         // Local test assets only. No external faucet, wallet or network is ever used.
-        for (const a of [address, data.guardian])
-          await client.request({
-            method: "anvil_setBalance" as never,
-            params: [a, toHex(parseEther("1"))] as never,
-          });
+        if (target === "local")
+          for (const a of [address, data.guardian])
+            await client.request({
+              method: "anvil_setBalance" as never,
+              params: [a, toHex(parseEther("1"))] as never,
+            });
         state.accounts.push(address);
         state.allocated = (
-          BigInt(state.allocated) + parseEther("0.5")
+          BigInt(state.allocated) + enrollmentBudget
         ).toString();
         save();
         return address;
@@ -828,7 +849,7 @@ const server = createServer(async (req, res) => {
       const op = await addSponsorship(await pack(data.sender, data.actions));
       reply(res, 200, {
         operation: op,
-        hash: operationHash(op, config.entryPoint),
+        hash: operationHash(op, config.entryPoint, config.chainId),
       });
       return;
     }
@@ -901,6 +922,8 @@ const server = createServer(async (req, res) => {
 server.requestTimeout = 30000;
 server.headersTimeout = 10000;
 server.listen(4355, "127.0.0.1", () => {
-  writeFileSync(".runtime/service.pid", String(process.pid), { mode: 0o600 });
+  writeFileSync(`${runtimeDir}/service.pid`, String(process.pid), {
+    mode: 0o600,
+  });
   console.log("W05 local allowlisted service on 127.0.0.1:4355");
 });

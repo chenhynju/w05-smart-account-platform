@@ -19,7 +19,7 @@ import {
   type Address,
   type Hex,
 } from "viem";
-import { anvil } from "viem/chains";
+import { webChain } from "../../../packages/network";
 import {
   accountAbi,
   counterAbi,
@@ -71,6 +71,11 @@ async function api<T>(path: string, data?: unknown): Promise<T> {
         },
   );
   const value = (await response.json()) as T & { error?: string };
+  if (
+    path === "config" &&
+    (value as unknown as Deployment).chainId !== webChain.id
+  )
+    throw new Error("Web build and service network do not match");
   if (!response.ok) throw new Error(value.error ?? "Request failed");
   return value;
 }
@@ -99,7 +104,10 @@ function App() {
   const typedSigner = useSignTypedData();
   const chainSwitch = useSwitchChain();
   function persist(next: LocalKeys) {
-    sessionStorage.setItem("w05.local.keys", JSON.stringify(next));
+    sessionStorage.setItem(
+      webChain.id === 31337 ? "w05.local.keys" : "w05.sepolia.keys",
+      JSON.stringify(next),
+    );
     setKeys(next);
   }
   async function refresh(address = account) {
@@ -110,7 +118,9 @@ function App() {
       .then(setConfig)
       .catch((e) => setError(String(e)));
     try {
-      const stored = sessionStorage.getItem("w05.local.keys");
+      const stored = sessionStorage.getItem(
+        webChain.id === 31337 ? "w05.local.keys" : "w05.sepolia.keys",
+      );
       if (stored) {
         const k = JSON.parse(stored) as LocalKeys;
         setKeys(k);
@@ -203,12 +213,12 @@ function App() {
       return next;
     }
     if (role === "owner" && injectedAccount.address) {
-      if (injectedAccount.chainId !== 31337) {
-        await chainSwitch.switchChainAsync({ chainId: 31337 });
+      if (injectedAccount.chainId !== config.chainId) {
+        await chainSwitch.switchChainAsync({ chainId: webChain.id });
       }
       address = injectedAccount.address;
       signature = await typedSigner.signTypedDataAsync({
-        ...operationTypedData(d.op, config.entryPoint),
+        ...operationTypedData(d.op, config.entryPoint, config.chainId),
         account: injectedAccount.address,
       });
     } else {
@@ -377,7 +387,7 @@ function App() {
       throw new Error("Enter the replacement owner address");
     const wallet = createWalletClient({
       account: privateKeyToAccount(keys.guardian),
-      chain: anvil,
+      chain: webChain,
       transport: http("/api/rpc"),
     });
     const hash = await wallet.writeContract({
@@ -430,7 +440,10 @@ function App() {
         <div className="aside-bottom">
           <div className="network-dot" />
           <div>
-            Isolated local network<small>Chain 31337 · EntryPoint 0.8</small>
+            {webChain.id === 31337
+              ? "Isolated local network"
+              : "Ethereum Sepolia testnet"}
+            <small>Chain {webChain.id} · EntryPoint 0.8</small>
           </div>
         </div>
       </aside>
@@ -452,7 +465,7 @@ function App() {
                     connector: connection.connectors[0],
                   });
                   setNotice(
-                    "Injected wallet connected. Switch to the account owner and chain 31337 before approving.",
+                    `Injected wallet connected. Switch to the account owner and chain ${webChain.id} before approving.`,
                   );
                 })
               }
@@ -998,7 +1011,7 @@ function App() {
                         throw new Error("Wallet unavailable");
                       const wallet = createWalletClient({
                         account: privateKeyToAccount(keys.guardian),
-                        chain: anvil,
+                        chain: webChain,
                         transport: http("/api/rpc"),
                       });
                       const hash = await wallet.writeContract({

@@ -9,3 +9,5 @@ playwright-report/
 test-results/
 .toolchain/
 **/*.tsbuildinfo
+
+apps/web/.next-sepolia/
