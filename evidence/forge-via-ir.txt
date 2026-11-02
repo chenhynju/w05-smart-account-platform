@@ -1,0 +1,25 @@
+Compiling 47 files with Solc 0.8.31
+Solc 0.8.31 finished in 50.00s
+Compiler run successful!
+
+Ran 17 tests for tests/contracts/Account.t.sol:AccountTest
+[PASS] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 241365)
+[PASS] testCrossChainSignatureRejected() (gas: 122186)
+[PASS] testDirectAndInheritedBypassDenied() (gas: 41506)
+[PASS] testERC1271DomainAndMalformed() (gas: 3190048)
+[PASS] testFactoryIdempotentAndSeparated() (gas: 61111)
+[PASS] testFuzz_AtomicRollback(uint96) (runs: 1000, μ: 231155, ~: 231556)
+[PASS] testFuzz_OwnerAmount(uint96) (runs: 1000, μ: 149112, ~: 149352)
+[PASS] testMultisigSortedUniqueThreshold() (gas: 394446)
+[PASS] testOwnerExecutionAndNonceReplay() (gas: 259045)
+[PASS] testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation() (gas: 1115218)
+[PASS] testRecoveryDelayDuplicateVoteCancelAndEpoch() (gas: 677563)
+[PASS] testRevocationBetweenValidationAndExecution() (gas: 418128)
+[PASS] testSessionBudgetExpiryAndRevocation() (gas: 823400)
+[PASS] testSessionCannotAdminOrWrongSelector() (gas: 388979)
+[PASS] testSponsorQuotaAndTamperRejected() (gas: 416950)
+[PASS] testSponsorshipReservesQuotaOnRevertingExecution() (gas: 268252)
+[PASS] testWrongSignerAndMalformedSignature() (gas: 199030)
+Suite result: ok. 17 passed; 0 failed; 0 skipped; finished in 1.24s (2.60s CPU time)
+
+Ran 1 test suite in 2.66s (1.24s CPU time): 17 tests passed, 0 failed, 0 skipped (17 total tests)

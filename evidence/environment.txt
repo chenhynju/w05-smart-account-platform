@@ -1,0 +1,11 @@
+Mon Nov  2 14:01:17 UTC 2026
+Linux chenhuanyu 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+v24.20.0
+11.19.0
+forge Version: 1.8.1
+Commit SHA: 982849d3140c01fd3b72905759581a132df7aa98
+Build Timestamp: 2026-08-28T17:46:00.964391484Z (1787939160)
+Build Profile: dist
+git version 2.43.0
+total 16472
+-rwxr-xr-x 1 chenhy chenhy 16865544 Sep  5 02:02 solc-0.8.31

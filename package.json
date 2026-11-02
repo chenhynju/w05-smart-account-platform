@@ -1,0 +1,34 @@
+{
+  "name": "smart-account-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build apps/web",
+    "dev": "next dev apps/web --hostname 127.0.0.1 --port 3155",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "service": "tsx services/bundler.ts",
+    "deploy:local": "tsx scripts/deploy-local.ts",
+    "e2e": "playwright test"
+  },
+  "dependencies": {
+    "@account-abstraction/contracts": "0.8.0",
+    "@openzeppelin/contracts": "5.5.0",
+    "@tanstack/react-query": "5.90.5",
+    "next": "16.4.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "viem": "2.38.5",
+    "wagmi": "2.19.5",
+    "zod": "4.1.12"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "@types/node": "24.10.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3"
+  }
+}

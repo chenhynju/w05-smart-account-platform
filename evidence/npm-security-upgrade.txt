@@ -1,0 +1,21 @@
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: use-sync-external-store@1.2.0
+npm warn Found: react@19.3.1
+npm warn node_modules/react
+npm warn   react@"19.3.1" from the root project
+npm warn   10 more (@tanstack/react-query, porto, zustand, styled-jsx, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer react@"^16.8.0 || ^17.0.0 || ^18.0.0" from use-sync-external-store@1.2.0
+npm warn node_modules/valtio/node_modules/use-sync-external-store
+npm warn   use-sync-external-store@"1.2.0" from valtio@1.13.2
+npm warn   node_modules/valtio
+npm warn
+npm warn Conflicting peer dependency: react@18.3.1
+npm warn node_modules/react
+npm warn   peer react@"^16.8.0 || ^17.0.0 || ^18.0.0" from use-sync-external-store@1.2.0
+npm warn   node_modules/valtio/node_modules/use-sync-external-store
+npm warn     use-sync-external-store@"1.2.0" from valtio@1.13.2
+npm warn     node_modules/valtio
+
+added 1 package, removed 4 packages, and changed 11 packages in 2m
