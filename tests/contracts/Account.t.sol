@@ -385,6 +385,17 @@ contract AccountTest {
         );
         PackedUserOperation memory op = operation(actions(address(counter), 0, abi.encodeCall(Counter.increment, (1))));
         bytes32 h = ep.getUserOpHash(op);
+        // Same length as localhost: a prefix-content check cannot hide behind a length check.
+        op.signature = abi.encodePacked(uint8(2), passkeyAssertion(h, 0x05, "http://evilhostx:3155"));
+        vm.expectRevert();
+        send(op);
+        // Wrong RP with a mathematically valid P256 signature, rather than an invalid-signature surrogate.
+        WebAuthn.WebAuthnAuth memory wrongRP =
+            abi.decode(passkeyAssertion(h, 0x05, "http://localhost:3155"), (WebAuthn.WebAuthnAuth));
+        wrongRP.authenticatorData = abi.encodePacked(sha256("evilhostx"), bytes1(0x05), bytes4(0));
+        (wrongRP.r, wrongRP.s) =
+            vm.signP256(42, sha256(abi.encodePacked(wrongRP.authenticatorData, sha256(bytes(wrongRP.clientDataJSON)))));
+        require(!account.verifyPasskey(h, abi.encode(wrongRP)), "wrong RP accepted despite valid signature");
         op.signature = abi.encodePacked(uint8(2), passkeyAssertion(h, 0x05, "http://evil.test"));
         vm.expectRevert();
         send(op);

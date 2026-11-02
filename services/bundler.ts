@@ -218,7 +218,7 @@ async function addSponsorship(op: PackedOp): Promise<PackedOp> {
       abi: paymasterAbi,
       functionName: "quotaEpoch",
     }),
-    client.getBlock(),
+    client.getBlock({ blockTag: "pending" }),
   ]);
   const until = Number(block.timestamp) + 300;
   op.paymasterAndData = sponsorshipData(

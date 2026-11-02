@@ -9,7 +9,7 @@ Severity: Low (availability / intended lifetime mismatch). Status: PATCHED, full
 冻结失败源5e5c219。完整浏览器已通过开户、owner、批量成功和回滚，随后Create session key失败。evidence/browser-session-clock-before.log、截图及JSON（原browser-release归档）。evidence/session-clock-before.json保存完整公开操作、签名与解码setSession，未保存私钥：validUntil1793653151，真实执行区块timestamp1793822353，已过期169202秒。外层receipt成功不代表UserOperation执行成功；service正确报告execution_failed，UI错误提示未确认策略而未假报成功。
 
 ## Fix
-读取当前实际网络最新区块timestamp，按chainTimestamp+3600计算uint48；负数和uint48溢出明确拒绝。不使用Date.now。只在ownerAction的真实成功事件确认后持久化本地session key，防止失败后展示未授权key为已启用。
+读取当前实际网络pending区块timestamp，按chainTimestamp+3600计算uint48；负数和uint48溢出明确拒绝。不使用Date.now。只在ownerAction的真实成功事件确认后持久化本地session key，防止失败后展示未授权key为已启用。
 
 ## Regression / review / residual risk
 network.test.ts覆盖两天时钟差、精确1小时、uint48最大边界与越界拒绝。真正回归必须在当前已推进两天的同一链重跑完整浏览器，并核对session策略的实际链上有效期，不重置链来掩盖问题。交易延迟仍会缩短剩余可用时间；需要重试时重新读取区块生成新签名。客户端读取的RPC是信任边界，服务和合约仍实施最终权限/有效期校验。公共网络恢复等待无法时间快进。

@@ -7,6 +7,7 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { privateKeyToAccount } from "viem/accounts";
 import {
   concat,
+  decodeAbiParameters,
   encodeFunctionData,
   createPublicClient,
   http,
@@ -121,6 +122,63 @@ test("local service real chain lifecycle and hostile requests", async (t) => {
           args: [op],
         }),
       );
+    },
+  );
+  await t.test(
+    "fresh sponsorship uses the pending clock even when the head is stale",
+    async () => {
+      const latest = await client.getBlock({ blockTag: "latest" });
+      const pending = await client.getBlock({ blockTag: "pending" });
+      const nextTimestamp =
+        (pending.timestamp > latest.timestamp
+          ? pending.timestamp
+          : latest.timestamp) + 600n;
+      await client.request({
+        method: "evm_setNextBlockTimestamp" as never,
+        params: [Number(nextTimestamp)] as never,
+      });
+      const op = await signed(
+        await prepared([
+          {
+            target: config.counter,
+            value: 0n,
+            data: encodeFunctionData({
+              abi: counterAbi,
+              functionName: "increment",
+              args: [1n],
+            }),
+          },
+        ]),
+      );
+      const packed = unpackOperation(op);
+      assert(packed.paymasterData);
+      const [until] = decodeAbiParameters(
+        [
+          { type: "uint48" },
+          { type: "uint48" },
+          { type: "uint256" },
+          { type: "bytes" },
+        ],
+        packed.paymasterData,
+      );
+      assert.equal(BigInt(until), nextTimestamp + 300n);
+      await api("simulate", op);
+      writeFileSync(
+        "evidence/pending-clock-sponsorship.json",
+        json({
+          latest: latest.timestamp,
+          previousPending: pending.timestamp,
+          nextTimestamp,
+          until,
+          scope:
+            "Local future pending block without mining; real signed operation simulation",
+          status: "PASS",
+        }) + "\n",
+      );
+      await client.request({
+        method: "evm_mine" as never,
+        params: [] as never,
+      });
     },
   );
   await t.test(

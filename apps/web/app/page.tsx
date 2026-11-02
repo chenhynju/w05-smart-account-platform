@@ -343,7 +343,7 @@ function App() {
     const block = await createPublicClient({
       chain: webChain,
       transport: http("/api/rpc"),
-    }).getBlock();
+    }).getBlock({ blockTag: "pending" });
     const validUntil = sessionValidUntil(block.timestamp);
     await ownerAction(
       encodeFunctionData({

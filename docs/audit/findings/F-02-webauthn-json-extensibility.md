@@ -15,3 +15,6 @@ Severity: Medium (authentication availability). Status: FIXED in d77f215a2147509
 
 ## Regression / fix review / residual risk
 testPasskeyCapturedChromiumExtension复用原始真实签名、坐标和hash，修复后PASS；testPasskeyExtensionAndPrefixBoundaries使用有效签名覆盖嵌套扩展、缺分隔符、错误token边界、非规范空格、challenge错误以及evil origin后跟重复合法origin；既有wrong origin/no UV/wrong challenge/revocation仍PASS。日志evidence/passkey-prefix-after.txt。仍需新部署完整浏览器连续断言；旧不可变账户保留失败行为作为历史证据。虚拟CTAP2不能证明所有物理认证器兼容性；不宣称独立第三方审计。
+
+## 变异测试揭示并修正的测试盲点
+禁用prefix内容比较的隔离mutant起初存活：旧错误origin长度不同，测试因长度拒绝而没有证明内容比较。原存活日志/JSON保留为mutation-passkey-context-survived。新增与localhost完全等长的evilhostx origin签名反例，并新增错误RP且P256数学签名有效的反例；修复测试后再杀死同一mutant才可PASS。没有改变正式验证逻辑来迎合测试，也不能隐藏存活的第一轮结果。
