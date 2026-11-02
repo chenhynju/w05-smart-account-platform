@@ -261,6 +261,7 @@ function App() {
       setNotice(
         "Submitted; awaiting a confirmed execution event. Use Reconcile to check again.",
       );
+    return result;
   }
   async function ownerAction(data: Hex) {
     if (!account) throw new Error("Create an account first");
@@ -269,7 +270,13 @@ function App() {
         "This policy needs threshold approvals; prepare it in the operation composer.",
       );
     const d = await prepare([{ target: account, value: 0n, data }]);
-    if (d) await submit(await approve(d, "owner"));
+    if (d) {
+      const receipt = await submit(await approve(d, "owner"));
+      if (receipt.status !== "succeeded")
+        throw new Error(
+          "Policy update is not confirmed. Reconcile the operation before treating local credentials as active.",
+        );
+    }
   }
   async function compose() {
     if (rawActions.trim()) {
