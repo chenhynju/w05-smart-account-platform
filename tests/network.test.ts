@@ -1,6 +1,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { networkFor, validateEndpoint } from "../packages/network.js";
+import {
+  networkFor,
+  validateEndpoint,
+  nextPublicGasReservation,
+} from "../packages/network.js";
 import {
   makeOperation,
   operationHash,
@@ -31,4 +35,20 @@ test("the same UserOperation has distinct Anvil and Sepolia domains", () => {
     11155111,
   );
   assert.equal(operationHash(op, address), operationHash(op, address, 31337));
+});
+
+test("public gas budget survives serialization and rejects the first overspend", () => {
+  let state = { reserved: "0" };
+  for (let i = 0; i < 25; i++) {
+    state = JSON.parse(
+      JSON.stringify({
+        reserved: nextPublicGasReservation(state.reserved, 10_000_000n),
+      }),
+    );
+  }
+  assert.equal(state.reserved, "500000000000000000");
+  assert.throws(() => nextPublicGasReservation(state.reserved, 1n));
+  assert.throws(() => nextPublicGasReservation("0", -1n));
+  assert.throws(() => nextPublicGasReservation("0", 10_000_001n));
+  assert.throws(() => nextPublicGasReservation("-1", 1n));
 });

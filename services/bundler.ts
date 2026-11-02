@@ -22,7 +22,11 @@ import {
   type Hex,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { networkFor, validateEndpoint } from "../packages/network.js";
+import {
+  networkFor,
+  validateEndpoint,
+  nextPublicGasReservation,
+} from "../packages/network.js";
 import { z } from "zod";
 import {
   accountAbi,
@@ -104,6 +108,7 @@ type OperationRecord = {
 type Store = {
   accounts: Address[];
   allocated: string;
+  publicGasReserved?: string;
   operations: Record<string, OperationRecord>;
 };
 const storePath = `${runtimeDir}/service-state-${config.entryPoint.toLowerCase()}.json`;
@@ -126,6 +131,21 @@ function save() {
   } finally {
     closeSync(directory);
   }
+}
+// Conservative lifetime gas reservation across restarts. No refund means uncertain broadcasts cannot reopen budget.
+function publicTransactionLimits(gas: bigint) {
+  if (target === "local") return {};
+  const maximumFee = 2_000_000_000n;
+  state.publicGasReserved = nextPublicGasReservation(
+    state.publicGasReserved ?? "0",
+    gas,
+  );
+  save();
+  return {
+    gas,
+    maxFeePerGas: maximumFee,
+    maxPriorityFeePerGas: 1_000_000_000n,
+  };
 }
 const challenges = new Map<string, { owner: Address; expires: number }>();
 const buckets = new Map<string, { start: number; count: number }>();
@@ -393,6 +413,7 @@ async function submitOperation(op: PackedOp): Promise<OperationRecord> {
           args: [[op], admin.address],
         }),
         gas: 10_000_000n,
+        ...publicTransactionLimits(10_000_000n),
       });
       current.serializedTransaction = await wallet.signTransaction(request);
       current.transactionHash = keccak256(current.serializedTransaction);
@@ -735,6 +756,7 @@ const server = createServer(async (req, res) => {
           address: config.factory,
           abi: factoryAbi,
           functionName: "createAccount",
+          ...publicTransactionLimits(6_000_000n),
           args: [data.owner, data.guardian, data.salt],
         });
         const receipt = await client.waitForTransactionReceipt({ hash });
@@ -744,6 +766,7 @@ const server = createServer(async (req, res) => {
           address: config.paymaster,
           abi: paymasterAbi,
           functionName: "setQuota",
+          ...publicTransactionLimits(100_000n),
           args: [address, enrollmentBudget],
         });
         if (

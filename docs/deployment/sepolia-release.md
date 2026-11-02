@@ -28,3 +28,5 @@ NEXT_PUBLIC_W05_NETWORK=sepolia npm run build
 产物独立放apps/web/.next-sepolia，不覆盖本地.next。服务默认仍是local；必须同时显式选择公共profile并通过授权门禁。bind仍loopback，暂不远程托管。上公网前另审CSP（当前兼容本地测试的unsafe-inline/unsafe-eval）、认证与速率策略、密钥保管、外部RPC能力及监控，不把本地开发origin策略当成公共部署准备完毕。
 
 Next自动生成的next-env.d.ts包含所选distDir路径，不属于手写源码，现由Next生成并忽略；干净副本必须证明没有它时仍可完整typecheck/build。其余手写源码和测试仍全部进入源码摘要门禁。
+
+公共服务另有持久化0.5测试ETH的最坏gas预留上限：每次direct factory/quota交易与bundler交易在签名前按gas上限×2gwei占用；跨重启保留，不因失败或不确定响应退款。factory单次6M、quota100k、bundle10M gas，priority1gwei/maxFee2gwei。由此部署+0.5存款上界0.5352与服务gas上界0.5合计1.0352测试ETH的保守gross支出上限（不扣gas报销）；两者必须分别明确授权。浏览器guardian自身交易需测试ETH与独立批准，不在服务自动资金范围内。已广播交易若遇baseFee太高会失败/阻塞，不提高费率绕过预算。服务上限是进程所用持久状态的边界，不能通过删store重置。

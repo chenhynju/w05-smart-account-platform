@@ -22,3 +22,18 @@ const target = process.env.NEXT_PUBLIC_W05_NETWORK ?? "local";
 if (target !== "local" && target !== "sepolia")
   throw new Error("Invalid NEXT_PUBLIC_W05_NETWORK");
 export const webChain = networkFor(target === "local" ? anvil.id : sepolia.id);
+
+/** Conservative maximum gas charge, stored before signing; intentionally never refunded. */
+export function nextPublicGasReservation(
+  previous: string,
+  gas: bigint,
+): string {
+  if (!/^\d+$/.test(previous) || gas <= 0n || gas > 10_000_000n)
+    throw new Error("Invalid public gas reservation");
+  const next = BigInt(previous) + gas * 2_000_000_000n;
+  if (next > 500_000_000_000_000_000n)
+    throw new Error(
+      "Public service lifetime gas budget exhausted; separate authorization required",
+    );
+  return next.toString();
+}

@@ -1,0 +1,3 @@
+# Exact historical false positives: conditional sessionStorage namespace constants, not credential values.
+8ceee1d69c92db0657a514b9b90655b8ea8ebea7:apps/web/app/page.tsx:generic-api-key:108
+8ceee1d69c92db0657a514b9b90655b8ea8ebea7:apps/web/app/page.tsx:generic-api-key:122
