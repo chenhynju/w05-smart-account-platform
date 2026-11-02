@@ -1,3 +1,4 @@
+import { openSync, closeSync, fsyncSync } from "node:fs";
 import { BaseError, HttpRequestError, TimeoutError } from "viem";
 import { concat, keccak256 } from "viem";
 import { pack128, unpack128, unpackOperation } from "../packages/protocol.js";
@@ -94,8 +95,21 @@ const state: Store = existsSync(storePath)
   ? (JSON.parse(readFileSync(storePath, "utf8")) as Store)
   : { accounts: [], allocated: "0", operations: {} };
 function save() {
-  writeFileSync(storePath + ".tmp", json(state), { mode: 0o600 });
-  renameSync(storePath + ".tmp", storePath);
+  const temporary = storePath + ".tmp";
+  const file = openSync(temporary, "w", 0o600);
+  try {
+    writeFileSync(file, json(state));
+    fsyncSync(file);
+  } finally {
+    closeSync(file);
+  }
+  renameSync(temporary, storePath);
+  const directory = openSync(".runtime", "r");
+  try {
+    fsyncSync(directory);
+  } finally {
+    closeSync(directory);
+  }
 }
 const challenges = new Map<string, { owner: Address; expires: number }>();
 const buckets = new Map<string, { start: number; count: number }>();
