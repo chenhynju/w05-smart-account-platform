@@ -2,7 +2,7 @@
 src = "contracts"
 test = "tests/contracts"
 out = "out"
-solc_version = "0.8.31"
+solc = ".toolchain/solc-0.8.38"
 via_ir = true
 evm_version = "cancun"
 optimizer = true

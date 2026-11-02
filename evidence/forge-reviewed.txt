@@ -1,0 +1,56 @@
+Compiling 48 files with Solc 0.8.31
+Solc 0.8.31 finished in 33.78s
+Compiler run successful!
+
+Ran 30 tests for tests/contracts/Account.t.sol:AccountTest
+[PASS] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 242033)
+[PASS] testCallbackCannotReenterExecutionOrFinalizeRecovery() (gas: 939995)
+[PASS] testCancelSpecificProposalDoesNotCancelIndependentThreshold() (gas: 629150)
+[PASS] testCrossChainSignatureRejected() (gas: 122753)
+[PASS] testDirectAndInheritedBypassDenied() (gas: 41840)
+[PASS] testERC1271DomainAndMalformed() (gas: 3403028)
+[PASS] testExpiredRotatedSponsorAndUnauthorizedPaymaster() (gas: 475187)
+[PASS] testFactoryIdempotentAndSeparated() (gas: 62881)
+[PASS] testFuzzSessionBudget(uint64) (runs: 1000, μ: 463096, ~: 463070)
+[PASS] testFuzz_AtomicRollback(uint96) (runs: 1000, μ: 231881, ~: 232278)
+[PASS] testFuzz_OwnerAmount(uint96) (runs: 1000, μ: 149592, ~: 149831)
+[PASS] testGuardianCannotLockRecoverySlot() (gas: 968011)
+[PASS] testInvalidOwnerGuardianListsAndUnauthorizedAdmin() (gas: 428567)
+[PASS] testInvalidSelectorsNonceAndEmptyBatch() (gas: 321103)
+[PASS] testListsReceiveAndDisabledBatch() (gas: 59721)
+[PASS] testMalformedPasskeyAndUnknownSignatureMode() (gas: 797540)
+[PASS] testMultisigSortedUniqueThreshold() (gas: 398292)
+[PASS] testOwnerExecutionAndNonceReplay() (gas: 259859)
+[PASS] testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation() (gas: 1124742)
+[PASS] testPaymasterConstructorAndZeroSponsorGuards() (gas: 6555)
+[PASS] testRecoveryDelayDuplicateVoteCancelAndEpoch() (gas: 880445)
+[PASS] testRecoveryWrongGuardianAndStalePolicy() (gas: 457699)
+[PASS] testRevocationBetweenValidationAndExecution() (gas: 424716)
+[PASS] testSessionBudgetExpiryAndRevocation() (gas: 831206)
+[PASS] testSessionCannotAdminOrWrongSelector() (gas: 394812)
+[PASS] testSessionReconfigurationInvalidatesQueuedOperation() (gas: 417786)
+[PASS] testSponsorQuotaAndTamperRejected() (gas: 418148)
+[PASS] testSponsorshipReservesQuotaOnRevertingExecution() (gas: 269047)
+[PASS] testTwoSessionOpsCannotOverspendOneBudget() (gas: 478059)
+[PASS] testWrongSignerAndMalformedSignature() (gas: 199848)
+Suite result: ok. 30 passed; 0 failed; 0 skipped; finished in 3.14s (9.40s CPU time)
+
+Ran 1 test for tests/contracts/Stateful.t.sol:StatefulTest
+[PASS]
+StatefulTest invariants:
+[PASS] invariant_CounterMatchesModel
+[PASS] invariant_OwnershipNeverChanges
+[PASS] invariant_SessionNeverOverspends
+ StatefulTest invariants (runs: 256, calls: 16384, reverts: 0)
+
+╭------------------+--------------+-------+---------+----------╮
+| Contract         | Selector     | Calls | Reverts | Discards |
++==============================================================+
+| OperationHandler | step         | 8179  | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| OperationHandler | unauthorized | 8205  | 0       | 0        |
+╰------------------+--------------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 19.34s (19.33s CPU time)
+
+Ran 2 test suites in 19.35s (22.48s CPU time): 31 tests passed, 0 failed, 0 skipped (31 total tests)

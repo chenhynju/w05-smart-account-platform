@@ -7,3 +7,5 @@ cache/
 .runtime/
 playwright-report/
 test-results/
+.toolchain/
+**/*.tsbuildinfo

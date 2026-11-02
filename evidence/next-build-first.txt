@@ -1,0 +1,46 @@
+
+> smart-account-platform@0.1.0 build
+> next build apps/web
+
+▲ Next.js 16.4.4 (Turbopack)
+✓ Running next.config.ts took 1321ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 20.2s
+  Running TypeScript ...
+
+  We detected TypeScript in your project and created a tsconfig.json file for you.
+app/page.tsx(26,427): error TS2345: Argument of type '{ message: string; }' is not assignable to parameter of type '{ account: `0x${string}` | Account; message: SignableMessage; connector?: Connector; }'.
+  Property 'account' is missing in type '{ message: string; }' but required in type '{ account: `0x${string}` | Account; message: SignableMessage; connector?: Connector; }'.
+app/page.tsx(30,215): error TS2345: Argument of type 'MessageDefinition<{ readonly PackedUserOperation: readonly [{ readonly type: "address"; readonly name: "sender"; }, { readonly type: "uint256"; readonly name: "nonce"; }, { readonly type: "bytes"; readonly name: "initCode"; }, ... 4 more ..., { ...; }]; }, "PackedUserOperation", "PackedUserOperation", { ...; }, { .....' is not assignable to parameter of type '{ types: { readonly PackedUserOperation: readonly [{ readonly type: "address"; readonly name: "sender"; }, { readonly type: "uint256"; readonly name: "nonce"; }, { readonly type: "bytes"; readonly name: "initCode"; }, ... 4 more ..., { ...; }]; }; ... 4 more ...; connector?: Connector; }'.
+  Property 'account' is missing in type 'MessageDefinition<{ readonly PackedUserOperation: readonly [{ readonly type: "address"; readonly name: "sender"; }, { readonly type: "uint256"; readonly name: "nonce"; }, { readonly type: "bytes"; readonly name: "initCode"; }, ... 4 more ..., { ...; }]; }, "PackedUserOperation", "PackedUserOperation", { ...; }, { .....' but required in type '{ types: { readonly PackedUserOperation: readonly [{ readonly type: "address"; readonly name: "sender"; }, { readonly type: "uint256"; readonly name: "nonce"; }, { readonly type: "bytes"; readonly name: "initCode"; }, ... 4 more ..., { ...; }]; }; ... 4 more ...; connector?: Connector; }'.
+app/page.tsx(36,264): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+app/page.tsx(37,167): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+app/page.tsx(37,312): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+app/page.tsx(39,395): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+app/page.tsx(41,306): error TS2345: Argument of type '{ address: `0x${string}`; abi: readonly [{ readonly name: "executeOperation"; readonly type: "function"; readonly stateMutability: "nonpayable"; readonly inputs: readonly [{ readonly type: "uint256"; readonly name: "nonce"; }, { ...; }, { ...; }]; readonly outputs: readonly []; }, ... 25 more ..., { ...; }]; functio...' is not assignable to parameter of type 'WriteContractParameters<readonly [{ readonly name: "executeOperation"; readonly type: "function"; readonly stateMutability: "nonpayable"; readonly inputs: readonly [{ readonly type: "uint256"; readonly name: "nonce"; }, { readonly type: "uint256"; readonly name: "expectedEpoch"; }, { ...; }]; readonly outputs: reado...'.
+  Property 'chain' is missing in type '{ address: `0x${string}`; abi: readonly [{ readonly name: "executeOperation"; readonly type: "function"; readonly stateMutability: "nonpayable"; readonly inputs: readonly [{ readonly type: "uint256"; readonly name: "nonce"; }, { ...; }, { ...; }]; readonly outputs: readonly []; }, ... 25 more ..., { ...; }]; functio...' but required in type '{ chain: undefined; }'.
+../../packages/passkey.ts(2,14): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/passkey.ts(7,61): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/passkey.ts(7,79): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/passkey.ts(8,48): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(60,14): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(60,26): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(60,40): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(60,44): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(60,59): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(60,63): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(61,22): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(63,71): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(63,91): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(63,95): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(63,101): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(65,168): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(65,179): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(65,210): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(65,235): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(65,250): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(76,27): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+../../packages/protocol.ts(76,53): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+Failed to type check.
+

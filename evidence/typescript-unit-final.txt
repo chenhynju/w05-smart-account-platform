@@ -1,0 +1,16 @@
+
+> smart-account-platform@0.1.0 test
+> tsx --test tests/*.test.ts
+
+✔ gas packing rejects uint128 overflow and preserves distinct halves (6.66013ms)
+✔ wire operation rejects malformed hex, floating nonces and overlong fields (11.378481ms)
+✔ v0.8 operation hash isolates EntryPoint, sender, nonce and calldata (39.996882ms)
+✔ DER parser normalizes valid scalars and rejects malformed encodings (2.711471ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13164.331638

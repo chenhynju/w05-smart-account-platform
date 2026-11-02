@@ -1,0 +1,8 @@
+node_modules/
+.next/
+apps/web/.next/
+out/
+cache/
+evidence/
+.runtime/
+package-lock.json

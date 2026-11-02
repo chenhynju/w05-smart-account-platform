@@ -1,0 +1,1 @@
+Formatted /home/chenhy/workspace/web3-portfolio/smart-account-platform/tests/contracts/Account.t.sol

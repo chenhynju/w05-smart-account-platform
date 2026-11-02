@@ -1,0 +1,18 @@
+apps/web/app/api/[...path]/route.ts 368ms
+apps/web/app/layout.tsx 44ms
+apps/web/app/page.tsx 707ms
+apps/web/app/providers.tsx 21ms
+apps/web/app/style.css 655ms
+apps/web/next-env.d.ts 45ms (unchanged)
+apps/web/next.config.ts 33ms
+apps/web/tsconfig.json 240ms
+packages/passkey.ts 235ms
+packages/protocol.ts 266ms
+services/bundler.ts 576ms
+scripts/deploy-local.ts 85ms
+scripts/update-local-factory.ts 46ms
+tests/integration/service.test.ts 147ms
+tests/protocol.test.ts 67ms
+package-lock.json 108ms (unchanged)
+package.json 5ms (unchanged)
+tsconfig.json 15ms

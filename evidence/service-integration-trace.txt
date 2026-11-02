@@ -1,0 +1,17 @@
+▶ local service real chain lifecycle and hostile requests
+  ✔ enrollment challenge cannot be replayed (29.822416ms)
+  ✔ SDK hash equals deployed EntryPoint v0.8 EIP712 hash (50.514628ms)
+  ✔ signed operation simulation and submission reconcile actual event (336.018585ms)
+  ✔ wrong owner signature rejected before broadcast (137.539976ms)
+  ✔ batch reversion is diagnosed and target state stays atomic (410.157425ms)
+  ✔ CSRF and arbitrary RPC administration blocked (49.221527ms)
+  ✔ malformed wire payload fails safely (16.044708ms)
+✔ local service real chain lifecycle and hostile requests (1608.437184ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11265.389856

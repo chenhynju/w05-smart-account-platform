@@ -1,0 +1,94 @@
+Compiling 46 files with Solc 0.8.38
+Solc 0.8.38 finished in 27.93s
+Compiler run successful with warnings:
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+  --> node_modules/@account-abstraction/contracts/core/BaseAccount.sol:27:39:
+   |
+27 |     error ExecuteError(uint256 index, bytes error);
+   |                                       ^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:125:29:
+    |
+125 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:134:29:
+    |
+134 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecoverCalldata(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:161:29:
+    |
+161 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, r, vs);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:203:29:
+    |
+203 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, v, r, s);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:273:26:
+    |
+273 |     function _throwError(RecoverError error, bytes32 errorArg) private pure {
+    |                          ^^^^^^^^^^^^^^^^^^
+
+
+Ran 32 tests for tests/contracts/Account.t.sol:AccountTest
+[PASS] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 241991)
+[PASS] testCallbackCannotReenterExecutionOrFinalizeRecovery() (gas: 939729)
+[PASS] testCancelSpecificProposalDoesNotCancelIndependentThreshold() (gas: 629155)
+[PASS] testCounterfactualFactoryDeploymentViaEntryPoint() (gas: 3537617)
+[PASS] testCrossChainSignatureRejected() (gas: 122776)
+[PASS] testDirectAndInheritedBypassDenied() (gas: 41831)
+[PASS] testERC1271DomainAndMalformed() (gas: 3399358)
+[PASS] testExpiredRotatedSponsorAndUnauthorizedPaymaster() (gas: 475121)
+[PASS] testFactoryIdempotentAndSeparated() (gas: 62820)
+[PASS] testFuzzSessionBudget(uint64) (runs: 1000, μ: 463056, ~: 463032)
+[PASS] testFuzz_AtomicRollback(uint96) (runs: 1000, μ: 231884, ~: 232283)
+[PASS] testFuzz_OwnerAmount(uint96) (runs: 1000, μ: 149565, ~: 149803)
+[PASS] testGuardianCannotLockRecoverySlot() (gas: 967954)
+[PASS] testIndependentNonceKeysAndReplayIsolation() (gas: 273633)
+[PASS] testInvalidOwnerGuardianListsAndUnauthorizedAdmin() (gas: 428468)
+[PASS] testInvalidSelectorsNonceAndEmptyBatch() (gas: 321043)
+[PASS] testListsReceiveAndDisabledBatch() (gas: 59750)
+[PASS] testMalformedPasskeyAndUnknownSignatureMode() (gas: 797437)
+[PASS] testMultisigSortedUniqueThreshold() (gas: 398180)
+[PASS] testOwnerExecutionAndNonceReplay() (gas: 259863)
+[PASS] testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation() (gas: 1130100)
+[PASS] testPaymasterConstructorAndZeroSponsorGuards() (gas: 6596)
+[PASS] testRecoveryDelayDuplicateVoteCancelAndEpoch() (gas: 880373)
+[PASS] testRecoveryWrongGuardianAndStalePolicy() (gas: 457708)
+[PASS] testRevocationBetweenValidationAndExecution() (gas: 424617)
+[PASS] testSessionBudgetExpiryAndRevocation() (gas: 831124)
+[PASS] testSessionCannotAdminOrWrongSelector() (gas: 394791)
+[PASS] testSessionReconfigurationInvalidatesQueuedOperation() (gas: 417698)
+[PASS] testSponsorQuotaAndTamperRejected() (gas: 418061)
+[PASS] testSponsorshipReservesQuotaOnRevertingExecution() (gas: 269064)
+[PASS] testTwoSessionOpsCannotOverspendOneBudget() (gas: 478003)
+[PASS] testWrongSignerAndMalformedSignature() (gas: 199862)
+Suite result: ok. 32 passed; 0 failed; 0 skipped; finished in 3.64s (10.51s CPU time)
+
+Ran 1 test for tests/contracts/Stateful.t.sol:StatefulTest
+[PASS]
+StatefulTest invariants:
+[PASS] invariant_CounterMatchesModel
+[PASS] invariant_OwnershipNeverChanges
+[PASS] invariant_SessionNeverOverspends
+ StatefulTest invariants (runs: 256, calls: 16384, reverts: 0)
+
+╭------------------+--------------+-------+---------+----------╮
+| Contract         | Selector     | Calls | Reverts | Discards |
++==============================================================+
+| OperationHandler | step         | 8179  | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| OperationHandler | unauthorized | 8205  | 0       | 0        |
+╰------------------+--------------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 19.49s (19.47s CPU time)
+
+Ran 2 test suites in 19.49s (23.13s CPU time): 33 tests passed, 0 failed, 0 skipped (33 total tests)

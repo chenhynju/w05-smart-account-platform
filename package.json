@@ -10,7 +10,11 @@
     "test": "tsx --test tests/*.test.ts",
     "service": "tsx services/bundler.ts",
     "deploy:local": "tsx scripts/deploy-local.ts",
-    "e2e": "playwright test"
+    "e2e": "node tests/e2e/browser.cjs",
+    "start": "next start apps/web --hostname 127.0.0.1 --port 3155",
+    "format": "prettier --write apps/web/app packages services scripts tests && forge fmt",
+    "format:check": "prettier --check apps/web/app packages services scripts tests && forge fmt --check",
+    "test:integration": "tsx --test tests/integration/service.test.ts"
   },
   "dependencies": {
     "@account-abstraction/contracts": "0.8.0",
@@ -19,15 +23,16 @@
     "next": "16.4.4",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "viem": "2.38.5",
-    "wagmi": "2.19.5",
-    "zod": "4.1.12"
+    "viem": "2.57.14",
+    "wagmi": "3.7.9",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
     "@types/node": "24.10.0",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
+    "prettier": "3.6.2",
     "tsx": "4.20.6",
     "typescript": "5.9.3"
   }

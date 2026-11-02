@@ -1,0 +1,18 @@
+Compiling 47 files with Solc 0.8.31
+Solc 0.8.31 finished in 34.51s
+Compiler run successful!
+
+Ran 1 test for tests/contracts/Account.t.sol:AccountTest
+[FAIL: next call did not revert as expected] testMultisigSortedUniqueThreshold() (gas: 392548)
+Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 13.12ms (5.57ms CPU time)
+
+Ran 1 test suite in 30.61ms (13.12ms CPU time): 0 tests passed, 1 failed, 0 skipped (1 total tests)
+
+Failing tests:
+Encountered 1 failing test in tests/contracts/Account.t.sol:AccountTest
+[FAIL: next call did not revert as expected] testMultisigSortedUniqueThreshold() (gas: 392548)
+
+Encountered a total of 1 failing tests, 0 tests succeeded
+
+Tip: Run `forge test --rerun` to retry only the 1 failed test
+Tip: Run `forge test --debug --match-test <TEST_NAME>` to inspect one failing test in the debugger

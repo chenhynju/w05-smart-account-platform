@@ -1,0 +1,20 @@
+
+> smart-account-platform@0.1.0 format
+> prettier --write apps/web/app packages services scripts tests && forge fmt
+
+apps/web/app/api/[...path]/route.ts 569ms (unchanged)
+apps/web/app/layout.tsx 77ms (unchanged)
+apps/web/app/page.tsx 1846ms (unchanged)
+apps/web/app/providers.tsx 136ms (unchanged)
+apps/web/app/style.css 1126ms (unchanged)
+packages/passkey.ts 250ms (unchanged)
+packages/protocol.ts 259ms (unchanged)
+services/bundler.ts 890ms
+scripts/deploy-local.ts 25ms (unchanged)
+scripts/local-stack.ts 82ms (unchanged)
+scripts/roll-local-stack.ts 18ms (unchanged)
+scripts/update-local-factory.ts 48ms (unchanged)
+scripts/verify-local.ts 120ms (unchanged)
+tests/e2e/browser.cjs 723ms (unchanged)
+tests/integration/service.test.ts 230ms
+tests/protocol.test.ts 51ms (unchanged)

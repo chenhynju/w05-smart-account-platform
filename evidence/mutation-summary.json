@@ -1,0 +1,23 @@
+[
+  {
+    "mutant": "batch-atomicity",
+    "test": "testAtomicBatchRollbackAndGasNonceStillConsumed",
+    "killed": true,
+    "exitCode": 1,
+    "log": "evidence/mutation-batch-atomicity.txt"
+  },
+  {
+    "mutant": "duplicate-owner",
+    "test": "testMultisigSortedUniqueThreshold",
+    "killed": true,
+    "exitCode": 1,
+    "log": "evidence/mutation-duplicate-owner.txt"
+  },
+  {
+    "mutant": "session-accounting",
+    "test": "testTwoSessionOpsCannotOverspendOneBudget",
+    "killed": true,
+    "exitCode": 1,
+    "log": "evidence/mutation-session-accounting.txt"
+  }
+]

@@ -1,0 +1,74 @@
+Warning: `--ir-minimum` enables `viaIR` with minimum optimization, which can result in inaccurate source mappings.
+Only use this flag as a workaround if you are experiencing "stack too deep" errors.
+Note that `viaIR` is production ready since Solidity 0.8.13 and above.
+See more: https://book.getfoundry.sh/guides/best-practices/stack-too-deep
+Compiling 48 files with Solc 0.8.31
+Solc 0.8.31 finished in 13.52s
+Compiler run successful!
+Analysing contracts...
+Running tests...
+
+Ran 25 tests for tests/contracts/Account.t.sol:AccountTest
+[PASS] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 323822)
+[PASS] testCrossChainSignatureRejected() (gas: 178458)
+[PASS] testDirectAndInheritedBypassDenied() (gas: 50406)
+[PASS] testERC1271DomainAndMalformed() (gas: 6787382)
+[PASS] testExpiredRotatedSponsorAndUnauthorizedPaymaster() (gas: 657018)
+[PASS] testFactoryIdempotentAndSeparated() (gas: 109701)
+[PASS] testFuzzSessionBudget(uint64) (runs: 1000, μ: 664253, ~: 664230)
+[PASS] testFuzz_AtomicRollback(uint96) (runs: 1000, μ: 311176, ~: 311426)
+[PASS] testFuzz_OwnerAmount(uint96) (runs: 1000, μ: 215091, ~: 215341)
+[PASS] testGuardianCannotLockRecoverySlot() (gas: 1110505)
+[PASS] testInvalidOwnerGuardianListsAndUnauthorizedAdmin() (gas: 588197)
+[PASS] testInvalidSelectorsNonceAndEmptyBatch() (gas: 466075)
+[PASS] testMultisigSortedUniqueThreshold() (gas: 589938)
+[PASS] testOwnerExecutionAndNonceReplay() (gas: 362631)
+[PASS] testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation() (gas: 1807489)
+[PASS] testRecoveryDelayDuplicateVoteCancelAndEpoch() (gas: 1035539)
+[PASS] testRecoveryWrongGuardianAndStalePolicy() (gas: 532107)
+[PASS] testRevocationBetweenValidationAndExecution() (gas: 652284)
+[PASS] testSessionBudgetExpiryAndRevocation() (gas: 1196965)
+[PASS] testSessionCannotAdminOrWrongSelector() (gas: 587049)
+[PASS] testSessionReconfigurationInvalidatesQueuedOperation() (gas: 609954)
+[PASS] testSponsorQuotaAndTamperRejected() (gas: 594925)
+[PASS] testSponsorshipReservesQuotaOnRevertingExecution() (gas: 383942)
+[PASS] testTwoSessionOpsCannotOverspendOneBudget() (gas: 742005)
+[PASS] testWrongSignerAndMalformedSignature() (gas: 286385)
+Suite result: ok. 25 passed; 0 failed; 0 skipped; finished in 17.25s (50.28s CPU time)
+
+Ran 1 test for tests/contracts/Stateful.t.sol:StatefulTest
+[PASS]
+StatefulTest invariants:
+[PASS] invariant_CounterMatchesModel
+[PASS] invariant_OwnershipNeverChanges
+[PASS] invariant_SessionNeverOverspends
+ StatefulTest invariants (runs: 256, calls: 16384, reverts: 0)
+
+╭------------------+--------------+-------+---------+----------╮
+| Contract         | Selector     | Calls | Reverts | Discards |
++==============================================================+
+| OperationHandler | step         | 8303  | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| OperationHandler | unauthorized | 8081  | 0       | 0        |
+╰------------------+--------------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 89.19s (89.05s CPU time)
+
+Ran 2 test suites in 89.21s (106.44s CPU time): 26 tests passed, 0 failed, 0 skipped (26 total tests)
+
+╭--------------------------------+------------------+------------------+----------------+----------------╮
+| File                           | % Lines          | % Statements     | % Branches     | % Funcs        |
++========================================================================================================+
+| contracts/AccountFactory.sol   | 100.00% (11/11)  | 100.00% (11/11)  | 100.00% (1/1)  | 100.00% (3/3)  |
+|--------------------------------+------------------+------------------+----------------+----------------|
+| contracts/Counter.sol          | 100.00% (5/5)    | 100.00% (3/3)    | N/A (0/0)      | 100.00% (2/2)  |
+|--------------------------------+------------------+------------------+----------------+----------------|
+| contracts/QuotaPaymaster.sol   | 100.00% (26/26)  | 90.91% (30/33)   | 40.00% (2/5)   | 100.00% (5/5)  |
+|--------------------------------+------------------+------------------+----------------+----------------|
+| contracts/SmartAccount.sol     | 85.99% (178/207) | 90.76% (275/303) | 76.92% (30/39) | 85.71% (30/35) |
+|--------------------------------+------------------+------------------+----------------+----------------|
+| tests/contracts/Stateful.t.sol | 95.35% (41/43)   | 95.92% (47/49)   | 61.54% (8/13)  | 100.00% (5/5)  |
+|--------------------------------+------------------+------------------+----------------+----------------|
+| Total                          | 89.38% (261/292) | 91.73% (366/399) | 70.69% (41/58) | 90.00% (45/50) |
+╰--------------------------------+------------------+------------------+----------------+----------------╯
+Wrote LCOV report.

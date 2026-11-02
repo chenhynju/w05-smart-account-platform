@@ -1,0 +1,5 @@
+scripts/deploy-local.ts 467ms (unchanged)
+scripts/local-stack.ts 300ms
+scripts/roll-local-stack.ts 79ms (unchanged)
+scripts/update-local-factory.ts 129ms (unchanged)
+scripts/verify-local.ts 123ms

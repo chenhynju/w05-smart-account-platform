@@ -1,0 +1,51 @@
+Compiling 2 files with Solc 0.8.31
+Solc 0.8.31 finished in 37.54s
+Compiler run successful!
+
+Ran 25 tests for tests/contracts/Account.t.sol:AccountTest
+[PASS] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 241607)
+[PASS] testCrossChainSignatureRejected() (gas: 122450)
+[PASS] testDirectAndInheritedBypassDenied() (gas: 41636)
+[PASS] testERC1271DomainAndMalformed() (gas: 3320565)
+[PASS] testExpiredRotatedSponsorAndUnauthorizedPaymaster() (gas: 474263)
+[PASS] testFactoryIdempotentAndSeparated() (gas: 62165)
+[PASS] testFuzzSessionBudget(uint64) (runs: 1000, μ: 462068, ~: 462051)
+[PASS] testFuzz_AtomicRollback(uint96) (runs: 1000, μ: 231444, ~: 231842)
+[PASS] testFuzz_OwnerAmount(uint96) (runs: 1000, μ: 149312, ~: 149550)
+[PASS] testGuardianCannotLockRecoverySlot() (gas: 964465)
+[PASS] testInvalidOwnerGuardianListsAndUnauthorizedAdmin() (gas: 427901)
+[PASS] testInvalidSelectorsNonceAndEmptyBatch() (gas: 320188)
+[PASS] testMultisigSortedUniqueThreshold() (gas: 394967)
+[PASS] testOwnerExecutionAndNonceReplay() (gas: 259425)
+[PASS] testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation() (gas: 1123161)
+[PASS] testRecoveryDelayDuplicateVoteCancelAndEpoch() (gas: 879638)
+[PASS] testRecoveryWrongGuardianAndStalePolicy() (gas: 455950)
+[PASS] testRevocationBetweenValidationAndExecution() (gas: 422961)
+[PASS] testSessionBudgetExpiryAndRevocation() (gas: 828699)
+[PASS] testSessionCannotAdminOrWrongSelector() (gas: 393840)
+[PASS] testSessionReconfigurationInvalidatesQueuedOperation() (gas: 416735)
+[PASS] testSponsorQuotaAndTamperRejected() (gas: 417290)
+[PASS] testSponsorshipReservesQuotaOnRevertingExecution() (gas: 268594)
+[PASS] testTwoSessionOpsCannotOverspendOneBudget() (gas: 476803)
+[PASS] testWrongSignerAndMalformedSignature() (gas: 199404)
+Suite result: ok. 25 passed; 0 failed; 0 skipped; finished in 2.62s (7.80s CPU time)
+
+Ran 1 test for tests/contracts/Stateful.t.sol:StatefulTest
+[PASS]
+StatefulTest invariants:
+[PASS] invariant_CounterMatchesModel
+[PASS] invariant_OwnershipNeverChanges
+[PASS] invariant_SessionNeverOverspends
+ StatefulTest invariants (runs: 256, calls: 16384, reverts: 0)
+
+╭------------------+--------------+-------+---------+----------╮
+| Contract         | Selector     | Calls | Reverts | Discards |
++==============================================================+
+| OperationHandler | step         | 8179  | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| OperationHandler | unauthorized | 8205  | 0       | 0        |
+╰------------------+--------------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 27.76s (27.74s CPU time)
+
+Ran 2 test suites in 27.77s (30.39s CPU time): 26 tests passed, 0 failed, 0 skipped (26 total tests)

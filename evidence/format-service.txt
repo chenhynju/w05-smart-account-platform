@@ -1,0 +1,6 @@
+services/bundler.ts 883ms
+scripts/deploy-local.ts 24ms
+scripts/local-stack.ts 48ms
+scripts/roll-local-stack.ts 8ms
+scripts/update-local-factory.ts 24ms (unchanged)
+scripts/verify-local.ts 60ms

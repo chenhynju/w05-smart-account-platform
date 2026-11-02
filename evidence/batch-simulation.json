@@ -1,0 +1,1 @@
+{"hash":"0xc2ffdfeeb1155777354a35819339f498cd438d4ca37aaeae6aeac9de129ed883","gas":"1683067","validation":"passed","execution":"reverted","revertReasons":["execution reverted","INTENTIONAL_FAILURE"],"scope":"Local debug trace simulation; actual receipt remains authoritative"}

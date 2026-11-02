@@ -80,3 +80,7 @@ Attacks: phishing/signed calldata deception, replay across chains/accounts, revo
 
 ## Economic and gas model
 Prefund is conservatively bounded by verificationGasLimit + callGasLimit + preVerificationGas plus paymaster verification/postOp limits, multiplied by maxFeePerGas; the deployed v0.8 EntryPoint implementation remains authoritative. ETH and quota use integer wei; all gas limit packing uses uint128 halves. No USD claim or fixed transaction price. Local mock ETH is not a cost forecast. Monitor deposit, reserved quota, simulation failures, receipt errors and stuck nonces. Never increase fees without the user's signed maxFee bounds.
+
+
+## Recovery concurrency remediation
+Recovery proposals are independent and addressed by ID. The latest-proposal fields are UI conveniences, never the sole recovery authority. Even if one guardian continuously proposes alternatives, a valid threshold can approve and complete its own proposal by ID. All proposals bind the current policy epoch. Owner cancellation of all proposals rotates the epoch and consequently also invalidates sessions and passkeys.
