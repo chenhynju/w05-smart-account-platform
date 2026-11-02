@@ -1,6 +1,6 @@
 # F-03 · Session有效期使用电脑时间导致链上过期授权
 
-Severity: Low (availability / intended lifetime mismatch). Status: PATCHED, full browser regression pending. Self-Assessment / AI-Assisted Review.
+Severity: Low (availability / intended lifetime mismatch). Status: FIXED / final browser regression PASS. Self-Assessment / AI-Assisted Review.
 
 ## Impact / prerequisites / root cause
 链时间与电脑时间相差较大（实际在本地恢复测试推进两天后），enableSession用Date.now()+3600生成一小时有效期，但合约按block.timestamp校验。真实新session配置操作验证签名成功、被EP包含，但执行回滚。用户电脑时间若超前，也会使“1小时”实际期限超出预期。合约没有越权；缺陷在前端选择错误时钟。
@@ -13,3 +13,5 @@ Severity: Low (availability / intended lifetime mismatch). Status: PATCHED, full
 
 ## Regression / review / residual risk
 network.test.ts覆盖两天时钟差、精确1小时、uint48最大边界与越界拒绝。真正回归必须在当前已推进两天的同一链重跑完整浏览器，并核对session策略的实际链上有效期，不重置链来掩盖问题。交易延迟仍会缩短剩余可用时间；需要重试时重新读取区块生成新签名。客户端读取的RPC是信任边界，服务和合约仍实施最终权限/有效期校验。公共网络恢复等待无法时间快进。
+
+最终回归：browser-release/evidence.json共16检查点，session-clock-after.json精确剩余期限；service-integration-release.txt共11 PASS，pending-clock-sponsorship.json实际模拟PASS。

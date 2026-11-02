@@ -1,0 +1,16 @@
+{
+  "sourceCommit": "1016f4cd3beb921994f1408768b67779b5a01f47",
+  "scope": "isolated test-only mutant, no application edit",
+  "mutation": "ignore clientData context prefix mismatch",
+  "command": [
+    "forge",
+    "test",
+    "--use",
+    "/home/chenhy/workspace/web3-portfolio/smart-account-platform/.toolchain/solc-0.8.38",
+    "--match-test",
+    "testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation",
+    "-vv"
+  ],
+  "exitCode": 1,
+  "killed": true
+}

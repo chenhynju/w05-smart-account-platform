@@ -1,0 +1,42 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 108,
+  "EndLine": 108,
+  "StartColumn": 33,
+  "EndColumn": 68,
+  "Match": "w05.local.keys\" : \"REDACTED\"",
+  "Secret": "REDACTED",
+  "File": "apps/web/app/page.tsx",
+  "SymlinkFile": "",
+  "Commit": "8ceee1d69c92db0657a514b9b90655b8ea8ebea7",
+  "Entropy": 3.625,
+  "Author": "chenhuanyu",
+  "Email": "chenhynju@gmail.com",
+  "Date": "2026-11-02T19:35:52Z",
+  "Message": "feat: prepare isolated Sepolia profile and unsigned bounded release plan",
+  "Tags": [],
+  "Fingerprint": "8ceee1d69c92db0657a514b9b90655b8ea8ebea7:apps/web/app/page.tsx:generic-api-key:108"
+ },
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 122,
+  "EndLine": 122,
+  "StartColumn": 35,
+  "EndColumn": 70,
+  "Match": "w05.local.keys\" : \"REDACTED\"",
+  "Secret": "REDACTED",
+  "File": "apps/web/app/page.tsx",
+  "SymlinkFile": "",
+  "Commit": "8ceee1d69c92db0657a514b9b90655b8ea8ebea7",
+  "Entropy": 3.625,
+  "Author": "chenhuanyu",
+  "Email": "chenhynju@gmail.com",
+  "Date": "2026-11-02T19:35:52Z",
+  "Message": "feat: prepare isolated Sepolia profile and unsigned bounded release plan",
+  "Tags": [],
+  "Fingerprint": "8ceee1d69c92db0657a514b9b90655b8ea8ebea7:apps/web/app/page.tsx:generic-api-key:122"
+ }
+]

@@ -1,0 +1,21 @@
+PASS Browser owner proof → factory deployment → account state
+PASS Owner signature → real simulation → sponsored EntryPoint execution → receipt UI
+PASS Atomic two-call batch succeeds through UI and changes chain counter twice
+PASS Second-call failure rolls back first-call state through complete UI lifecycle
+PASS Scoped session-key configuration and actual session operation
+PASS Revoked session signature rejected by chain validation
+PASS Chromium WebAuthn enrollment → real P256 assertion → on-chain WebAuthn verification
+PASS 12 further independent browser Passkey assertions submitted without retrying failures
+PASS Guardian transaction and owner-authorized recovery cancellation
+PASS Threshold policy rejects an operation with only one owner approval
+PASS Two distinct approval actions → sorted threshold signature → successful execution
+PASS 390px responsive layout without horizontal overflow
+PASS No browser page exceptions
+locator.waitFor: Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+    1) <div role="alert" class="message error">Execution reverted with reason: "RPC Request fail…</div> aka getByText('Execution reverted with')
+    2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+Call log:
+[2m  - waiting for getByRole('alert') to be visible[22m
+
+    at /home/chenhy/workspace/web3-portfolio/smart-account-platform/tests/e2e/browser.cjs:289:35

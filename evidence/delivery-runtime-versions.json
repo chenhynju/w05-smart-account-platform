@@ -1,0 +1,68 @@
+{
+  "checkedAtUTC": "2026-11-02T21:04:26.424629+00:00",
+  "versions": [
+    {
+      "command": [
+        "node",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "v24.20.0"
+    },
+    {
+      "command": [
+        "npm",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "11.19.0"
+    },
+    {
+      "command": [
+        "forge",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "forge Version: 1.8.1\nCommit SHA: 982849d3140c01fd3b72905759581a132df7aa98\nBuild Timestamp: 2026-08-28T17:46:00.964391484Z (1787939160)\nBuild Profile: dist"
+    },
+    {
+      "command": [
+        "anvil",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "anvil Version: 1.8.1\nCommit SHA: 982849d3140c01fd3b72905759581a132df7aa98\nBuild Timestamp: 2026-08-28T17:46:00.964391484Z (1787939160)\nBuild Profile: dist"
+    },
+    {
+      "command": [
+        ".toolchain/solc-0.8.38",
+        "--version"
+      ],
+      "exitCode": 0,
+      "output": "solc, the solidity compiler commandline interface\nVersion: 0.8.38+commit.1835d247.Linux.g++"
+    },
+    {
+      "command": [
+        "gitleaks",
+        "version"
+      ],
+      "exitCode": 0,
+      "output": "version is set by build process"
+    }
+  ],
+  "compilerSHA256": "65c3180a336eabb6bdc4bbd49cc405aeb233976964ae6c11fba2a6c8be8f3243",
+  "sourceHash": "fc1008dad72f7f426e0279b191cf03f7228eae392d88a9bd396c951262e66dec",
+  "gitSourceCommit": "fcc439f8167b7573269f1ce5a17058071e10a0a7",
+  "keyFileModesOnly": {
+    ".runtime/keys.json": "0o600",
+    ".runtime/sepolia/keys.json": "0o600"
+  },
+  "listeners": [
+    "LISTEN 0      511         127.0.0.1:4355       0.0.0.0:*    users:((\"MainThread\",pid=116690,fd=33))     ",
+    "LISTEN 0      128         127.0.0.1:18555      0.0.0.0:*    users:((\"anvil\",pid=80480,fd=11))           ",
+    "LISTEN 0      511         127.0.0.1:3155       0.0.0.0:*    users:((\"next-server (v1\",pid=116968,fd=21))"
+  ],
+  "browser": "Windows Chromium 156.0.8078.4, Playwright virtual CTAP2",
+  "osRelease": "\"Ubuntu 24.04.5 LTS\"",
+  "kernelRelease": "6.18.54.1-microsoft-standard-WSL2"
+}

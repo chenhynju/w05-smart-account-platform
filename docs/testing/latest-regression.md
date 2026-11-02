@@ -1,3 +1,27 @@
+# 当前交付结论 2026-11-03T04:55:32.847744+08:00
+
+本地最终16浏览器/11 API/35 Foundry/8 TS/干净副本/当前故障恢复均PASS；完整公共阶段仍BLOCKED，用户掌握NOT RUN。F-02/F-03/F-04真实反例与最终回归已闭环。最新权威报告见docs/testing/delivery-current.md；以下旧阶段内容仅为历史，不覆盖当前结论。
+
+# 当前：F-03 / F-04与上下文测试增强等待最终完整回归
+
+F-03已改为pending区块时间计算一小时session并延迟本地key激活；F-04实际空闲链使latest落后pending1204秒，300秒赞助立即AA32，已改pending并新增十分钟差的真实集成回归。原失败均保留。额外mutation曾存活，等长错误origin/RP有效签名测试现已增强，等待同一mutant被杀死。不得用上一轮基础/浏览器PASS覆盖当前未完成的最终新源验收。
+
+# 最新F-03：Session链时间缺陷已补丁，等待真实完整回归
+
+最终网络profile API10通过，浏览器在第二次复用已推进两天的链时，Create session key真实execution_failed。捕获公开操作后确认wall-clock期限小于真实区块时间。已改为最新区块timestamp+3600，并且只在成功事件确认后保存session key。F-03详述和证据已保存。不能用前一套15检查点PASS冒充修复后完整回归。公共网络仍无签名/广播。
+
+# F-02已定位并通过真实浏览器修复回归
+
+原间歇性AA24根因为完整clientDataJSON模板比较错误拒绝浏览器扩展。捕获原始公开断言，Node P256=true但chain=false；Foundry原始断言修复前FAIL、修复后PASS。补丁d77f215采用W3C有限验证前缀与分隔符，保留完整P256签名和RP/origin/challenge/UV/epoch政策。见docs/audit/findings/F-02-webauthn-json-extensibility.md。
+
+新不可变栈在b1a6095源码部署。最新完整浏览器a347899通过15个验收检查点：批量成功/真实回滚、撤销、连续13次Passkey真实上链（额外12次中观察到2个Chrome扩展）、多签与完整guardian延迟恢复/旧owner失权、390px及无pageerror。evidence/browser-passkey-fixed/evidence.json和.log。旧JSON模板反例、旧失败栈和原失败日志保留；不是“重试至通过”，必须继续保留稳定反例回归。
+
+另一次扩展脚本因Next路由公告也使用role=alert而在选择器层FAIL，已保留selector-failure证据，修正为产品.message.error后整套通过。这不是链上认证再次失败。
+
+此后新增显式Sepolia配置与公共签名门禁，当前新源码基础门禁/最终服务浏览器仍需看最新release-candidate日志，不把上述b1/a347证据冒充新服务全栈已经验收。公共签名广播未授权/NOT RUN，物理认证器NOT RUN。
+
+## 原失败记录（历史，已保留并修复）
+
 # 最新未解决回归 — Passkey间歇性AA24
 
 时间2026-11-03T01:24:54.336078+08:00，当前源码 `93a0e219cbbe3053a7727479809927b96aaa668f`。**最新完整浏览器重跑FAIL，不能用之前10检查点PASS覆盖此失败，也不能宣称本地完整Engineering Gate已通过。**

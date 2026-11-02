@@ -1,6 +1,6 @@
 # SmartAccount：从授权到恢复
 
-源码冻结 Commit：`4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b`。实际路径：`/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/SmartAccount.sol`。代码变更后必须重新生成行号与source-map。
+源码冻结 Commit：`fcc439f8167b7573269f1ce5a17058071e10a0a7`。实际路径：`/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/SmartAccount.sol`。代码变更后必须重新生成行号与source-map。
 
 ## A. Business Principle
 账户持有资产，授权规则可编程。owner阈值拥有完整权限；session拥有小范围权限；guardian只能延迟换owner；Paymaster不拥有账户资金。
@@ -31,18 +31,18 @@
 |`contracts/SmartAccount.sol:288` `_validateList`|required位于1..length，length最多10，地址严格递增避免零地址和重复。|
 |`contracts/SmartAccount.sol:297` `setPasskey`|仅单签策略可配置；绑定公开P256坐标、RP哈希、origin与新epoch，不能上传私钥。|
 |`contracts/SmartAccount.sol:310` `revokePasskey`|递增epoch使已登记passkey失效，保留公钥数据不代表仍有授权。|
-|`contracts/SmartAccount.sol:317` `verifyPasskey`|验证真实WebAuthn断言；严格JSON和RP绑定补足第三方库省略的上下文检查。|
-|`contracts/SmartAccount.sol:332` `_bumpEpoch`|策略全局版本单调递增；Solidity checked arithmetic禁止回绕到0。|
-|`contracts/SmartAccount.sol:338` `proposeRecovery`|每次提案得到独立ID与两天截止时间，并自动记录提议guardian的第一票；不占全局唯一锁。|
-|`contracts/SmartAccount.sol:352` `approveRecovery`|无参版本操作最新指针，有参版本针对确定ID；真正权限与唯一票检查在内部函数。|
-|`contracts/SmartAccount.sol:356` `approveRecovery`|无参版本操作最新指针，有参版本针对确定ID；真正权限与唯一票检查在内部函数。|
-|`contracts/SmartAccount.sol:360` `_approveRecovery`|检查当前guardian、提案active/epoch和未投票，计一票并发事件。|
-|`contracts/SmartAccount.sol:372` `cancelRecovery`|无参版使全部旧提案随epoch失效；有参版只禁用该ID，不破坏独立合法提案。|
-|`contracts/SmartAccount.sol:377` `cancelRecovery`|无参版使全部旧提案随epoch失效；有参版只禁用该ID，不破坏独立合法提案。|
-|`contracts/SmartAccount.sol:382` `completeRecovery`|无参版针对最新指针，有参版可完成被其他提案覆盖显示的合法ID。|
-|`contracts/SmartAccount.sol:386` `completeRecovery`|无参版针对最新指针，有参版可完成被其他提案覆盖显示的合法ID。|
-|`contracts/SmartAccount.sol:390` `_completeRecovery`|禁止执行期间回调完成恢复，检查阈值/延迟/epoch，替换owner并全面撤销旧授权。|
-|`contracts/SmartAccount.sol:410` `_clearRecovery`|只清空最新提案的UI便利字段；不把它当作所有提案的权威存储。|
+|`contracts/SmartAccount.sol:319` `verifyPasskey`|验证真实WebAuthn断言；W3C有限验证前缀和RP绑定补足第三方库省略的上下文检查。|
+|`contracts/SmartAccount.sol:341` `_bumpEpoch`|策略全局版本单调递增；Solidity checked arithmetic禁止回绕到0。|
+|`contracts/SmartAccount.sol:347` `proposeRecovery`|每次提案得到独立ID与两天截止时间，并自动记录提议guardian的第一票；不占全局唯一锁。|
+|`contracts/SmartAccount.sol:361` `approveRecovery`|无参版本操作最新指针，有参版本针对确定ID；真正权限与唯一票检查在内部函数。|
+|`contracts/SmartAccount.sol:365` `approveRecovery`|无参版本操作最新指针，有参版本针对确定ID；真正权限与唯一票检查在内部函数。|
+|`contracts/SmartAccount.sol:369` `_approveRecovery`|检查当前guardian、提案active/epoch和未投票，计一票并发事件。|
+|`contracts/SmartAccount.sol:381` `cancelRecovery`|无参版使全部旧提案随epoch失效；有参版只禁用该ID，不破坏独立合法提案。|
+|`contracts/SmartAccount.sol:386` `cancelRecovery`|无参版使全部旧提案随epoch失效；有参版只禁用该ID，不破坏独立合法提案。|
+|`contracts/SmartAccount.sol:391` `completeRecovery`|无参版针对最新指针，有参版可完成被其他提案覆盖显示的合法ID。|
+|`contracts/SmartAccount.sol:395` `completeRecovery`|无参版针对最新指针，有参版可完成被其他提案覆盖显示的合法ID。|
+|`contracts/SmartAccount.sol:399` `_completeRecovery`|禁止执行期间回调完成恢复，检查阈值/延迟/epoch，替换owner并全面撤销旧授权。|
+|`contracts/SmartAccount.sol:419` `_clearRecovery`|只清空最新提案的UI便利字段；不把它当作所有提案的权威存储。|
 
 ## D. Line-by-Line Walkthrough
 这里解释安全相关的重要语句，而不为明显赋值制造逐行废话。
@@ -64,13 +64,13 @@
 |`contracts/SmartAccount.sol:195`|严格地址顺序与owner集合检查|消除重复票；无效签名先看ECDSA错误码。|
 |`contracts/SmartAccount.sol:221`|在累加前检查剩余预算|上轮已保证total≤remaining，减法不会先下溢；金额单位wei。|
 |`contracts/SmartAccount.sol:234`|effects-before-interactions扣预算|后续目标回调不能再次使用未扣预算；失败回滚恢复它。|
-|`contracts/SmartAccount.sol:318`|passkey只能使用当前单签策略|不能以旧P256凭据绕过新2-of-2策略。|
-|`contracts/SmartAccount.sol:320`|核对认证器签署的RP ID hash|仅检查clientData中的origin而不检查RP不够。|
-|`contracts/SmartAccount.sol:328`|严格比较完整预期浏览器JSON|拒绝错误origin、challenge、crossOrigin和重复字段歧义。|
-|`contracts/SmartAccount.sol:329`|调用固定版本的正式密码学库并要求UV|不要用mock签名替换真实P256验证；虚拟认证器仍做真实签名。|
-|`contracts/SmartAccount.sol:342`|创建按ID隔离的提案状态|一个恶意guardian提案不会阻塞其他人的有效阈值。|
-|`contracts/SmartAccount.sol:365`|记录该提案内这个guardian已经投票|重复调用不是重复票；策略epoch变化会使旧提案失效。|
-|`contracts/SmartAccount.sol:393`|完成恢复同时检查当前阈值与等待期|票数不能从旧guardian策略或另一个提案挪用。|
+|`contracts/SmartAccount.sol:320`|passkey只能使用当前单签策略|不能以旧P256凭据绕过新2-of-2策略。|
+|`contracts/SmartAccount.sol:322`|核对认证器签署的RP ID hash|仅检查clientData中的origin而不检查RP不够。|
+|`contracts/SmartAccount.sol:332`|检查规范上下文前缀与紧随分隔符，允许签名扩展|拒绝错误origin、challenge、crossOrigin或错误token边界；后缀不解析为授权。|
+|`contracts/SmartAccount.sol:338`|调用固定版本的正式密码学库并要求UV|不要用mock签名替换真实P256验证；虚拟认证器仍做真实签名。|
+|`contracts/SmartAccount.sol:351`|创建按ID隔离的提案状态|一个恶意guardian提案不会阻塞其他人的有效阈值。|
+|`contracts/SmartAccount.sol:374`|记录该提案内这个guardian已经投票|重复调用不是重复票；策略epoch变化会使旧提案失效。|
+|`contracts/SmartAccount.sol:402`|完成恢复同时检查当前阈值与等待期|票数不能从旧guardian策略或另一个提案挪用。|
 
 ## E. Execution Trace
 `testRevocationBetweenValidationAndExecution`中：先授权session；构造nonce n的owner撤销操作与n+1的session操作；EntryPoint先验证二者；n执行递增epoch；n+1执行发现Permit epoch陈旧而回滚；Counter不增加。注意nonce和费用可以被EntryPoint消费。查真实命令及日志目录evidence，而不是把本段文字当运行证据。
@@ -89,3 +89,8 @@ Account.t.sol中的回放/跨链/阈值/恢复/原子性/会话测试通过真�
 
 ## I. Interview Questions
 为什么不能只保存lastSigner？为什么owner也不直接调用execute？validateUserOp为什么不能只检查一次session预算？为什么失败批量操作仍可能消耗nonce？取消单个恢复提案与取消全部提案的失效范围有何区别？每个回答必须指向上述实际源码及一个测试。
+
+## F-02 增量执行跟踪
+真实浏览器P256签名有效、RP/challenge/UV和EP哈希一致，但旧完整JSON等值检查因新增签名成员而返回false。以捕获的公开断言建立稳定失败测试后，采用W3C 5.8.1.2：按顺序比较固定前缀，再检查下一字节为逗号或右花括号。最后OZ对完整原始JSON取SHA256，连同authenticatorData验证P256。签名仍覆盖所有尾部字节。后缀不参与策略，不作第二次JSON解析；不支持跨源iframe。
+
+动手题：为什么不能改成搜索origin子串？为什么falsehood必须失败？为什么扩展字段仍需包含在P256摘要内？如何构造“evil origin先出现、合法origin后出现”的签名反例？分别运行testPasskeyCapturedChromiumExtension和testPasskeyExtensionAndPrefixBoundaries，解释前者为何证明真实兼容性，后者为何需要有效签名才能证明上下文防护。

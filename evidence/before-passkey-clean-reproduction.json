@@ -1,0 +1,26 @@
+{
+  "sourceCommit": "93a0e219cbbe3053a7727479809927b96aaa668f",
+  "workingDirectory": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/.runtime/repro/1793637152",
+  "scope": "Fresh Linux checkout and node_modules in isolated directory on the same host; npm cache and checksum-verified compiler reused. Not a fresh OS and not CI.",
+  "steps": [
+    {
+      "step": "install",
+      "exitCode": 0,
+      "log": "evidence/repro-install.txt"
+    },
+    {
+      "step": "complete-gate",
+      "exitCode": 0,
+      "log": "evidence/repro-complete-gate.txt"
+    },
+    {
+      "step": "final-source-complete-gate",
+      "exitCode": 0,
+      "log": "evidence/repro-complete-gate.txt"
+    }
+  ],
+  "status": "PASS",
+  "baseSourceCommit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
+  "sourceHash": "5669532638217610054f73514a01eea20f71cdc1494008be295477935410a96e",
+  "followup": "Copied the sole final UI owner-label change into the existing fresh dependency checkout, committed it, reran the complete gate, and verified all tracked source bytes match the final checkout. No node_modules/shared build outputs were copied."
+}

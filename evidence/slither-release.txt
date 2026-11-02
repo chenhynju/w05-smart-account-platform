@@ -1,0 +1,92 @@
+
+Detector: reentrancy-eth
+Reentrancy in SmartAccount.executeOperation(uint256,uint256,SmartAccount.Action[]) (contracts/SmartAccount.sol#113-127):
+	External calls:
+	- (ok,result) = actions[i].target.call{value: actions[i].value}(actions[i].data) (contracts/SmartAccount.sol#122)
+	State variables written after the call(s):
+	- _executing = false (contracts/SmartAccount.sol#125)
+	SmartAccount._executing (contracts/SmartAccount.sol#64) can be used in cross function reentrancies:
+	- SmartAccount._completeRecovery(bytes32) (contracts/SmartAccount.sol#399-417)
+	- SmartAccount.executeOperation(uint256,uint256,SmartAccount.Action[]) (contracts/SmartAccount.sol#113-127)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Detector: locked-ether
+Contract locking ether found:
+	Contract Counter (contracts/Counter.sol#5-17) has payable functions:
+	 - Counter.increment(uint256) (contracts/Counter.sol#9-12)
+	But does not have a function to withdraw the ether
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether
+
+Detector: uninitialized-local
+SmartAccount._validateList(address[],uint256).previous (contracts/SmartAccount.sol#290) is a local variable never initialized
+SmartAccount._validateSignature(PackedUserOperation,bytes32).e (contracts/SmartAccount.sol#151) is a local variable never initialized
+SmartAccount._validateSignature(PackedUserOperation,bytes32).n (contracts/SmartAccount.sol#150) is a local variable never initialized
+SmartAccount._validateSignature(PackedUserOperation,bytes32).signer (contracts/SmartAccount.sol#165) is a local variable never initialized
+SmartAccount._validateSignature(PackedUserOperation,bytes32).actions (contracts/SmartAccount.sol#152) is a local variable never initialized
+SmartAccount._spendSession(address,SmartAccount.Action[]).total (contracts/SmartAccount.sol#230) is a local variable never initialized
+SmartAccount._thresholdValid(bytes32,bytes).previous (contracts/SmartAccount.sol#192) is a local variable never initialized
+SmartAccount._validateSignature(PackedUserOperation,bytes32).validationData (contracts/SmartAccount.sol#166) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+
+Detector: unused-return
+QuotaPaymaster._validatePaymasterUserOp(PackedUserOperation,bytes32,uint256) (contracts/QuotaPaymaster.sol#64-82) ignores return value by (signer,err,None) = ECDSA.tryRecover(sponsorshipDigest(op,until,after_,policyEpoch),signature) (contracts/QuotaPaymaster.sol#71-72)
+SmartAccount._validateSignature(PackedUserOperation,bytes32) (contracts/SmartAccount.sol#149-188) ignores return value by (recovered,err,None) = ECDSA.tryRecover(opHash,signature) (contracts/SmartAccount.sol#170)
+SmartAccount._thresholdValid(bytes32,bytes) (contracts/SmartAccount.sol#190-199) ignores return value by (signer,err,None) = ECDSA.tryRecover(digest,signatures) (contracts/SmartAccount.sol#194)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+
+Detector: calls-loop
+SmartAccount.executeOperation(uint256,uint256,SmartAccount.Action[]) (contracts/SmartAccount.sol#113-127) has external calls inside a loop: (ok,result) = actions[i].target.call{value: actions[i].value}(actions[i].data) (contracts/SmartAccount.sol#122)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+
+Detector: reentrancy-events
+Reentrancy in SmartAccount.executeOperation(uint256,uint256,SmartAccount.Action[]) (contracts/SmartAccount.sol#113-127):
+	External calls:
+	- (ok,result) = actions[i].target.call{value: actions[i].value}(actions[i].data) (contracts/SmartAccount.sol#122)
+	Event emitted after the call(s):
+	- Executed(nonce,payload) (contracts/SmartAccount.sol#126)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+
+Detector: timestamp
+SmartAccount._spendSession(address,SmartAccount.Action[]) (contracts/SmartAccount.sol#227-235) uses timestamp for comparisons
+	Dangerous comparisons:
+	- s.epoch != epoch || block.timestamp > s.validUntil || ! _sessionAllowed(s,actions) (contracts/SmartAccount.sol#229)
+SmartAccount.setSession(address,address,bytes4,uint48,uint256) (contracts/SmartAccount.sol#237-248) uses timestamp for comparisons
+	Dangerous comparisons:
+	- key == address(0) || target == address(this) || target == address(_entryPoint) || target.code.length == 0 || validUntil <= block.timestamp (contracts/SmartAccount.sol#242-243)
+SmartAccount._completeRecovery(bytes32) (contracts/SmartAccount.sol#399-417) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _executing || ! proposal.active || proposal.policyEpoch != epoch || proposal.votes < guardianThreshold || block.timestamp < proposal.readyAt (contracts/SmartAccount.sol#402-403)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+
+Detector: assembly
+SmartAccount._sessionAllowed(SmartAccount.Session,SmartAccount.Action[]) (contracts/SmartAccount.sol#210-225) uses assembly
+	- INLINE ASM (contracts/SmartAccount.sol#220)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+
+Detector: costly-loop
+SmartAccount.setOwners(address[],uint256) (contracts/SmartAccount.sol#256-270) has costly operations inside a loop:
+	- delete owners[_owners[i]] (contracts/SmartAccount.sol#259)
+SmartAccount.setGuardians(address[],uint256) (contracts/SmartAccount.sol#272-286) has costly operations inside a loop:
+	- delete guardians[_guardians[i]] (contracts/SmartAccount.sol#275)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+
+Detector: low-level-calls
+Low level call in SmartAccount.executeOperation(uint256,uint256,SmartAccount.Action[]) (contracts/SmartAccount.sol#113-127):
+	- (ok,result) = actions[i].target.call{value: actions[i].value}(actions[i].data) (contracts/SmartAccount.sol#122)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Detector: too-many-digits
+AccountFactory.getAddress(address,address,bytes32) (contracts/AccountFactory.sol#15-19) uses literals with too many digits:
+	- codeHash = keccak256(bytes)(abi.encodePacked(type()(SmartAccount).creationCode,abi.encode(entryPoint,owner,guardian))) (contracts/AccountFactory.sol#16-17)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+
+Detector: cache-array-length
+Loop condition i < _owners.length (contracts/SmartAccount.sol#407) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < _owners.length (contracts/SmartAccount.sol#258) should use cached array length instead of referencing `length` member of the storage array.
+ Loop condition i < _guardians.length (contracts/SmartAccount.sol#274) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+. analyzed (30 contracts with 102 detectors), 26 result(s) found
+'forge clean' running (wd: /home/chenhy/workspace/web3-portfolio/smart-account-platform)
+'forge config --json' running
+'forge build --build-info --deny never --skip ./tests/contracts/** ./script/** --force' running (wd: /home/chenhy/workspace/web3-portfolio/smart-account-platform)
+Slither process exit: 255 (findings require manual triage)

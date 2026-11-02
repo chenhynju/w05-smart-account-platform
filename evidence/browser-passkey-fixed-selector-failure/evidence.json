@@ -1,0 +1,80 @@
+{
+  "scope": "Chromium with virtual CTAP2 authenticator, local Anvil chain. No physical authenticator or public network tested.",
+  "evidence": [
+    {
+      "name": "Browser owner proof → factory deployment → account state",
+      "status": "PASS",
+      "at": "2026-11-02T19:25:34.400Z"
+    },
+    {
+      "name": "Owner signature → real simulation → sponsored EntryPoint execution → receipt UI",
+      "status": "PASS",
+      "at": "2026-11-02T19:25:37.351Z"
+    },
+    {
+      "name": "Atomic two-call batch succeeds through UI and changes chain counter twice",
+      "status": "PASS",
+      "at": "2026-11-02T19:25:40.188Z"
+    },
+    {
+      "name": "Second-call failure rolls back first-call state through complete UI lifecycle",
+      "status": "PASS",
+      "at": "2026-11-02T19:25:43.055Z"
+    },
+    {
+      "name": "Scoped session-key configuration and actual session operation",
+      "status": "PASS",
+      "at": "2026-11-02T19:25:47.356Z"
+    },
+    {
+      "name": "Revoked session signature rejected by chain validation",
+      "status": "PASS",
+      "at": "2026-11-02T19:25:50.003Z"
+    },
+    {
+      "name": "Chromium WebAuthn enrollment → real P256 assertion → on-chain WebAuthn verification",
+      "status": "PASS",
+      "at": "2026-11-02T19:25:55.273Z"
+    },
+    {
+      "name": "12 further independent browser Passkey assertions submitted without retrying failures",
+      "status": "PASS",
+      "at": "2026-11-02T19:26:29.521Z"
+    },
+    {
+      "name": "Chrome extension assertions observed",
+      "count": 2,
+      "status": "OBSERVED"
+    },
+    {
+      "name": "Guardian transaction and owner-authorized recovery cancellation",
+      "status": "PASS",
+      "at": "2026-11-02T19:26:31.888Z"
+    },
+    {
+      "name": "Threshold policy rejects an operation with only one owner approval",
+      "status": "PASS",
+      "at": "2026-11-02T19:26:33.301Z"
+    },
+    {
+      "name": "Two distinct approval actions → sorted threshold signature → successful execution",
+      "status": "PASS",
+      "at": "2026-11-02T19:26:34.535Z"
+    },
+    {
+      "name": "390px responsive layout without horizontal overflow",
+      "status": "PASS",
+      "at": "2026-11-02T19:26:37.036Z"
+    },
+    {
+      "name": "No browser page exceptions",
+      "status": "PASS",
+      "at": "2026-11-02T19:26:37.039Z"
+    },
+    {
+      "name": "Error: locator.waitFor: Error: strict mode violation: getByRole('alert') resolved to 2 elements:\n    1) <div role=\"alert\" class=\"message error\">Execution reverted with reason: \"RPC Request fail…</div> aka getByText('Execution reverted with')\n    2) <div role=\"alert\" aria-live=\"assertive\" id=\"__next-route-announcer__\"></div> aka locator('[id=\"__next-route-announcer__\"]')\n\nCall log:\n\u001b[2m  - waiting for getByRole('alert') to be visible\u001b[22m\n",
+      "status": "FAIL"
+    }
+  ],
+  "errors": []
+}

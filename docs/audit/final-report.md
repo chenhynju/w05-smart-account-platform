@@ -1,3 +1,7 @@
+# 当前交付结论 2026-11-03T04:55:32.847744+08:00
+
+本地最终16浏览器/11 API/35 Foundry/8 TS/干净副本/当前故障恢复均PASS；完整公共阶段仍BLOCKED，用户掌握NOT RUN。F-02/F-03/F-04真实反例与最终回归已闭环。最新权威报告见docs/testing/delivery-current.md；以下旧阶段内容仅为历史，不覆盖当前结论。
+
 > **最新状态覆盖：浏览器重跑出现未解决的Passkey AA24签名失败，完整本地Gate未通过。以下PASS属于先前已记录子范围，不能代替最新失败。见 latest-regression.md（位于docs/testing）。**
 
 # Local-stage security report

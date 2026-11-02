@@ -1,6 +1,6 @@
 # F-04 · 空闲链的陈旧链头使新赞助券立即过期
 
-Severity: Low (availability). Status: PATCHED / integration regression pending. Self-Assessment / AI-Assisted Review.
+Severity: Low (availability). Status: FIXED / integration regression PASS. Self-Assessment / AI-Assisted Review.
 
 ## Impact / root cause / preconditions
 addSponsorship按getBlock(latest).timestamp+300生成Paymaster validUntil。Anvil按需出块，长时间空闲后latest不前进，但pending以及下一次实际验证的区块时间已经前进。结果新生成的操作在estimateGas/EntryPoint验证时已过期，AA32。仅重试不能修复此问题；不能通过重置或额外挖块来掩盖。正常每12秒出块的网络不常触发，但非出块期或provider stale-head也必须明确处理。
@@ -15,3 +15,5 @@ evidence/service-integration-stale-head-before.txt：实际API10中5项失败，
 pending区块的具体构造是provider能力和信任边界；交易等待超过300秒仍应正常过期，需要重新请求赞助并重新签用户操作。不能对已签操作直接修改期限。客户端/服务签名、模拟、广播和receipt仍需分别确认。
 
 修复后的第一轮，新增时间推进用例放在另一笔已签操作之后，导致那笔旧操作按设计过期；该测试顺序失败保留pending-clock-test-order-failure.txt。已将时间推进用例移到后续操作准备之前，没有放宽生产有效期或吞掉AA32。simulate的eth_call与trace统一pending区块，避免跨时间域误判。
+
+最终回归：browser-release/evidence.json共16检查点，session-clock-after.json精确剩余期限；service-integration-release.txt共11 PASS，pending-clock-sponsorship.json实际模拟PASS。

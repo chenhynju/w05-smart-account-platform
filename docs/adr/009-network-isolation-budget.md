@@ -1,0 +1,7 @@
+# ADR-009 · 显式网络身份与公共gas门禁
+Status: implemented; public execution NOT RUN.
+Why：硬编码31337不可能直接部署Sepolia，单纯改RPC会造成域签名错误、复用本地私钥和错误资金注入。
+Decision：只支持Anvil31337和Sepolia11155111；前后端链配置一致；独立runtime与浏览器sessionStorage；public服务禁用Anvil管理RPC、默认拒绝签名；单独的未签名计划与固定gas/value费用上界。
+Alternatives：任意EVM链自动发现更灵活但扩大审核与配置范围；第三方托管bundler降低运维工作但不能证明本项目本地基础设施行为。
+Trade-offs：自建allowlisted bundler并非公共mempool合规认证；需要兼容debug_traceCall的RPC、测试ETH、额外授权及公共实测。
+Risks：持久化gas预留不退款，失败可消耗可用预算以换取保守上界。保护和备份store，不可删除重置预算。当前低费率固定上限可能因baseFee而阻塞，不能自动提费绕过审批。

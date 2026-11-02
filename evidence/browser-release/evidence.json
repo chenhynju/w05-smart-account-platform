@@ -1,0 +1,91 @@
+{
+  "scope": "Chromium with virtual CTAP2 authenticator, local Anvil chain. No physical authenticator or public network tested.",
+  "evidence": [
+    {
+      "name": "Browser owner proof → factory deployment → account state",
+      "status": "PASS",
+      "at": "2026-11-02T20:46:31.013Z"
+    },
+    {
+      "name": "Owner signature → real simulation → sponsored EntryPoint execution → receipt UI",
+      "status": "PASS",
+      "at": "2026-11-02T20:46:34.505Z"
+    },
+    {
+      "name": "Atomic two-call batch succeeds through UI and changes chain counter twice",
+      "status": "PASS",
+      "at": "2026-11-02T20:46:38.537Z"
+    },
+    {
+      "name": "Second-call failure rolls back first-call state through complete UI lifecycle",
+      "status": "PASS",
+      "at": "2026-11-02T20:46:41.451Z"
+    },
+    {
+      "name": "One-hour session uses chain timestamp despite chain being over two days ahead of computer",
+      "status": "PASS",
+      "at": "2026-11-02T20:46:45.207Z"
+    },
+    {
+      "name": "Scoped session-key configuration and actual session operation",
+      "status": "PASS",
+      "at": "2026-11-02T20:46:47.962Z"
+    },
+    {
+      "name": "Revoked session signature rejected by chain validation",
+      "status": "PASS",
+      "at": "2026-11-02T20:46:51.210Z"
+    },
+    {
+      "name": "Chromium WebAuthn enrollment → real P256 assertion → on-chain WebAuthn verification",
+      "status": "PASS",
+      "at": "2026-11-02T20:46:58.009Z"
+    },
+    {
+      "name": "12 further independent browser Passkey assertions submitted without retrying failures",
+      "status": "PASS",
+      "at": "2026-11-02T20:47:36.570Z"
+    },
+    {
+      "name": "Chrome extension assertions observed",
+      "count": 3,
+      "status": "OBSERVED"
+    },
+    {
+      "name": "Guardian transaction and owner-authorized recovery cancellation",
+      "status": "PASS",
+      "at": "2026-11-02T20:47:39.573Z"
+    },
+    {
+      "name": "Threshold policy rejects an operation with only one owner approval",
+      "status": "PASS",
+      "at": "2026-11-02T20:47:41.076Z"
+    },
+    {
+      "name": "Two distinct approval actions → sorted threshold signature → successful execution",
+      "status": "PASS",
+      "at": "2026-11-02T20:47:42.194Z"
+    },
+    {
+      "name": "390px responsive layout without horizontal overflow",
+      "status": "PASS",
+      "at": "2026-11-02T20:47:44.103Z"
+    },
+    {
+      "name": "No browser page exceptions",
+      "status": "PASS",
+      "at": "2026-11-02T20:47:44.107Z"
+    },
+    {
+      "name": "Recovery completion before on-chain delay rejected in browser",
+      "status": "PASS",
+      "at": "2026-11-02T20:47:47.131Z"
+    },
+    {
+      "name": "Guardian completes after local two-day time advance; previous owners lose authorization",
+      "status": "PASS",
+      "at": "2026-11-02T20:47:49.054Z"
+    }
+  ],
+  "errors": []
+}

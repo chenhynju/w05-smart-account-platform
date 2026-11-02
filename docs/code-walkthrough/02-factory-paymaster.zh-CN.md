@@ -1,6 +1,6 @@
 # CREATE2 Factory 与 QuotaPaymaster
 
-Commit `4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b`。实际路径 `/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/AccountFactory.sol` 和 `/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/QuotaPaymaster.sol`。
+Commit `fcc439f8167b7573269f1ce5a17058071e10a0a7`。实际路径 `/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/AccountFactory.sol` 和 `/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/QuotaPaymaster.sol`。
 
 ## A. Business Principle
 Factory把owner、guardian与固定EntryPoint写入部署身份；Paymaster提供有上限的Gas代付，不取得账户交易权限。赞助不是“免费的区块链”：是另一个主体承担成本。

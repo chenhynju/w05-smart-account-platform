@@ -1,6 +1,6 @@
 # 测试、状态模型、部署与CI
 
-Commit `4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b`。工程根路径 `/home/chenhy/workspace/web3-portfolio/smart-account-platform`。
+Commit `fcc439f8167b7573269f1ce5a17058071e10a0a7`。工程根路径 `/home/chenhy/workspace/web3-portfolio/smart-account-platform`。
 
 ## A. Business Principle
 测试从需求与不变量推出，既要证明有效用户可执行，也要证明非法状态被拒绝。部署验证证明选定源码产生了实际代码；源码存在和HTTP200不等于功能完成。
@@ -25,24 +25,24 @@ Commit `4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b`。工程根路径 `/home/chenh
 |`tests/contracts/Account.t.sol:260` `testRecoveryDelayDuplicateVoteCancelAndEpoch`|重复guardian票无效、不能提前恢复、owner能取消、成功后旧owner失权。|
 |`tests/contracts/Account.t.sol:284` `testSponsorshipReservesQuotaOnRevertingExecution`|revert也消耗预算，Paymaster不能被“只扣成功操作”的规则耗尽。|
 |`tests/contracts/Account.t.sol:291` `testSponsorQuotaAndTamperRejected`|篡改gas参数导致赞助签名失败，低quota不能上链。|
-|`tests/contracts/Account.t.sol:318` `testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation`|真实P256签名的正面路径与origin/UV/challenge/撤销负面路径。|
-|`tests/contracts/Account.t.sol:343` `testFuzz_OwnerAmount`|随机正面输入确实能执行，避免所有路径都拒绝的空洞安全。|
-|`tests/contracts/Account.t.sol:352` `testFuzz_AtomicRollback`|随机数值的先成功后失败批量都应恢复Counter。|
-|`tests/contracts/Account.t.sol:360` `testGuardianCannotLockRecoverySlot`|一个guardian不能阻塞另两个达到阈值的guardian；合法ID在指针改变后仍可完成。|
-|`tests/contracts/Account.t.sol:387` `testSessionReconfigurationInvalidatesQueuedOperation`|重配同一个key也不能保留旧签名语义。|
-|`tests/contracts/Account.t.sol:397` `testTwoSessionOpsCannotOverspendOneBudget`|两笔分别满足预算的预验证操作仍不能合计超支。|
-|`tests/contracts/Account.t.sol:416` `testInvalidSelectorsNonceAndEmptyBatch`|畸形selector、nonce不匹配、空批量失败。|
-|`tests/contracts/Account.t.sol:436` `testInvalidOwnerGuardianListsAndUnauthorizedAdmin`|重复/零地址/非法阈值和普通调用者不能改变策略。|
-|`tests/contracts/Account.t.sol:452` `testExpiredRotatedSponsorAndUnauthorizedPaymaster`|过期赞助、旧sponsor、非owner改quota、非EntryPoint验证被拒绝。|
-|`tests/contracts/Account.t.sol:469` `testRecoveryWrongGuardianAndStalePolicy`|非guardian与旧策略下提案无效。|
-|`tests/contracts/Account.t.sol:483` `testFuzzSessionBudget`|随机预算全部消费后额外1 wei必须失败。|
-|`tests/contracts/Account.t.sol:495` `testCallbackCannotReenterExecutionOrFinalizeRecovery`|真实恶意目标回调被身份/锁拒绝，成熟恢复也不能在账户执行中完成。|
-|`tests/contracts/Account.t.sol:529` `testListsReceiveAndDisabledBatch`|公开列表和接收ETH路径可用，disabled batch依然拒绝。|
-|`tests/contracts/Account.t.sol:540` `testCancelSpecificProposalDoesNotCancelIndependentThreshold`|取消一个ID不应取消另一个独立合法提案。|
-|`tests/contracts/Account.t.sol:553` `testMalformedPasskeyAndUnknownSignatureMode`|未知签名模式、错误ABI、非法key配置必须失败。|
-|`tests/contracts/Account.t.sol:584` `testPaymasterConstructorAndZeroSponsorGuards`|零sponsor不能配置，避免无意义授权域。|
-|`tests/contracts/Account.t.sol:591` `testCounterfactualFactoryDeploymentViaEntryPoint`|真正通过initCode由EntryPoint创建账户并执行，不是提前手动new账户。|
-|`tests/contracts/Account.t.sol:614` `testIndependentNonceKeysAndReplayIsolation`|key42顺序独立于key0，完整nonce重放仍失败。|
+|`tests/contracts/Account.t.sol:379` `testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation`|真实P256签名的正面路径与origin/UV/challenge/撤销负面路径。|
+|`tests/contracts/Account.t.sol:415` `testFuzz_OwnerAmount`|随机正面输入确实能执行，避免所有路径都拒绝的空洞安全。|
+|`tests/contracts/Account.t.sol:424` `testFuzz_AtomicRollback`|随机数值的先成功后失败批量都应恢复Counter。|
+|`tests/contracts/Account.t.sol:432` `testGuardianCannotLockRecoverySlot`|一个guardian不能阻塞另两个达到阈值的guardian；合法ID在指针改变后仍可完成。|
+|`tests/contracts/Account.t.sol:459` `testSessionReconfigurationInvalidatesQueuedOperation`|重配同一个key也不能保留旧签名语义。|
+|`tests/contracts/Account.t.sol:469` `testTwoSessionOpsCannotOverspendOneBudget`|两笔分别满足预算的预验证操作仍不能合计超支。|
+|`tests/contracts/Account.t.sol:488` `testInvalidSelectorsNonceAndEmptyBatch`|畸形selector、nonce不匹配、空批量失败。|
+|`tests/contracts/Account.t.sol:508` `testInvalidOwnerGuardianListsAndUnauthorizedAdmin`|重复/零地址/非法阈值和普通调用者不能改变策略。|
+|`tests/contracts/Account.t.sol:524` `testExpiredRotatedSponsorAndUnauthorizedPaymaster`|过期赞助、旧sponsor、非owner改quota、非EntryPoint验证被拒绝。|
+|`tests/contracts/Account.t.sol:541` `testRecoveryWrongGuardianAndStalePolicy`|非guardian与旧策略下提案无效。|
+|`tests/contracts/Account.t.sol:555` `testFuzzSessionBudget`|随机预算全部消费后额外1 wei必须失败。|
+|`tests/contracts/Account.t.sol:567` `testCallbackCannotReenterExecutionOrFinalizeRecovery`|真实恶意目标回调被身份/锁拒绝，成熟恢复也不能在账户执行中完成。|
+|`tests/contracts/Account.t.sol:601` `testListsReceiveAndDisabledBatch`|公开列表和接收ETH路径可用，disabled batch依然拒绝。|
+|`tests/contracts/Account.t.sol:612` `testCancelSpecificProposalDoesNotCancelIndependentThreshold`|取消一个ID不应取消另一个独立合法提案。|
+|`tests/contracts/Account.t.sol:625` `testMalformedPasskeyAndUnknownSignatureMode`|未知签名模式、错误ABI、非法key配置必须失败。|
+|`tests/contracts/Account.t.sol:656` `testPaymasterConstructorAndZeroSponsorGuards`|零sponsor不能配置，避免无意义授权域。|
+|`tests/contracts/Account.t.sol:663` `testCounterfactualFactoryDeploymentViaEntryPoint`|真正通过initCode由EntryPoint创建账户并执行，不是提前手动new账户。|
+|`tests/contracts/Account.t.sol:686` `testIndependentNonceKeysAndReplayIsolation`|key42顺序独立于key0，完整nonce重放仍失败。|
 
 ## D. Stateful与运维语句解释
 - `tests/contracts/Stateful.t.sol:31`：随机选择owner、受限session、错误签名或原子失败路径；正面路径不能随意revert，负面路径不能被接受。

@@ -1,0 +1,23 @@
+
+> smart-account-platform@0.1.0 test:integration
+> tsx --test tests/integration/service.test.ts
+
+▶ local service real chain lifecycle and hostile requests
+  ✔ enrollment challenge cannot be replayed (62.017861ms)
+  ✔ SDK hash equals deployed EntryPoint v0.8 EIP712 hash (130.196985ms)
+  ✔ signed operation simulation and submission reconcile actual event (3547.152328ms)
+  ✔ wrong owner signature rejected before broadcast (254.401203ms)
+  ✔ batch reversion is diagnosed and target state stays atomic (2402.562811ms)
+  ✔ CSRF and arbitrary RPC administration blocked (144.49624ms)
+  ✔ malformed wire payload fails safely (28.07883ms)
+  ✔ viem BundlerClient interoperates with local ERC-4337 JSON-RPC (2584.243754ms)
+  ✔ lost HTTP response does not cause duplicate execution (2244.269823ms)
+✔ local service real chain lifecycle and hostile requests (13897.230809ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43333.322948
