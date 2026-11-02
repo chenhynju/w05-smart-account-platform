@@ -671,10 +671,7 @@ const server = createServer(async (req, res) => {
           id: request.id,
           error: {
             code: -32500,
-            message: (error instanceof Error
-              ? error.message
-              : "Operation rejected"
-            ).slice(0, 1500),
+            message: requestError(error).slice(0, 1500),
           },
         });
       }
