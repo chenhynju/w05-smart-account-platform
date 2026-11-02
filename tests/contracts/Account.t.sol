@@ -603,7 +603,8 @@ contract AccountTest {
             SmartAccount.executeOperation,
             (uint256(0), uint256(1), actions(address(counter), 0, abi.encodeCall(Counter.increment, (5))))
         );
-        op.accountGasLimits = bytes32(uint256(6000000) << 128 | uint256(1500000));
+        // This semantic deployment test also runs under unoptimized coverage instrumentation; gas cost is measured separately.
+        op.accountGasLimits = bytes32(uint256(20000000) << 128 | uint256(1500000));
         send(signed(op, OWNER, 0));
         require(predicted.code.length > 0);
         require(counter.number() == 5);
