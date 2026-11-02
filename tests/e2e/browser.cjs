@@ -106,7 +106,7 @@ const assert = require("node:assert/strict");
       .getByRole("button", { name: "Submit operation", exact: true })
       .click();
     await page
-      .getByRole("alert")
+      .locator('.message.error[role="alert"]')
       .filter({ hasText: /revert|fail/i })
       .waitFor();
     await page.getByRole("button", { name: "Overview", exact: true }).click();
@@ -155,7 +155,7 @@ const assert = require("node:assert/strict");
     await page
       .getByRole("button", { name: "Submit operation", exact: true })
       .click();
-    await page.getByRole("alert").waitFor();
+    await page.locator('.message.error[role="alert"]').waitFor();
     record("Revoked session signature rejected by chain validation");
     await page
       .getByRole("button", { name: "Access & recovery", exact: true })
@@ -230,7 +230,7 @@ const assert = require("node:assert/strict");
     await page
       .getByRole("button", { name: "Submit operation", exact: true })
       .click();
-    await page.getByRole("alert").waitFor();
+    await page.locator('.message.error[role="alert"]').waitFor();
     record(
       "Threshold policy rejects an operation with only one owner approval",
     );
@@ -286,7 +286,7 @@ const assert = require("node:assert/strict");
         exact: true,
       })
       .click();
-    await page.getByRole("alert").waitFor();
+    await page.locator('.message.error[role="alert"]').waitFor();
     record("Recovery completion before on-chain delay rejected in browser");
     const rpc = async (method, params) => {
       const response = await fetch("http://127.0.0.1:18555", {
@@ -319,7 +319,7 @@ const assert = require("node:assert/strict");
     await page
       .getByRole("button", { name: "Submit operation", exact: true })
       .click();
-    await page.getByRole("alert").waitFor();
+    await page.locator('.message.error[role="alert"]').waitFor();
     record(
       "Guardian completes after local two-day time advance; previous owners lose authorization",
     );
