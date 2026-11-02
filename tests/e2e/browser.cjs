@@ -49,9 +49,7 @@ const assert = require("node:assert/strict");
     const initial = BigInt(await page.getByTestId("counter-value").innerText());
     async function prepare() {
       await page.getByRole("button", { name: "Overview", exact: true }).click();
-      await page
-        .getByRole("button", { name: "Prepare operation", exact: true })
-        .click();
+      await page.getByRole("button", { name: /^Prepare operation/ }).click();
       await page.getByRole("heading", { name: "Operation review" }).waitFor();
     }
     async function submit() {
