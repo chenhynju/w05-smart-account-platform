@@ -1,0 +1,24 @@
+[
+  {
+    "round": 0,
+    "nodeValid": true,
+    "chainValid": true,
+    "simulationOK": true,
+    "hashMatches": true,
+    "flags": 5,
+    "jsonMatches": true,
+    "rpMatches": true,
+    "challengeMatches": true
+  },
+  {
+    "round": 1,
+    "nodeValid": true,
+    "chainValid": false,
+    "simulationOK": false,
+    "hashMatches": true,
+    "flags": 5,
+    "jsonMatches": false,
+    "rpMatches": true,
+    "challengeMatches": true
+  }
+]

@@ -1,0 +1,16 @@
+No files changed, compilation skipped
+
+Ran 1 test for tests/contracts/Account.t.sol:AccountTest
+[FAIL: valid browser extension rejected] testPasskeyCapturedChromiumExtension() (gas: 291474)
+Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 19.31ms (4.32ms CPU time)
+
+Ran 1 test suite in 47.14ms (19.31ms CPU time): 0 tests passed, 1 failed, 0 skipped (1 total tests)
+
+Failing tests:
+Encountered 1 failing test in tests/contracts/Account.t.sol:AccountTest
+[FAIL: valid browser extension rejected] testPasskeyCapturedChromiumExtension() (gas: 291474)
+
+Encountered a total of 1 failing tests, 0 tests succeeded
+
+Tip: Run `forge test --rerun` to retry only the 1 failed test
+Tip: Run `forge test --debug --match-test <TEST_NAME>` to inspect one failing test in the debugger

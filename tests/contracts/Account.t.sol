@@ -315,6 +315,67 @@ contract AccountTest {
         return abi.encode(auth);
     }
 
+    // Public Chromium assertion captured before the fix; no private key is in this fixture.
+    function testPasskeyCapturedChromiumExtension() public {
+        admin(
+            abi.encodeCall(
+                SmartAccount.setPasskey,
+                (
+                    bytes32(0x4ecdc5689846f7c3ad0ebc72ab92a9ca8f54a20a5d51ddec1120e206c43bb020),
+                    bytes32(0x3ff4796b5f9be36e509abbcd78dd4137175016c5e922b3fe4a4814978eda2275),
+                    sha256("localhost"),
+                    "http://localhost:3155"
+                )
+            )
+        );
+        require(
+            account.verifyPasskey(
+                0xbb98236b7d11da14762f1e99224ca7946ccc10ea9181b3a4634aafcad383927c,
+                hex"000000000000000000000000000000000000000000000000000000000000002069f9822e43bda0db677e8ceaa4b82298868c00b3a5f4c1589482dd07e2dd34c86281a7b87c20467def2c2d6b8299d05697d5c37e9313bd8373e148b458bce3840000000000000000000000000000000000000000000000000000000000000017000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000002549960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d9763050000000300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f37b2274797065223a22776562617574686e2e676574222c226368616c6c656e6765223a227535676a61333052326852324c78365a496b796e6c477a4d454f715267624f6b5930717679744f446b6e77222c226f726967696e223a22687474703a2f2f6c6f63616c686f73743a33313535222c2263726f73734f726967696e223a66616c73652c226f746865725f6b6579735f63616e5f62655f61646465645f68657265223a22646f206e6f7420636f6d7061726520636c69656e74446174614a534f4e20616761696e737420612074656d706c6174652e205365652068747470733a2f2f676f6f2e676c2f796162506578227d00000000000000000000000000"
+            ),
+            "valid browser extension rejected"
+        );
+    }
+
+    function signClientData(string memory json) internal pure returns (bytes memory) {
+        bytes memory data = abi.encodePacked(sha256("localhost"), bytes1(0x05), bytes4(0));
+        (bytes32 r, bytes32 s) = vm.signP256(42, sha256(abi.encodePacked(data, sha256(bytes(json)))));
+        return abi.encode(WebAuthn.WebAuthnAuth(r, s, 23, 1, data, json));
+    }
+
+    function testPasskeyExtensionAndPrefixBoundaries() public {
+        (uint256 x, uint256 y) = vm.publicKeyP256(42);
+        admin(
+            abi.encodeCall(
+                SmartAccount.setPasskey, (bytes32(x), bytes32(y), sha256("localhost"), "http://localhost:3155")
+            )
+        );
+        bytes32 h = keccak256("limited-verification");
+        string memory prefix = string.concat(
+            '{"type":"webauthn.get","challenge":"',
+            Base64.encodeURL(abi.encodePacked(h)),
+            '","origin":"http://localhost:3155","crossOrigin":false'
+        );
+        require(account.verifyPasskey(h, signClientData(string.concat(prefix, "}"))));
+        require(
+            account.verifyPasskey(h, signClientData(string.concat(prefix, ',"extension":{"nested":true}}'))),
+            "extension rejected"
+        );
+        require(!account.verifyPasskey(h, signClientData(prefix)), "missing delimiter");
+        require(!account.verifyPasskey(h, signClientData(string.concat(prefix, "hood}"))), "false token boundary");
+        require(!account.verifyPasskey(h, signClientData(string.concat(prefix, " }"))), "noncanonical delimiter");
+        require(
+            !account.verifyPasskey(bytes32(uint256(1)), signClientData(string.concat(prefix, ',"extension":1}'))),
+            "challenge mismatch"
+        );
+        string memory evil = string.concat(
+            '{"type":"webauthn.get","challenge":"',
+            Base64.encodeURL(abi.encodePacked(h)),
+            '","origin":"http://evil.test","crossOrigin":false,"origin":"http://localhost:3155"}'
+        );
+        require(!account.verifyPasskey(h, signClientData(evil)), "later origin must not override prefix");
+    }
+
     function testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation() public {
         (uint256 x, uint256 y) = vm.publicKeyP256(42);
         admin(

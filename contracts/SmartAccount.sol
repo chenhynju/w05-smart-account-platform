@@ -312,7 +312,9 @@ contract SmartAccount is BaseAccount {
         emit PasskeyRevoked(epoch);
     }
 
-    /// @dev Strict canonical browser clientDataJSON plus RP hash adds checks omitted by OZ WebAuthn.
+    /// @dev W3C WebAuthn 3 section 5.8.1.2 limited verification (topOrigin undefined).
+    /// Canonical context prefix is mandatory; signed extension fields may follow.
+    /// The signed suffix is opaque, not parsed or used as authorization data. RP hash is checked separately.
     /// Registration is authenticated by an existing owner operation, not an unauthenticated key upload.
     function verifyPasskey(bytes32 hash, bytes calldata signature) external view returns (bool) {
         if (passkeyEpoch != epoch || threshold != 1) return false;
@@ -323,9 +325,16 @@ contract SmartAccount is BaseAccount {
             Base64.encodeURL(abi.encodePacked(hash)),
             '","origin":"',
             passkeyOrigin,
-            '","crossOrigin":false}'
+            '","crossOrigin":false'
         );
-        if (keccak256(bytes(auth.clientDataJSON)) != keccak256(bytes(expected))) return false;
+        bytes memory json = bytes(auth.clientDataJSON);
+        bytes memory prefix = bytes(expected);
+        if (json.length <= prefix.length) return false;
+        for (uint256 i; i < prefix.length; ++i) {
+            if (json[i] != prefix[i]) return false;
+        }
+        // W3C steps 13-15: require the full prefix and an object/field delimiter.
+        if (json[prefix.length] != bytes1("}") && json[prefix.length] != bytes1(",")) return false;
         return WebAuthn.verify(abi.encodePacked(hash), auth, passkeyX, passkeyY, true);
     }
 

@@ -1,0 +1,22 @@
+{
+  "round": 0,
+  "nodeValid": true,
+  "chainValid": true,
+  "hashMatches": true,
+  "simulationOK": true,
+  "flags": 5,
+  "jsonMatches": true,
+  "rpMatches": true,
+  "challengeMatches": true
+}
+{
+  "round": 1,
+  "nodeValid": true,
+  "chainValid": false,
+  "hashMatches": true,
+  "simulationOK": false,
+  "flags": 5,
+  "jsonMatches": false,
+  "rpMatches": true,
+  "challengeMatches": true
+}
