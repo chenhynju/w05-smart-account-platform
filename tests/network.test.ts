@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  sessionValidUntil,
   networkFor,
   validateEndpoint,
   nextPublicGasReservation,
@@ -51,4 +52,18 @@ test("public gas budget survives serialization and rejects the first overspend",
   assert.throws(() => nextPublicGasReservation("0", -1n));
   assert.throws(() => nextPublicGasReservation("0", 10_000_001n));
   assert.throws(() => nextPublicGasReservation("-1", 1n));
+});
+
+test("session policy follows a chain two days ahead, with exact uint48 bounds", () => {
+  const chainTime = 1_793_817_600n;
+  const hostTime = chainTime - 172800n;
+  const expiry = BigInt(sessionValidUntil(chainTime));
+  assert.equal(expiry - chainTime, 3600n);
+  assert(expiry > hostTime + 172800n);
+  assert.equal(
+    BigInt(sessionValidUntil((1n << 48n) - 3601n)),
+    (1n << 48n) - 1n,
+  );
+  assert.throws(() => sessionValidUntil((1n << 48n) - 3600n));
+  assert.throws(() => sessionValidUntil(-1n));
 });

@@ -1,0 +1,30 @@
+{
+  "scope": "Chromium with virtual CTAP2 authenticator, local Anvil chain. No physical authenticator or public network tested.",
+  "evidence": [
+    {
+      "name": "Browser owner proof → factory deployment → account state",
+      "status": "PASS",
+      "at": "2026-11-02T19:58:48.783Z"
+    },
+    {
+      "name": "Owner signature → real simulation → sponsored EntryPoint execution → receipt UI",
+      "status": "PASS",
+      "at": "2026-11-02T19:58:53.169Z"
+    },
+    {
+      "name": "Atomic two-call batch succeeds through UI and changes chain counter twice",
+      "status": "PASS",
+      "at": "2026-11-02T19:59:03.191Z"
+    },
+    {
+      "name": "Second-call failure rolls back first-call state through complete UI lifecycle",
+      "status": "PASS",
+      "at": "2026-11-02T19:59:09.737Z"
+    },
+    {
+      "name": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Confirmed: the UserOperation event reports successful execution.') to be visible\u001b[22m\n",
+      "status": "FAIL"
+    }
+  ],
+  "errors": []
+}

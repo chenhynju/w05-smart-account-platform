@@ -37,3 +37,11 @@ export function nextPublicGasReservation(
     );
   return next.toString();
 }
+
+/** A one-hour policy is measured on the chain that enforces it, never the computer clock. */
+export function sessionValidUntil(chainTimestamp: bigint): number {
+  const until = chainTimestamp + 3600n;
+  if (chainTimestamp < 0n || until >= 1n << 48n)
+    throw new Error("Session timestamp outside uint48");
+  return Number(until);
+}

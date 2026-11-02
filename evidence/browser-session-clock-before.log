@@ -1,0 +1,11 @@
+PASS Browser owner proof → factory deployment → account state
+PASS Owner signature → real simulation → sponsored EntryPoint execution → receipt UI
+PASS Atomic two-call batch succeeds through UI and changes chain counter twice
+PASS Second-call failure rolls back first-call state through complete UI lifecycle
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByText('Confirmed: the UserOperation event reports successful execution.') to be visible[22m
+
+    at /home/chenhy/workspace/web3-portfolio/smart-account-platform/tests/e2e/browser.cjs:133:8 {
+  name: 'TimeoutError'
+}

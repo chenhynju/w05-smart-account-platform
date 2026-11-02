@@ -14,12 +14,13 @@ import {
   keccak256,
   toHex,
   createWalletClient,
+  createPublicClient,
   http,
   parseEther,
   type Address,
   type Hex,
 } from "viem";
-import { webChain } from "../../../packages/network";
+import { webChain, sessionValidUntil } from "../../../packages/network";
 import {
   accountAbi,
   counterAbi,
@@ -339,7 +340,11 @@ function App() {
   async function enableSession() {
     if (!keys || !config) throw new Error("Wallet unavailable");
     const key = generatePrivateKey();
-    persist({ ...keys, session: key });
+    const block = await createPublicClient({
+      chain: webChain,
+      transport: http("/api/rpc"),
+    }).getBlock();
+    const validUntil = sessionValidUntil(block.timestamp);
     await ownerAction(
       encodeFunctionData({
         abi: accountAbi,
@@ -348,11 +353,12 @@ function App() {
           privateKeyToAccount(key).address,
           config.counter,
           "0x7cf5dab0",
-          Math.floor(Date.now() / 1000) + 3600,
+          validUntil,
           parseEther("0.001"),
         ],
       }),
     );
+    persist({ ...keys, session: key });
   }
   async function enableMultisig() {
     if (!keys || !snapshot || !account) throw new Error("Wallet unavailable");

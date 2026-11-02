@@ -2,6 +2,7 @@ const { chromium } = require("playwright");
 const fs = require("node:fs");
 const path = require("node:path");
 const assert = require("node:assert/strict");
+const { decodeFunctionData, parseAbi } = require("viem");
 (async () => {
   const browser = process.env.W05_CDP_URL
     ? await chromium.connectOverCDP(process.env.W05_CDP_URL)
@@ -24,6 +25,17 @@ const assert = require("node:assert/strict");
     evidence.push({ name, status: "PASS", at: new Date().toISOString() });
     console.log("PASS " + name);
   };
+  const rpc = async (method, params) => {
+    const response = await fetch("http://127.0.0.1:18555", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+    });
+    const result = await response.json();
+    if (result.error) throw new Error(JSON.stringify(result.error));
+    return result.result;
+  };
+
   try {
     const cdp = await context.newCDPSession(page);
     await cdp.send("WebAuthn.enable");
@@ -123,6 +135,12 @@ const assert = require("node:assert/strict");
     await page
       .getByRole("button", { name: "Access & recovery", exact: true })
       .click();
+    // The same persistent chain deliberately runs two days ahead of the host clock.
+    await rpc("evm_increaseTime", [172800]);
+    await rpc("evm_mine", []);
+    const policyRequest = page.waitForRequest(
+      (r) => r.url().endsWith("/api/submit") && r.method() === "POST",
+    );
     await page
       .getByRole("button", { name: "Create session key", exact: true })
       .click();
@@ -131,6 +149,47 @@ const assert = require("node:assert/strict");
         "Confirmed: the UserOperation event reports successful execution.",
       )
       .waitFor();
+    const policyOperation = (await policyRequest).postDataJSON();
+    const outer = decodeFunctionData({
+      abi: parseAbi([
+        "function executeOperation(uint256 nonce,uint256 expectedEpoch,(address target,uint256 value,bytes data)[] actions)",
+      ]),
+      data: policyOperation.callData,
+    });
+    const inner = decodeFunctionData({
+      abi: parseAbi([
+        "function setSession(address key,address target,bytes4 selector,uint48 validUntil,uint256 budget)",
+      ]),
+      data: outer.args[2][0].data,
+    });
+    const chainBlock = await rpc("eth_getBlockByNumber", ["latest", false]);
+    const validUntil = BigInt(inner.args[3]),
+      remaining = validUntil - BigInt(chainBlock.timestamp);
+    assert(
+      remaining > 0n && remaining <= 3600n,
+      "session must expire one chain hour after preparation",
+    );
+    assert(
+      validUntil > BigInt(Math.floor(Date.now() / 1000)) + 172000n,
+      "chain clock drift must be exercised",
+    );
+    fs.writeFileSync(
+      path.join(artifactDir, "session-clock-after.json"),
+      JSON.stringify(
+        {
+          policyOperation,
+          validUntil,
+          blockTimestamp: BigInt(chainBlock.timestamp),
+          remaining,
+          scope: "Local chain deliberately advanced; no public transaction",
+        },
+        (_, v) => (typeof v === "bigint" ? v.toString() : v),
+        2,
+      ),
+    );
+    record(
+      "One-hour session uses chain timestamp despite chain being over two days ahead of computer",
+    );
     await prepare();
     await page
       .getByRole("button", { name: "Use session key", exact: true })
@@ -288,16 +347,6 @@ const assert = require("node:assert/strict");
       .click();
     await page.locator('.message.error[role="alert"]').waitFor();
     record("Recovery completion before on-chain delay rejected in browser");
-    const rpc = async (method, params) => {
-      const response = await fetch("http://127.0.0.1:18555", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
-      });
-      const result = await response.json();
-      if (result.error) throw new Error(JSON.stringify(result.error));
-      return result.result;
-    };
     await rpc("evm_increaseTime", [172801]);
     await rpc("evm_mine", []);
     await page
