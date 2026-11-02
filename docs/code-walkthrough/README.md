@@ -1,6 +1,6 @@
 # Source teaching index
 
-冻结源代码 Commit：`297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58`。完整绝对根路径：`/home/chenhy/workspace/web3-portfolio/smart-account-platform`。
+冻结源代码 Commit：`4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b`。完整绝对根路径：`/home/chenhy/workspace/web3-portfolio/smart-account-platform`。
 
 1. [SmartAccount授权、执行与恢复](01-smart-account.zh-CN.md)
 2. [Factory与Paymaster](02-factory-paymaster.zh-CN.md)

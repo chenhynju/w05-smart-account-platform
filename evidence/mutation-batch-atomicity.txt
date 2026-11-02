@@ -1,22 +1,58 @@
-Compiling 47 files with Solc 0.8.31
-Solc 0.8.31 finished in 34.33s
+Compiling 47 files with Solc 0.8.38
+Solc 0.8.38 finished in 83.95s
 Compiler run successful with warnings:
-Warning (2072): Unused local variable.
-   --> contracts/SmartAccount.sol:117:23:
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+  --> node_modules/@account-abstraction/contracts/core/BaseAccount.sol:27:39:
+   |
+27 |     error ExecuteError(uint256 index, bytes error);
+   |                                       ^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:125:29:
     |
-117 |             (bool ok, bytes memory result) = actions[i].target.call{value: actions[i].value}(actions[i].data);
+125 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:134:29:
+    |
+134 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecoverCalldata(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:161:29:
+    |
+161 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, r, vs);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:203:29:
+    |
+203 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, v, r, s);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:273:26:
+    |
+273 |     function _throwError(RecoverError error, bytes32 errorArg) private pure {
+    |                          ^^^^^^^^^^^^^^^^^^
+
+Warning (2072): Unused local variable.
+   --> contracts/SmartAccount.sol:122:23:
+    |
+122 |             (bool ok, bytes memory result) = actions[i].target.call{value: actions[i].value}(actions[i].data);
     |                       ^^^^^^^^^^^^^^^^^^^
 
 
 Ran 1 test for tests/contracts/Account.t.sol:AccountTest
-[FAIL: EvmError: Revert] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 189539)
-Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 10.73ms (2.17ms CPU time)
+[FAIL: EvmError: Revert] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 189908)
+Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 31.24ms (10.16ms CPU time)
 
-Ran 1 test suite in 38.87ms (10.73ms CPU time): 0 tests passed, 1 failed, 0 skipped (1 total tests)
+Ran 1 test suite in 80.65ms (31.24ms CPU time): 0 tests passed, 1 failed, 0 skipped (1 total tests)
 
 Failing tests:
 Encountered 1 failing test in tests/contracts/Account.t.sol:AccountTest
-[FAIL: EvmError: Revert] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 189539)
+[FAIL: EvmError: Revert] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 189908)
 
 Encountered a total of 1 failing tests, 0 tests succeeded
 

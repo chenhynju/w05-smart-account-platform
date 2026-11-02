@@ -1,0 +1,22 @@
+{
+  "before": {
+    "hash": "0x45772dc9380ef119249890f2a450c5f4849edb8baa8aa84f75a177b4fbaddc17",
+    "status": "succeeded",
+    "transactionHash": "0x60a5b627e40da70ecbd0a43743136d8b48c77f2711fb11bef14feeb5a32b3aa7",
+    "number": "13",
+    "epoch": "1",
+    "quota": "458800000000000000",
+    "nonce": "4"
+  },
+  "after": {
+    "hash": "0x45772dc9380ef119249890f2a450c5f4849edb8baa8aa84f75a177b4fbaddc17",
+    "status": "succeeded",
+    "transactionHash": "0x60a5b627e40da70ecbd0a43743136d8b48c77f2711fb11bef14feeb5a32b3aa7",
+    "number": "13",
+    "epoch": "1",
+    "quota": "458800000000000000",
+    "nonce": "4"
+  },
+  "status": "PASS",
+  "scope": "Node service restart; same live local chain"
+}

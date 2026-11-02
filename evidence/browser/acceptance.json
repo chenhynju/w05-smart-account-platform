@@ -1,0 +1,56 @@
+{
+  "scope": "Chromium with virtual CTAP2 authenticator, local Anvil chain. No physical authenticator or public network tested.",
+  "evidence": [
+    {
+      "name": "Browser owner proof \u2192 factory deployment \u2192 account state",
+      "status": "PASS",
+      "at": "2026-11-02T16:10:52.057Z"
+    },
+    {
+      "name": "Owner signature \u2192 real simulation \u2192 sponsored EntryPoint execution \u2192 receipt UI",
+      "status": "PASS",
+      "at": "2026-11-02T16:10:54.667Z"
+    },
+    {
+      "name": "Scoped session-key configuration and actual session operation",
+      "status": "PASS",
+      "at": "2026-11-02T16:10:59.284Z"
+    },
+    {
+      "name": "Revoked session signature rejected by chain validation",
+      "status": "PASS",
+      "at": "2026-11-02T16:11:01.951Z"
+    },
+    {
+      "name": "Chromium WebAuthn enrollment \u2192 real P256 assertion \u2192 on-chain WebAuthn verification",
+      "status": "PASS",
+      "at": "2026-11-02T16:11:05.771Z"
+    },
+    {
+      "name": "Guardian transaction and owner-authorized recovery cancellation",
+      "status": "PASS",
+      "at": "2026-11-02T16:11:08.822Z"
+    },
+    {
+      "name": "Threshold policy rejects an operation with only one owner approval",
+      "status": "PASS",
+      "at": "2026-11-02T16:11:11.438Z"
+    },
+    {
+      "name": "Two distinct approval actions \u2192 sorted threshold signature \u2192 successful execution",
+      "status": "PASS",
+      "at": "2026-11-02T16:11:12.573Z"
+    },
+    {
+      "name": "390px responsive layout without horizontal overflow",
+      "status": "PASS",
+      "at": "2026-11-02T16:11:14.486Z"
+    },
+    {
+      "name": "No browser page exceptions",
+      "status": "PASS",
+      "at": "2026-11-02T16:11:14.490Z"
+    }
+  ],
+  "errors": []
+}

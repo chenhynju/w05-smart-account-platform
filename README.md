@@ -55,4 +55,4 @@ Windows Chromium can also run `tests/e2e/browser.cjs` against the WSL applicatio
 
 `contracts/` contains the account, factory, paymaster and local acceptance target. `packages/` holds ABI/packing/hash and WebAuthn helpers. `services/bundler.ts` owns enrollment, sponsorship, simulation, serialization and reconciliation. `apps/web/` is the Next/wagmi UI. `tests/` contains Solidity, stateful, TypeScript, API and browser checks. `deployments/` and `evidence/` retain public local evidence; `.runtime/` contains private state and must not be shared or committed.
 
-Source teaching was anchored at commit `297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58`. Later documentation-only commits do not change the taught source; check the source-map hashes when updating it. Learning materials are not proof that the learner has mastered the implementation.
+Source teaching was anchored at commit `4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b`. Later documentation-only commits do not change the taught source; check the source-map hashes when updating it. Learning materials are not proof that the learner has mastered the implementation.

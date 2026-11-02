@@ -1,206 +1,206 @@
 {
-  "sourceCommit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+  "sourceCommit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
   "files": [
     {
       "path": "apps/web/app/api/[...path]/route.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/apps/web/app/api/[...path]/route.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 81,
       "sha256": "b6e683ccb65ec54ca6cc4b10bdc66a9bd5d0809fc1b28b24302e62b951c010e1"
     },
     {
       "path": "apps/web/app/layout.tsx",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/apps/web/app/layout.tsx",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 14,
       "sha256": "b02efb3d2729b98283eef0abb6742921e0651069cc845bcf3e0ca3fc7ea619e4"
     },
     {
       "path": "apps/web/app/page.tsx",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/apps/web/app/page.tsx",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 1101,
       "sha256": "8ab287f6d8fef20f5dc33a4b42a62f26f5ddd9e5ec2ddd1ac499866eca48f5c0"
     },
     {
       "path": "apps/web/app/providers.tsx",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/apps/web/app/providers.tsx",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 20,
       "sha256": "1e666b40ecd1f694363c5160b5ad30c7491b119c1728d38ffcfbefdd3cfc28a5"
     },
     {
       "path": "apps/web/app/style.css",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/apps/web/app/style.css",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 798,
       "sha256": "1d3c15d9054f6cca6ee7ab5eb92b24076268b18598d4de8ef075d4475a8ca0b2"
     },
     {
       "path": "apps/web/next-env.d.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/apps/web/next-env.d.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 7,
       "sha256": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b"
     },
     {
       "path": "apps/web/next.config.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/apps/web/next.config.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 26,
       "sha256": "70dcb03a70eed86bda308ac64d8113e0bf938f52aab6b7b1d08b35f89af87d07"
     },
     {
       "path": "contracts/AccountFactory.sol",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/AccountFactory.sol",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 27,
       "sha256": "e307259911cdf8bb99508ac433b9fa6d65daeea1a28fba850b949f2d3ba6a461"
     },
     {
       "path": "contracts/Counter.sol",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/Counter.sol",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 17,
       "sha256": "0522edb1f156a2c699f70d2c75217835ae29afacbf8ea7a62678acbcce3b5938"
     },
     {
       "path": "contracts/QuotaPaymaster.sol",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/QuotaPaymaster.sol",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 83,
       "sha256": "840f50155cda35d6f67a15a25932be6f6c28d8a07109382802596cad7d2efc34"
     },
     {
       "path": "contracts/SmartAccount.sol",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/SmartAccount.sol",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 416,
       "sha256": "5bb54d77ec75211f2d96f5d337bb58ffa6f1e5332e01ab83fc2de3c530a97c42"
     },
     {
       "path": "packages/passkey.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/packages/passkey.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 142,
       "sha256": "3b2d600d238d5a2b559e1b76b62a2a95aedd6c033c24e614198be9e016f57335"
     },
     {
       "path": "packages/protocol.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/packages/protocol.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 230,
       "sha256": "bec9ae058c89fe5ee578d9517a02657612c3cb8dcb432d47bfcbd99a22324825"
     },
     {
       "path": "scripts/bootstrap-compiler.py",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/scripts/bootstrap-compiler.py",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 13,
       "sha256": "838820da285c0d2c227bd0a556733ad6f0508c3809c2b2de49aef4f97830092a"
     },
     {
       "path": "scripts/check.sh",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/scripts/check.sh",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 13,
       "sha256": "be69d129a6a801a74badc332783f382d272986f083ccd586d2d3ce720a0edc1f"
     },
     {
       "path": "scripts/deploy-local.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/scripts/deploy-local.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 33,
       "sha256": "b8eb4621a32662fa806c2d3928a165502d438beeef2b4d8fa09743d12a6697a9"
     },
     {
       "path": "scripts/local-stack.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/scripts/local-stack.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 185,
       "sha256": "f5a5ddff69ae5f04026840f081a3fb6901a78f156accd77606bacbd41bddcbfd"
     },
     {
       "path": "scripts/mutation-check.py",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/scripts/mutation-check.py",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 28,
       "sha256": "c07a375dc04a1b038e6cac2127707c5b33c8b5303ede6550d69ce366485b2ebd"
     },
     {
       "path": "scripts/roll-local-stack.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/scripts/roll-local-stack.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 10,
       "sha256": "4f711613d375ea094733bdb29929fece531c2aed63835116a6b8225d70432ce3"
     },
     {
       "path": "scripts/run-local.sh",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/scripts/run-local.sh",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 25,
       "sha256": "078842d23c7d9cd91809ab4480345150058f95bee9ffed41f24090eb837d2f0c"
     },
     {
       "path": "scripts/update-local-factory.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/scripts/update-local-factory.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 53,
       "sha256": "fbef857e94190b5b7bbd00a927f3073a35063b733e33235c77683d4c85adfc49"
     },
     {
       "path": "scripts/verify-local.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/scripts/verify-local.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 122,
       "sha256": "d35cfc25444b3018b250f648e91c03b9bd9841ad2ffd05bcaf673c1b7178c21b"
     },
     {
       "path": "scripts/write-checkpoint.py",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/scripts/write-checkpoint.py",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 20,
       "sha256": "a32e89778a9a07ab967652e00b2ca4c6b613ca6791185135cbedee404b517edc"
     },
     {
       "path": "services/bundler.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/services/bundler.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 906,
       "sha256": "c42793ca4d4163cdd936e4c9816353f2a05a0889a41cd858259d2ec15cb85f86"
     },
     {
       "path": "tests/contracts/Account.t.sol",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/tests/contracts/Account.t.sol",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
-      "lines": 629,
-      "sha256": "56037683c5157f9a15c98bcea3b6aa4609ddc26bcebe370d7763b97e40ebf0a5"
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
+      "lines": 630,
+      "sha256": "64ec8cd3997c6565e5f6842d5c5fc3152bbea9581e187fc9d4ce32bd5fd2e504"
     },
     {
       "path": "tests/contracts/Stateful.t.sol",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/tests/contracts/Stateful.t.sol",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 118,
       "sha256": "e8d74ec95d3ceb324572e18abce5af6f5ce79e6b5253872514995053299f5971"
     },
     {
       "path": "tests/e2e/browser.cjs",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/tests/e2e/browser.cjs",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
-      "lines": 238,
-      "sha256": "50239a1aa5d9099a33c5c6b323b54f2e3a58fdd80db475a460b6f617505a7c3b"
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
+      "lines": 236,
+      "sha256": "a415f0bb6823c2cb9ae38c18fd8cb903c96328540177c08ab5d3b0e0bc597dec"
     },
     {
       "path": "tests/integration/service.test.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/tests/integration/service.test.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 346,
       "sha256": "772758c98f2f6ba0d98829c699ac85cd05c3eca5966c218a405f72e6083b520a"
     },
     {
       "path": "tests/protocol.test.ts",
       "absolutePath": "/home/chenhy/workspace/web3-portfolio/smart-account-platform/tests/protocol.test.ts",
-      "commit": "297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58",
+      "commit": "4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b",
       "lines": 58,
       "sha256": "3f161f319f98e181457daeead1fd9f88db16e37a7ae9ec38678932787f93f6ae"
     }

@@ -1,6 +1,6 @@
 # 测试、状态模型、部署与CI
 
-Commit `297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58`。工程根路径 `/home/chenhy/workspace/web3-portfolio/smart-account-platform`。
+Commit `4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b`。工程根路径 `/home/chenhy/workspace/web3-portfolio/smart-account-platform`。
 
 ## A. Business Principle
 测试从需求与不变量推出，既要证明有效用户可执行，也要证明非法状态被拒绝。部署验证证明选定源码产生了实际代码；源码存在和HTTP200不等于功能完成。
@@ -42,7 +42,7 @@ Commit `297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58`。工程根路径 `/home/chenh
 |`tests/contracts/Account.t.sol:553` `testMalformedPasskeyAndUnknownSignatureMode`|未知签名模式、错误ABI、非法key配置必须失败。|
 |`tests/contracts/Account.t.sol:584` `testPaymasterConstructorAndZeroSponsorGuards`|零sponsor不能配置，避免无意义授权域。|
 |`tests/contracts/Account.t.sol:591` `testCounterfactualFactoryDeploymentViaEntryPoint`|真正通过initCode由EntryPoint创建账户并执行，不是提前手动new账户。|
-|`tests/contracts/Account.t.sol:613` `testIndependentNonceKeysAndReplayIsolation`|key42顺序独立于key0，完整nonce重放仍失败。|
+|`tests/contracts/Account.t.sol:614` `testIndependentNonceKeysAndReplayIsolation`|key42顺序独立于key0，完整nonce重放仍失败。|
 
 ## D. Stateful与运维语句解释
 - `tests/contracts/Stateful.t.sol:31`：随机选择owner、受限session、错误签名或原子失败路径；正面路径不能随意revert，负面路径不能被接受。

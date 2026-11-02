@@ -1,6 +1,6 @@
 # SmartAccount：从授权到恢复
 
-源码冻结 Commit：`297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58`。实际路径：`/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/SmartAccount.sol`。代码变更后必须重新生成行号与source-map。
+源码冻结 Commit：`4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b`。实际路径：`/home/chenhy/workspace/web3-portfolio/smart-account-platform/contracts/SmartAccount.sol`。代码变更后必须重新生成行号与source-map。
 
 ## A. Business Principle
 账户持有资产，授权规则可编程。owner阈值拥有完整权限；session拥有小范围权限；guardian只能延迟换owner；Paymaster不拥有账户资金。

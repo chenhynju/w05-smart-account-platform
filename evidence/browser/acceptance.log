@@ -1,0 +1,10 @@
+PASS Browser owner proof → factory deployment → account state
+PASS Owner signature → real simulation → sponsored EntryPoint execution → receipt UI
+PASS Scoped session-key configuration and actual session operation
+PASS Revoked session signature rejected by chain validation
+PASS Chromium WebAuthn enrollment → real P256 assertion → on-chain WebAuthn verification
+PASS Guardian transaction and owner-authorized recovery cancellation
+PASS Threshold policy rejects an operation with only one owner approval
+PASS Two distinct approval actions → sorted threshold signature → successful execution
+PASS 390px responsive layout without horizontal overflow
+PASS No browser page exceptions

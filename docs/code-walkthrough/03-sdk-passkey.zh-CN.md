@@ -1,6 +1,6 @@
 # SDK、Gas打包与WebAuthn客户端
 
-冻结Commit `297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58`。实际文件 `/home/chenhy/workspace/web3-portfolio/smart-account-platform/packages/protocol.ts`、`/home/chenhy/workspace/web3-portfolio/smart-account-platform/packages/passkey.ts`。
+冻结Commit `4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b`。实际文件 `/home/chenhy/workspace/web3-portfolio/smart-account-platform/packages/protocol.ts`、`/home/chenhy/workspace/web3-portfolio/smart-account-platform/packages/passkey.ts`。
 
 ## A. Business Principle
 SDK把用户要做的业务动作变成确定的签名对象；Passkey把认证器的真实授权证据转换成合约理解的ABI。SDK没有链上最终决定权。

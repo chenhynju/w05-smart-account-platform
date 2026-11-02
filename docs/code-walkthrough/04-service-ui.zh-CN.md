@@ -1,6 +1,6 @@
 # 基础设施服务与真实客户端
 
-Commit `297be8d4c862ffcf99543f2a7e0f4edf6a8c5f58`。实际文件 `/home/chenhy/workspace/web3-portfolio/smart-account-platform/services/bundler.ts`、`/home/chenhy/workspace/web3-portfolio/smart-account-platform/apps/web/app/page.tsx`；Next代理为apps/web/app/api/[...path]/route.ts。
+Commit `4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b`。实际文件 `/home/chenhy/workspace/web3-portfolio/smart-account-platform/services/bundler.ts`、`/home/chenhy/workspace/web3-portfolio/smart-account-platform/apps/web/app/page.tsx`；Next代理为apps/web/app/api/[...path]/route.ts。
 
 ## A. Business Principle
 服务承担Gas与操作转发，但不能代替owner同意交易。UI把链上实际结果解释给用户，不能让“已提交”看起来像“已执行”。

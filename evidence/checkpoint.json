@@ -1,0 +1,14 @@
+{
+  "sourceHash": "5669532638217610054f73514a01eea20f71cdc1494008be295477935410a96e",
+  "sourceCommit": "93a0e219cbbe3053a7727479809927b96aaa668f",
+  "checkedAtUTC": "2026-11-02T17:18:40.615769+00:00",
+  "checks": [
+    "format",
+    "strict typecheck",
+    "TypeScript unit",
+    "Foundry unit/fuzz/stateful invariants seed 0x4337",
+    "forced compiler build and size limits",
+    "Next production build"
+  ],
+  "status": "PASS"
+}

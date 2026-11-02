@@ -1,0 +1,119 @@
+Warning: `--ir-minimum` enables `viaIR` with minimum optimization, which can result in inaccurate source mappings.
+Only use this flag as a workaround if you are experiencing "stack too deep" errors.
+Note that `viaIR` is production ready since Solidity 0.8.13 and above.
+See more: https://book.getfoundry.sh/guides/best-practices/stack-too-deep
+Compiling 48 files with Solc 0.8.38
+Solc 0.8.38 finished in 26.02s
+Compiler run successful with warnings:
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+  --> node_modules/@account-abstraction/contracts/core/BaseAccount.sol:27:39:
+   |
+27 |     error ExecuteError(uint256 index, bytes error);
+   |                                       ^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:125:29:
+    |
+125 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:134:29:
+    |
+134 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecoverCalldata(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:161:29:
+    |
+161 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, r, vs);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:203:29:
+    |
+203 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, v, r, s);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:273:26:
+    |
+273 |     function _throwError(RecoverError error, bytes32 errorArg) private pure {
+    |                          ^^^^^^^^^^^^^^^^^^
+
+Analysing contracts...
+Running tests...
+
+Ran 32 tests for tests/contracts/Account.t.sol:AccountTest
+[PASS] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 323780)
+[PASS] testCallbackCannotReenterExecutionOrFinalizeRecovery() (gas: 1291920)
+[PASS] testCancelSpecificProposalDoesNotCancelIndependentThreshold() (gas: 716704)
+[PASS] testCounterfactualFactoryDeploymentViaEntryPoint() (gas: 7122358)
+[PASS] testCrossChainSignatureRejected() (gas: 178495)
+[PASS] testDirectAndInheritedBypassDenied() (gas: 50397)
+[PASS] testERC1271DomainAndMalformed() (gas: 6903778)
+[PASS] testExpiredRotatedSponsorAndUnauthorizedPaymaster() (gas: 656952)
+[PASS] testFactoryIdempotentAndSeparated() (gas: 110930)
+[PASS] testFuzzSessionBudget(uint64) (runs: 1000, μ: 664270, ~: 664246)
+[PASS] testFuzz_AtomicRollback(uint96) (runs: 1000, μ: 311186, ~: 311456)
+[PASS] testFuzz_OwnerAmount(uint96) (runs: 1000, μ: 215035, ~: 215305)
+[PASS] testGuardianCannotLockRecoverySlot() (gas: 1114573)
+[PASS] testIndependentNonceKeysAndReplayIsolation() (gas: 392805)
+[PASS] testInvalidOwnerGuardianListsAndUnauthorizedAdmin() (gas: 588116)
+[PASS] testInvalidSelectorsNonceAndEmptyBatch() (gas: 466003)
+[PASS] testListsReceiveAndDisabledBatch() (gas: 69778)
+[PASS] testMalformedPasskeyAndUnknownSignatureMode() (gas: 1116625)
+[PASS] testMultisigSortedUniqueThreshold() (gas: 593229)
+[PASS] testOwnerExecutionAndNonceReplay() (gas: 362722)
+[PASS] testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation() (gas: 1801920)
+[PASS] testPaymasterConstructorAndZeroSponsorGuards() (gas: 10077)
+[PASS] testRecoveryDelayDuplicateVoteCancelAndEpoch() (gas: 1035489)
+[PASS] testRecoveryWrongGuardianAndStalePolicy() (gas: 533786)
+[PASS] testRevocationBetweenValidationAndExecution() (gas: 653639)
+[PASS] testSessionBudgetExpiryAndRevocation() (gas: 1197729)
+[PASS] testSessionCannotAdminOrWrongSelector() (gas: 587050)
+[PASS] testSessionReconfigurationInvalidatesQueuedOperation() (gas: 609894)
+[PASS] testSponsorQuotaAndTamperRejected() (gas: 594874)
+[PASS] testSponsorshipReservesQuotaOnRevertingExecution() (gas: 383994)
+[PASS] testTwoSessionOpsCannotOverspendOneBudget() (gas: 742082)
+[PASS] testWrongSignerAndMalformedSignature() (gas: 286470)
+Suite result: ok. 32 passed; 0 failed; 0 skipped; finished in 17.05s (47.87s CPU time)
+
+Ran 1 test for tests/contracts/Stateful.t.sol:StatefulTest
+[PASS]
+StatefulTest invariants:
+[PASS] invariant_CounterMatchesModel
+[PASS] invariant_OwnershipNeverChanges
+[PASS] invariant_SessionNeverOverspends
+ StatefulTest invariants (runs: 256, calls: 16384, reverts: 0)
+
+╭------------------+--------------+-------+---------+----------╮
+| Contract         | Selector     | Calls | Reverts | Discards |
++==============================================================+
+| OperationHandler | step         | 8303  | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| OperationHandler | unauthorized | 8081  | 0       | 0        |
+╰------------------+--------------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 247.78s (247.75s CPU time)
+
+Ran 2 test suites in 247.79s (264.83s CPU time): 33 tests passed, 0 failed, 0 skipped (33 total tests)
+
+╭--------------------------------+------------------+------------------+----------------+-----------------╮
+| File                           | % Lines          | % Statements     | % Branches     | % Funcs         |
++=========================================================================================================+
+| contracts/AccountFactory.sol   | 100.00% (11/11)  | 100.00% (11/11)  | 100.00% (1/1)  | 100.00% (3/3)   |
+|--------------------------------+------------------+------------------+----------------+-----------------|
+| contracts/Counter.sol          | 100.00% (5/5)    | 100.00% (3/3)    | N/A (0/0)      | 100.00% (2/2)   |
+|--------------------------------+------------------+------------------+----------------+-----------------|
+| contracts/QuotaPaymaster.sol   | 100.00% (26/26)  | 93.94% (31/33)   | 60.00% (3/5)   | 100.00% (5/5)   |
+|--------------------------------+------------------+------------------+----------------+-----------------|
+| contracts/SmartAccount.sol     | 93.40% (198/212) | 93.83% (289/308) | 87.18% (34/39) | 100.00% (35/35) |
+|--------------------------------+------------------+------------------+----------------+-----------------|
+| tests/contracts/Account.t.sol  | 100.00% (5/5)    | 100.00% (4/4)    | N/A (0/0)      | 100.00% (2/2)   |
+|--------------------------------+------------------+------------------+----------------+-----------------|
+| tests/contracts/Stateful.t.sol | 95.35% (41/43)   | 95.92% (47/49)   | 61.54% (8/13)  | 100.00% (5/5)   |
+|--------------------------------+------------------+------------------+----------------+-----------------|
+| Total                          | 94.70% (286/302) | 94.36% (385/408) | 79.31% (46/58) | 100.00% (52/52) |
+╰--------------------------------+------------------+------------------+----------------+-----------------╯
+Wrote LCOV report.

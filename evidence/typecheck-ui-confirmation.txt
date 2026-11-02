@@ -1,0 +1,6 @@
+
+> smart-account-platform@0.1.0 typecheck
+> tsc --noEmit
+
+apps/web/app/page.tsx(769,55): error TS2322: Type 'Promise<Receipt>' is not assignable to type 'Promise<void>'.
+  Type 'Receipt' is not assignable to type 'void'.
