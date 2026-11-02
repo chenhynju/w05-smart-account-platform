@@ -3,10 +3,12 @@ const fs = require("node:fs");
 const path = require("node:path");
 const assert = require("node:assert/strict");
 (async () => {
-  const browser = await chromium.launch({
-    executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE,
-    headless: true,
-  });
+  const browser = process.env.W05_CDP_URL
+    ? await chromium.connectOverCDP(process.env.W05_CDP_URL)
+    : await chromium.launch({
+        executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE,
+        headless: true,
+      });
   const context = await browser.newContext({
     viewport: { width: 1440, height: 1000 },
   });
@@ -78,6 +80,47 @@ const assert = require("node:assert/strict");
       initial + 1n,
     );
     await page
+      .getByRole("checkbox", { name: "Add a second call to the atomic batch" })
+      .check();
+    await prepare();
+    await page
+      .getByRole("button", { name: "Approve as owner", exact: true })
+      .click();
+    await submit();
+    await page.getByRole("button", { name: "Overview", exact: true }).click();
+    assert.equal(
+      BigInt(await page.getByTestId("counter-value").innerText()),
+      initial + 3n,
+    );
+    record(
+      "Atomic two-call batch succeeds through UI and changes chain counter twice",
+    );
+    await page
+      .getByRole("checkbox", { name: "Make the second call revert" })
+      .check();
+    await prepare();
+    await page
+      .getByRole("button", { name: "Approve as owner", exact: true })
+      .click();
+    await page
+      .getByRole("button", { name: "Submit operation", exact: true })
+      .click();
+    await page
+      .getByRole("alert")
+      .filter({ hasText: /revert|fail/i })
+      .waitFor();
+    await page.getByRole("button", { name: "Overview", exact: true }).click();
+    assert.equal(
+      BigInt(await page.getByTestId("counter-value").innerText()),
+      initial + 3n,
+    );
+    record(
+      "Second-call failure rolls back first-call state through complete UI lifecycle",
+    );
+    await page
+      .getByRole("checkbox", { name: "Add a second call to the atomic batch" })
+      .uncheck();
+    await page
       .getByRole("button", { name: "Access & recovery", exact: true })
       .click();
     await page
@@ -133,6 +176,26 @@ const assert = require("node:assert/strict");
     record(
       "Chromium WebAuthn enrollment → real P256 assertion → on-chain WebAuthn verification",
     );
+    let extensionAssertions = 0;
+    for (let n = 0; n < 12; n++) {
+      await prepare();
+      await page
+        .getByRole("button", { name: "Approve with passkey", exact: true })
+        .click();
+      const operation = await page.locator("details pre").first().textContent();
+      if (operation && operation.includes("6f746865725f6b657973"))
+        extensionAssertions++;
+      await submit();
+    }
+    record(
+      "12 further independent browser Passkey assertions submitted without retrying failures",
+    );
+    evidence.push({
+      name: "Chrome extension assertions observed",
+      count: extensionAssertions,
+      status: "OBSERVED",
+    });
+
     await page
       .getByRole("button", { name: "Access & recovery", exact: true })
       .click();
@@ -181,7 +244,7 @@ const assert = require("node:assert/strict");
     await page.getByRole("button", { name: "Overview", exact: true }).click();
     assert.equal(
       BigInt(await page.getByTestId("counter-value").innerText()),
-      initial + 4n,
+      initial + 18n,
     );
     await page.screenshot({
       path: path.join(artifactDir, "W05-overview.png"),
@@ -206,6 +269,60 @@ const assert = require("node:assert/strict");
     record("390px responsive layout without horizontal overflow");
     assert.deepEqual(errors, []);
     record("No browser page exceptions");
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page
+      .getByRole("button", { name: "Access & recovery", exact: true })
+      .click();
+    await page
+      .getByRole("textbox", { name: "Replacement owner" })
+      .fill("0x2222222222222222222222222222222222222222");
+    await page
+      .getByRole("button", { name: "Propose as guardian", exact: true })
+      .click();
+    await page.getByText(/Guardian proposal submitted/).waitFor();
+    await page
+      .getByRole("button", {
+        name: "Complete recovery after delay",
+        exact: true,
+      })
+      .click();
+    await page.getByRole("alert").waitFor();
+    record("Recovery completion before on-chain delay rejected in browser");
+    const rpc = async (method, params) => {
+      const response = await fetch("http://127.0.0.1:18555", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+      });
+      const result = await response.json();
+      if (result.error) throw new Error(JSON.stringify(result.error));
+      return result.result;
+    };
+    await rpc("evm_increaseTime", [172801]);
+    await rpc("evm_mine", []);
+    await page
+      .getByRole("button", {
+        name: "Complete recovery after delay",
+        exact: true,
+      })
+      .click();
+    await page.getByText(/Recovery transaction submitted/).waitFor();
+    await page.getByRole("button", { name: "Overview", exact: true }).click();
+    await page.getByText("0x222222…222222", { exact: true }).first().waitFor();
+    await prepare();
+    await page
+      .getByRole("button", { name: "Approve as owner", exact: true })
+      .click();
+    await page
+      .getByRole("button", { name: "Approve as cosigner", exact: true })
+      .click();
+    await page
+      .getByRole("button", { name: "Submit operation", exact: true })
+      .click();
+    await page.getByRole("alert").waitFor();
+    record(
+      "Guardian completes after local two-day time advance; previous owners lose authorization",
+    );
   } catch (error) {
     await page.screenshot({
       path: path.join(artifactDir, "failure.png"),
