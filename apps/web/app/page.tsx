@@ -393,9 +393,7 @@ function App() {
     await refresh();
   }
   const online = Boolean(config);
-  const ownerAddress =
-    injectedAccount.address ??
-    (keys ? privateKeyToAccount(keys.owner).address : undefined);
+  const ownerAddress = snapshot?.owners[0];
   return (
     <div className="shell">
       <aside>
