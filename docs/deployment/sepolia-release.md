@@ -30,3 +30,5 @@ NEXT_PUBLIC_W05_NETWORK=sepolia npm run build
 Next自动生成的next-env.d.ts包含所选distDir路径，不属于手写源码，现由Next生成并忽略；干净副本必须证明没有它时仍可完整typecheck/build。其余手写源码和测试仍全部进入源码摘要门禁。
 
 公共服务另有持久化0.5测试ETH的最坏gas预留上限：每次direct factory/quota交易与bundler交易在签名前按gas上限×2gwei占用；跨重启保留，不因失败或不确定响应退款。factory单次6M、quota100k、bundle10M gas，priority1gwei/maxFee2gwei。由此部署+0.5存款上界0.5352与服务gas上界0.5合计1.0352测试ETH的保守gross支出上限（不扣gas报销）；两者必须分别明确授权。浏览器guardian自身交易需测试ETH与独立批准，不在服务自动资金范围内。已广播交易若遇baseFee太高会失败/阻塞，不提高费率绕过预算。服务上限是进程所用持久状态的边界，不能通过删store重置。
+
+只读验证器：`npx tsx scripts/verify-sepolia.ts`，无需签名key，核对5笔实际交易的链/nonce/from/input/value/gas/费用上限、两确认收据、构造参数与固定compiler/artifact、runtime hashes、EP与管理员/sponsor及deposit。未实际部署前该验证器为NOT RUN，不能提前生成PASS报告。源码公开验证和完整业务E2E仍另行执行。
