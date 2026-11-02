@@ -6,5 +6,7 @@ npm run format:check
 npm run typecheck
 npm test
 forge test --fuzz-seed 0x4337 -vv
-forge build --sizes
+forge build --force --sizes
 npm run build
+
+python3 scripts/write-checkpoint.py --record

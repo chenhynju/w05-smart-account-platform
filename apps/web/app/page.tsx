@@ -124,7 +124,7 @@ function App() {
       setError("Could not restore local wallet");
     }
   }, []);
-  async function run(fn: () => Promise<void>) {
+  async function run(fn: () => Promise<unknown>) {
     setBusy(true);
     setError("");
     setNotice("");
