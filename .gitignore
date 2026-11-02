@@ -11,3 +11,6 @@ test-results/
 **/*.tsbuildinfo
 
 apps/web/.next-sepolia/
+
+# Next regenerates ambient declarations for the selected distDir.
+apps/web/next-env.d.ts

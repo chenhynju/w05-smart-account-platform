@@ -26,3 +26,5 @@ npx tsx scripts/sepolia-release.ts --prepare
 NEXT_PUBLIC_W05_NETWORK=sepolia npm run build
 ```
 产物独立放apps/web/.next-sepolia，不覆盖本地.next。服务默认仍是local；必须同时显式选择公共profile并通过授权门禁。bind仍loopback，暂不远程托管。上公网前另审CSP（当前兼容本地测试的unsafe-inline/unsafe-eval）、认证与速率策略、密钥保管、外部RPC能力及监控，不把本地开发origin策略当成公共部署准备完毕。
+
+Next自动生成的next-env.d.ts包含所选distDir路径，不属于手写源码，现由Next生成并忽略；干净副本必须证明没有它时仍可完整typecheck/build。其余手写源码和测试仍全部进入源码摘要门禁。
