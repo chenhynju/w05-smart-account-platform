@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
+source_hash=$(python3 scripts/write-checkpoint.py --digest)
 python3 scripts/bootstrap-compiler.py
 npm run format:check
 npm run typecheck
@@ -9,4 +10,4 @@ forge test --fuzz-seed 0x4337 -vv
 forge build --force --sizes
 npm run build
 
-python3 scripts/write-checkpoint.py --record
+python3 scripts/write-checkpoint.py --record --expected "$source_hash"

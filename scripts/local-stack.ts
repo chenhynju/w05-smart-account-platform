@@ -52,6 +52,9 @@ export async function deployStack(
       "Commit and review source changes before local release deployment",
     );
   }
+  execFileSync("python3", ["scripts/write-checkpoint.py", "--verify"], {
+    stdio: "pipe",
+  });
   for (const name of [
     "EntryPoint",
     "AccountFactory",
