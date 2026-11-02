@@ -38,10 +38,10 @@ for (const [name, info] of Object.entries(manifest.contracts)) {
     };
   };
   if (
-    createHash("sha256").update(artifact.bytecode.object).digest("hex") !==
+    createHash("sha256").update(raw).digest("hex") !==
     manifest.artifactHashes[name]
   )
-    throw new Error(`Creation bytecode changed ${name}`);
+    throw new Error(`Artifact file changed ${name}`);
   if (
     !artifact.metadata.compiler.version.startsWith("0.8.38+") ||
     artifact.metadata.settings.evmVersion !== "cancun" ||

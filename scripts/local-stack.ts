@@ -52,6 +52,36 @@ export async function deployStack(
       "Commit and review source changes before local release deployment",
     );
   }
+  for (const name of [
+    "EntryPoint",
+    "AccountFactory",
+    "QuotaPaymaster",
+    "Counter",
+  ]) {
+    const artifact = JSON.parse(
+      readFileSync(`out/${name}.sol/${name}.json`, "utf8"),
+    ) as {
+      metadata: {
+        compiler: { version: string };
+        settings: {
+          viaIR: boolean;
+          evmVersion: string;
+          optimizer: { enabled: boolean; runs: number };
+        };
+      };
+    };
+    const meta = artifact.metadata;
+    if (
+      meta.compiler.version !== "0.8.38+commit.1835d247" ||
+      !meta.settings.viaIR ||
+      meta.settings.evmVersion !== "cancun" ||
+      !meta.settings.optimizer.enabled ||
+      meta.settings.optimizer.runs !== 200
+    )
+      throw new Error(
+        `Preflight failed for ${name}; force a clean pinned build before any deployment`,
+      );
+  }
   const rpcUrl = "http://127.0.0.1:18555";
   const client = createPublicClient({ chain: anvil, transport: http(rpcUrl) });
   if ((await client.getChainId()) !== 31337)
