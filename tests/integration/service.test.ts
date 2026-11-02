@@ -96,34 +96,6 @@ test("local service real chain lifecycle and hostile requests", async (t) => {
       /Expired or unknown/,
     );
   });
-  const initial = await api(`account?address=${account}`);
-  const op = await signed(
-    await prepared([
-      {
-        target: config.counter,
-        value: 0n,
-        data: encodeFunctionData({
-          abi: counterAbi,
-          functionName: "increment",
-          args: [3n],
-        }),
-      },
-    ]),
-  );
-  await t.test(
-    "SDK hash equals deployed EntryPoint v0.8 EIP712 hash",
-    async () => {
-      assert.equal(
-        operationHash(op, config.entryPoint),
-        await client.readContract({
-          address: config.entryPoint,
-          abi: entryPointAbi,
-          functionName: "getUserOpHash",
-          args: [op],
-        }),
-      );
-    },
-  );
   await t.test(
     "fresh sponsorship uses the pending clock even when the head is stale",
     async () => {
@@ -179,6 +151,34 @@ test("local service real chain lifecycle and hostile requests", async (t) => {
         method: "evm_mine" as never,
         params: [] as never,
       });
+    },
+  );
+  const initial = await api(`account?address=${account}`);
+  const op = await signed(
+    await prepared([
+      {
+        target: config.counter,
+        value: 0n,
+        data: encodeFunctionData({
+          abi: counterAbi,
+          functionName: "increment",
+          args: [3n],
+        }),
+      },
+    ]),
+  );
+  await t.test(
+    "SDK hash equals deployed EntryPoint v0.8 EIP712 hash",
+    async () => {
+      assert.equal(
+        operationHash(op, config.entryPoint),
+        await client.readContract({
+          address: config.entryPoint,
+          abi: entryPointAbi,
+          functionName: "getUserOpHash",
+          args: [op],
+        }),
+      );
     },
   );
   await t.test(

@@ -13,3 +13,5 @@ evidence/service-integration-stale-head-before.txt：实际API10中5项失败，
 
 ## Residual risk
 pending区块的具体构造是provider能力和信任边界；交易等待超过300秒仍应正常过期，需要重新请求赞助并重新签用户操作。不能对已签操作直接修改期限。客户端/服务签名、模拟、广播和receipt仍需分别确认。
+
+修复后的第一轮，新增时间推进用例放在另一笔已签操作之后，导致那笔旧操作按设计过期；该测试顺序失败保留pending-clock-test-order-failure.txt。已将时间推进用例移到后续操作准备之前，没有放宽生产有效期或吞掉AA32。simulate的eth_call与trace统一pending区块，避免跨时间域误判。

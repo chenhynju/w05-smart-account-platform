@@ -24,6 +24,13 @@ import { sepolia } from "viem/chains";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { paymasterAbi, json } from "../packages/protocol.js";
 import { validateEndpoint } from "../packages/network.js";
+// Provider URLs can contain credentials; never print an unhandled network exception.
+process.on("uncaughtException", () => {
+  console.error(
+    "Sepolia operation failed. Inspect preflight/receipt journals locally; do not retry an uncertain signed transaction.",
+  );
+  process.exit(1);
+});
 // --prepare creates fresh, isolated keys and an UNSIGNED review plan. It never signs or broadcasts.
 // --broadcast additionally needs explicit user authorization (the environment flag is a guard, not consent).
 const flags = process.argv.slice(2);
@@ -116,7 +123,28 @@ try {
   baseFee = (await client.getBlock()).baseFeePerGas ?? 0n;
   rpcStatus = "PASS";
 } catch (e) {
-  rpcError = e instanceof Error ? e.message : "RPC unavailable";
+  rpcError = "Read-only chain/nonce/balance preflight failed";
+}
+let traceRpcStatus = "BLOCKED",
+  traceRpcError: string | undefined;
+try {
+  await client.request({
+    method: "debug_traceCall" as never,
+    params: [
+      {
+        from: deployer.address,
+        to: "0x000000000000000000000000000000000000dead",
+        data: "0x",
+        gas: "0x5208",
+      },
+      "pending",
+      { tracer: "callTracer", tracerConfig: { withLog: true } },
+    ] as never,
+  });
+  traceRpcStatus = "PASS";
+} catch (e) {
+  traceRpcError =
+    "Required pending debug_traceCall/callTracer/withLog unavailable";
 }
 const maxFeePerGas = 2_000_000_000n,
   maxPriorityFeePerGas = 1_000_000_000n;
@@ -201,6 +229,8 @@ const plan = {
   sponsor: sponsor.address,
   predicted: { entryPoint, factory, paymaster, counter },
   rpcStatus,
+  traceRpcStatus,
+  traceRpcError,
   rpcError,
   balance,
   baseFee,
@@ -244,6 +274,7 @@ if (json(reviewFields(old)) !== json(reviewFields(plan)))
   throw new Error("Reviewed plan changed; regenerate and reauthorize");
 if (
   rpcStatus !== "PASS" ||
+  traceRpcStatus !== "PASS" ||
   balance < maximumCost ||
   baseFee + maxPriorityFeePerGas > maxFeePerGas
 )

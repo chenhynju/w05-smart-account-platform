@@ -20,6 +20,13 @@ import {
   type Deployment,
 } from "../packages/protocol.js";
 import { validateEndpoint } from "../packages/network.js";
+// Provider URLs can contain credentials; never print an unhandled network exception.
+process.on("uncaughtException", () => {
+  console.error(
+    "Sepolia operation failed. Inspect preflight/receipt journals locally; do not retry an uncertain signed transaction.",
+  );
+  process.exit(1);
+});
 // Read-only verifier: no keys, wallet client, signature or transaction submission.
 const manifest = JSON.parse(
   readFileSync(".runtime/sepolia/deployment.json", "utf8"),

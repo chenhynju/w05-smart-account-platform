@@ -211,6 +211,11 @@ async function pack(sender: Address, actions: Action[]): Promise<PackedOp> {
   ]);
   return makeOperation(sender, nonce, epoch, actions);
 }
+function requestError(error: unknown): string {
+  if (target === "sepolia")
+    return "Public request failed; reconcile submitted operations and check RPC capability or policy locally.";
+  return error instanceof Error ? error.message : "Request failed";
+}
 async function addSponsorship(op: PackedOp): Promise<PackedOp> {
   const [quotaEpoch, block] = await Promise.all([
     client.readContract({
@@ -261,6 +266,7 @@ async function simulate(op: PackedOp) {
     to: config.entryPoint,
     data,
     gas: 10_000_000n,
+    blockTag: "pending",
   });
   const gas = await client.estimateGas({
     account: admin.address,
@@ -282,7 +288,7 @@ async function simulate(op: PackedOp) {
         data,
         gas: toHex(10_000_000n),
       },
-      "latest",
+      "pending",
       { tracer: "callTracer", tracerConfig: { withLog: true } },
     ] as never,
   })) as Trace;
@@ -431,10 +437,7 @@ async function submitOperation(op: PackedOp): Promise<OperationRecord> {
       return reconcile(current);
     } catch (error) {
       current.status = current.transactionHash ? "submitted" : "unknown";
-      current.error =
-        error instanceof Error
-          ? error.message.slice(0, 300)
-          : "Submission error";
+      current.error = requestError(error).slice(0, 300);
       save();
       return current;
     }
@@ -920,7 +923,7 @@ const server = createServer(async (req, res) => {
     }
     reply(res, 404, { error: "Not found" });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Request failed";
+    const message = requestError(error);
     const unavailable =
       error instanceof BaseError &&
       Boolean(
