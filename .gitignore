@@ -17,3 +17,11 @@ apps/web/next-env.d.ts
 
 # Review plans are regenerated for the final delivery HEAD and exported separately.
 deployments/sepolia-unsigned-plan.json
+
+.vercel/
+
+*.tsbuildinfo
+
+__pycache__/
+
+*.py[cod]
