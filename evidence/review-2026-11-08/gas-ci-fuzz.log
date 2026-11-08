@@ -1,0 +1,9 @@
+No files changed, compilation skipped
+
+Ran 3 tests for tests/contracts/Account.t.sol:AccountTest
+[PASS] testFuzzSessionBudget(uint64) (runs: 1000, μ: 463205, ~: 463181)
+[PASS] testFuzz_AtomicRollback(uint96) (runs: 1000, μ: 231995, ~: 232393)
+[PASS] testFuzz_OwnerAmount(uint96) (runs: 1000, μ: 149631, ~: 149869)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 5.85s (17.46s CPU time)
+
+Ran 1 test suite in 5.88s (5.85s CPU time): 3 tests passed, 0 failed, 0 skipped (3 total tests)

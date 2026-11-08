@@ -1,0 +1,40 @@
+{
+  "observedFailure": "GitHub 42504723526: fuzz gas mean 463206 vs 463205 and median 463187 vs 463181 despite fixed seed; all 41 tests passed.",
+  "policy": "Fixed-input snapshots exact; fuzz-only mean/median threshold 1 percent. No test or snapshot removed.",
+  "checks": [
+    {
+      "scope": "fixed",
+      "command": [
+        "forge",
+        "snapshot",
+        "--match-contract",
+        "AccountTest",
+        "--no-match-test",
+        "testFuzz",
+        "--fuzz-seed",
+        "0x4337",
+        "--check"
+      ],
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "scope": "fuzz",
+      "command": [
+        "forge",
+        "snapshot",
+        "--match-contract",
+        "AccountTest",
+        "--match-test",
+        "testFuzz",
+        "--fuzz-seed",
+        "0x4337",
+        "--check",
+        "--tolerance",
+        "1"
+      ],
+      "status": "PASS",
+      "exitCode": 0
+    }
+  ]
+}
