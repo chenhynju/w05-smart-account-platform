@@ -1,0 +1,39 @@
+[
+  {
+    "project": "W05",
+    "command": [
+      "forge",
+      "coverage",
+      "--ir-minimum",
+      "--report",
+      "summary",
+      "--report",
+      "lcov",
+      "--fuzz-runs",
+      "256"
+    ],
+    "cwd": "/home/chenhy/workspace/web3-portfolio/w05-smart-account-platform",
+    "startedAt": "2026-11-08T07:16:37.851393+00:00",
+    "seconds": 213.92,
+    "exitCode": 0,
+    "executionStatus": "PASS",
+    "log": "/home/chenhy/workspace/web3-portfolio/portfolio-ops/evidence/2026-11-08/extended-02-W05.log"
+  },
+  {
+    "project": "W05",
+    "command": [
+      "slither",
+      ".",
+      "--filter-paths",
+      "node_modules/|tests/",
+      "--json",
+      "/home/chenhy/workspace/web3-portfolio/portfolio-ops/evidence/2026-11-08/w05-slither.json"
+    ],
+    "cwd": "/home/chenhy/workspace/web3-portfolio/w05-smart-account-platform",
+    "startedAt": "2026-11-08T07:20:08.162934+00:00",
+    "seconds": 48.45,
+    "exitCode": 255,
+    "executionStatus": "REVIEW_REQUIRED",
+    "log": "/home/chenhy/workspace/web3-portfolio/portfolio-ops/evidence/2026-11-08/extended-03-W05.log"
+  }
+]

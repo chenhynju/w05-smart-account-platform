@@ -1,3 +1,8 @@
+import {
+  applicationOrigins,
+  serviceEndpoint,
+  proxyToken,
+} from "../../../../../packages/http-policy";
 import { NextRequest } from "next/server";
 const allowed = new Set([
   "config",
@@ -19,11 +24,21 @@ async function proxy(
   const { path } = await context.params;
   if (path.length !== 1 || !allowed.has(path[0]))
     return Response.json({ error: "Not found" }, { status: 404 });
+  let upstream: URL;
+  let origins: string[];
+  let token: string | undefined;
+  try {
+    upstream = serviceEndpoint();
+    origins = applicationOrigins();
+    token = proxyToken();
+  } catch {
+    return Response.json(
+      { error: "Service hosting is not configured" },
+      { status: 503 },
+    );
+  }
   const origin = request.headers.get("origin");
-  if (
-    request.method === "POST" &&
-    !["http://localhost:3155", "http://127.0.0.1:3155"].includes(origin ?? "")
-  )
+  if (request.method === "POST" && !origins.includes(origin ?? ""))
     return Response.json({ error: "Untrusted origin" }, { status: 403 });
   try {
     let payload: string | undefined;
@@ -51,12 +66,13 @@ async function proxy(
       payload = new TextDecoder().decode(bytes);
     }
     const response = await fetch(
-      `http://127.0.0.1:4355/${path[0]}${request.nextUrl.search}`,
+      new URL(`/${path[0]}${request.nextUrl.search}`, upstream),
       {
         method: request.method,
         headers: {
           "Content-Type": "application/json",
           ...(origin ? { origin } : {}),
+          ...(token ? { "x-w05-proxy-token": token } : {}),
         },
         body: payload,
         signal: AbortSignal.timeout(30000),
@@ -72,7 +88,7 @@ async function proxy(
     });
   } catch {
     return Response.json(
-      { error: "Local service unavailable; check service and chain" },
+      { error: "Account service unavailable; check service and chain" },
       { status: 503 },
     );
   }

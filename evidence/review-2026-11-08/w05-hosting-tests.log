@@ -1,0 +1,33 @@
+packages/http-policy.ts 1371ms
+tests/http-policy.test.ts 179ms
+apps/web/app/api/[...path]/route.ts 207ms
+services/bundler.ts 1416ms
+apps/web/next.config.ts 49ms
+
+> smart-account-platform@0.1.0 typecheck
+> tsc --noEmit
+
+tests/http-policy.test.ts(10,39): error TS2345: Argument of type '{}' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{}' but required in type 'ProcessEnv'.
+tests/http-policy.test.ts(14,32): error TS2345: Argument of type '{}' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{}' but required in type 'ProcessEnv'.
+tests/http-policy.test.ts(15,27): error TS2345: Argument of type '{}' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{}' but required in type 'ProcessEnv'.
+tests/http-policy.test.ts(22,44): error TS2345: Argument of type '{ W05_NETWORK: string; NEXT_PUBLIC_W05_NETWORK?: undefined; } | { NEXT_PUBLIC_W05_NETWORK: string; W05_NETWORK?: undefined; }' is not assignable to parameter of type 'ProcessEnv | undefined'.
+  Property 'NODE_ENV' is missing in type '{ W05_NETWORK: string; NEXT_PUBLIC_W05_NETWORK?: undefined; }' but required in type 'ProcessEnv'.
+tests/http-policy.test.ts(23,41): error TS2345: Argument of type '{ W05_NETWORK: string; NEXT_PUBLIC_W05_NETWORK?: undefined; } | { NEXT_PUBLIC_W05_NETWORK: string; W05_NETWORK?: undefined; }' is not assignable to parameter of type 'ProcessEnv | undefined'.
+  Property 'NODE_ENV' is missing in type '{ W05_NETWORK: string; NEXT_PUBLIC_W05_NETWORK?: undefined; }' but required in type 'ProcessEnv'.
+tests/http-policy.test.ts(24,36): error TS2345: Argument of type '{ W05_NETWORK: string; NEXT_PUBLIC_W05_NETWORK?: undefined; } | { NEXT_PUBLIC_W05_NETWORK: string; W05_NETWORK?: undefined; }' is not assignable to parameter of type 'ProcessEnv | undefined'.
+  Property 'NODE_ENV' is missing in type '{ W05_NETWORK: string; NEXT_PUBLIC_W05_NETWORK?: undefined; }' but required in type 'ProcessEnv'.
+tests/http-policy.test.ts(25,36): error TS2345: Argument of type '{ W05_PROXY_TOKEN: string; W05_NETWORK: string; NEXT_PUBLIC_W05_NETWORK?: undefined; } | { W05_PROXY_TOKEN: string; NEXT_PUBLIC_W05_NETWORK: string; W05_NETWORK?: undefined; }' is not assignable to parameter of type 'ProcessEnv | undefined'.
+  Property 'NODE_ENV' is missing in type '{ W05_PROXY_TOKEN: string; W05_NETWORK: string; NEXT_PUBLIC_W05_NETWORK?: undefined; }' but required in type 'ProcessEnv'.
+tests/http-policy.test.ts(38,44): error TS2345: Argument of type '{ W05_APP_ORIGIN: string; }' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{ W05_APP_ORIGIN: string; }' but required in type 'ProcessEnv'.
+tests/http-policy.test.ts(39,41): error TS2345: Argument of type '{ W05_SERVICE_URL: string; }' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{ W05_SERVICE_URL: string; }' but required in type 'ProcessEnv'.
+tests/http-policy.test.ts(47,39): error TS2345: Argument of type '{ W05_NETWORK: string; W05_APP_ORIGIN: string; W05_SERVICE_URL: string; W05_PROXY_TOKEN: string; }' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{ W05_NETWORK: string; W05_APP_ORIGIN: string; W05_SERVICE_URL: string; W05_PROXY_TOKEN: string; }' but required in type 'ProcessEnv'.
+tests/http-policy.test.ts(48,32): error TS2345: Argument of type '{ W05_NETWORK: string; W05_APP_ORIGIN: string; W05_SERVICE_URL: string; W05_PROXY_TOKEN: string; }' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{ W05_NETWORK: string; W05_APP_ORIGIN: string; W05_SERVICE_URL: string; W05_PROXY_TOKEN: string; }' but required in type 'ProcessEnv'.
+tests/http-policy.test.ts(49,27): error TS2345: Argument of type '{ W05_NETWORK: string; W05_APP_ORIGIN: string; W05_SERVICE_URL: string; W05_PROXY_TOKEN: string; }' is not assignable to parameter of type 'ProcessEnv'.
+  Property 'NODE_ENV' is missing in type '{ W05_NETWORK: string; W05_APP_ORIGIN: string; W05_SERVICE_URL: string; W05_PROXY_TOKEN: string; }' but required in type 'ProcessEnv'.

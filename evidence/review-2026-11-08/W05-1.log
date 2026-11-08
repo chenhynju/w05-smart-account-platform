@@ -1,0 +1,20 @@
+
+> smart-account-platform@0.1.0 test
+> tsx --test tests/*.test.ts
+
+✔ network profiles reject mainnet, wrong local RPC and insecure public RPC (15.787911ms)
+✔ the same UserOperation has distinct Anvil and Sepolia domains (75.97464ms)
+✔ public gas budget survives serialization and rejects the first overspend (3.041271ms)
+✔ session policy follows a chain two days ahead, with exact uint48 bounds (1.013249ms)
+✔ gas packing rejects uint128 overflow and preserves distinct halves (4.925125ms)
+✔ wire operation rejects malformed hex, floating nonces and overlong fields (17.638213ms)
+✔ v0.8 operation hash isolates EntryPoint, sender, nonce and calldata (65.401412ms)
+✔ DER parser normalizes valid scalars and rejects malformed encodings (1.497302ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30170.709364

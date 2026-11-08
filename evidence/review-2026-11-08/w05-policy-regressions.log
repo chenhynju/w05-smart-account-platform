@@ -1,0 +1,49 @@
+Formatted /home/chenhy/workspace/web3-portfolio/w05-smart-account-platform/tests/contracts/Account.t.sol
+Compiling 1 files with Solc 0.8.38
+Solc 0.8.38 finished in 64.76s
+Compiler run successful with warnings:
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+  --> node_modules/@account-abstraction/contracts/core/BaseAccount.sol:27:39:
+   |
+27 |     error ExecuteError(uint256 index, bytes error);
+   |                                       ^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:125:29:
+    |
+125 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:134:29:
+    |
+134 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecoverCalldata(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:161:29:
+    |
+161 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, r, vs);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:203:29:
+    |
+203 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, v, r, s);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:273:26:
+    |
+273 |     function _throwError(RecoverError error, bytes32 errorArg) private pure {
+    |                          ^^^^^^^^^^^^^^^^^^
+
+
+Ran 4 tests for tests/contracts/Account.t.sol:AccountTest
+[PASS] testCancellingOneRecoveryDoesNotClearAnotherProposal() (gas: 473501)
+[PASS] testEveryPolicySetterRejectsDirectExternalCallers() (gas: 200411)
+[PASS] testMalformedSessionECDSAIsRejectedByEntryPoint() (gas: 280787)
+[PASS] testPolicyListRejectsZeroThresholdAndOversizedMembership() (gas: 83405)
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 114.02ms (127.76ms CPU time)
+
+Ran 1 test suite in 163.48ms (114.02ms CPU time): 4 tests passed, 0 failed, 0 skipped (4 total tests)

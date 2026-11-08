@@ -1,0 +1,7 @@
+{
+  "url": "https://sepolia.gateway.tenderly.co",
+  "checkedAt": "2026-11-08T07:21:17.247122+00:00",
+  "status": "BLOCKED",
+  "httpStatus": 429,
+  "response": "{\"id\":1,\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32005,\"message\":\"rate limit exceeded\"}}"
+}

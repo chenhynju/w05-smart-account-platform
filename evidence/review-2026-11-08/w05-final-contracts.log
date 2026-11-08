@@ -1,0 +1,1880 @@
+Compiling 48 files with Solc 0.8.38
+Solc 0.8.38 finished in 161.70s
+Compiler run successful with warnings:
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+  --> node_modules/@account-abstraction/contracts/core/BaseAccount.sol:27:39:
+   |
+27 |     error ExecuteError(uint256 index, bytes error);
+   |                                       ^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:125:29:
+    |
+125 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:134:29:
+    |
+134 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecoverCalldata(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:161:29:
+    |
+161 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, r, vs);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:203:29:
+    |
+203 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, v, r, s);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol:273:26:
+    |
+273 |     function _throwError(RecoverError error, bytes32 errorArg) private pure {
+    |                          ^^^^^^^^^^^^^^^^^^
+
+
+╭------------------+------------------+-------------------+--------------------+---------------------╮
+| Contract         | Runtime Size (B) | Initcode Size (B) | Runtime Margin (B) | Initcode Margin (B) |
++====================================================================================================+
+| AccountFactory   | 16,787           | 16,927            | 7,789              | 32,225              |
+|------------------+------------------+-------------------+--------------------+---------------------|
+| CallbackTarget   | 475              | 608               | 24,101             | 48,544              |
+|------------------+------------------+-------------------+--------------------+---------------------|
+| Counter          | 308              | 334               | 24,268             | 48,818              |
+|------------------+------------------+-------------------+--------------------+---------------------|
+| EntryPoint       | 15,865           | 18,008            | 8,711              | 31,144              |
+|------------------+------------------+-------------------+--------------------+---------------------|
+| OperationHandler | 3,478            | 3,688             | 21,098             | 45,464              |
+|------------------+------------------+-------------------+--------------------+---------------------|
+| QuotaPaymaster   | 4,023            | 4,593             | 20,553             | 44,559              |
+|------------------+------------------+-------------------+--------------------+---------------------|
+| SenderCreator    | 899              | 951               | 23,677             | 48,201              |
+|------------------+------------------+-------------------+--------------------+---------------------|
+| SmartAccount     | 15,364           | 15,929            | 9,212              | 33,223              |
+|------------------+------------------+-------------------+--------------------+---------------------|
+| UserOperationLib | 175              | 203               | 24,401             | 48,949              |
+╰------------------+------------------+-------------------+--------------------+---------------------╯
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+  ╭▸ contracts/AccountFactory.sol:8:34
+  │
+8 │     IEntryPoint public immutable entryPoint;
+  │                                  ━━━━━━━━━━ help: consider using: `ENTRY_POINT`
+  │
+  ╰ help: https://getfoundry.sh/forge/linting/screaming-snake-case-immutable
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+   ╭▸ contracts/SmartAccount.sol:33:35
+   │
+33 │     IEntryPoint private immutable _entryPoint;
+   │                                   ━━━━━━━━━━━ help: consider using: `_ENTRY_POINT`
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/screaming-snake-case-immutable
+
+note[low-level-calls]: Low-level calls should be avoided
+    ╭▸ contracts/SmartAccount.sol:122:46
+    │
+122 │             (bool ok, bytes memory result) = actions[i].target.call{value: actions[i].value}(actions[i].data);
+    │                                              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/low-level-calls
+
+note[inline-assembly]: inline assembly (declared memory-safe); review business logic and side effects
+    ╭▸ contracts/SmartAccount.sol:220:13
+    │
+220 │             assembly ("memory-safe") { selector := mload(add(data, 32)) }
+    │             ━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/inline-assembly
+
+note[asm-keccak256]: use of inefficient hashing mechanism; consider using inline assembly
+   ╭▸ contracts/AccountFactory.sol:17:13
+   │
+17 │             keccak256(abi.encodePacked(type(SmartAccount).creationCode, abi.encode(entryPoint, owner, guardian)));
+   │             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/asm-keccak256
+
+warning[encode-packed-collision]: `abi.encodePacked()` called with multiple dynamic type arguments; hash collisions possible
+   ╭▸ contracts/AccountFactory.sol:17:23
+   │
+17 │             keccak256(abi.encodePacked(type(SmartAccount).creationCode, abi.encode(entryPoint, owner, guardian)));
+   │                       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/encode-packed-collision
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ contracts/SmartAccount.sol:143:31
+    │
+143 │         if (callData.length < 4 || bytes4(callData[:4]) != SmartAccount.executeOperation.selector) {
+    │                               ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ contracts/SmartAccount.sol:191:46
+    │
+191 │         if (signatures.length != threshold * 65) return false;
+    │                                              ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ contracts/SmartAccount.sol:194:97
+    │
+194 │             (address signer, ECDSA.RecoverError err,) = ECDSA.tryRecover(digest, signatures[i * 65:(i + 1) * 65]);
+    │                                                                                                 ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[custom-errors]: prefer using custom errors on revert and require calls
+   ╭▸ contracts/Counter.sol:15:9
+   │
+15 │         revert("INTENTIONAL_FAILURE");
+   │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/custom-errors
+
+note[screaming-snake-case-const]: constants should use SCREAMING_SNAKE_CASE
+   ╭▸ tests/contracts/Stateful.t.sol:10:17
+   │
+10 │     Vm constant vm = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
+   │                 ━━ help: consider using: `VM`
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/screaming-snake-case-const
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ contracts/SmartAccount.sol:194:110
+    │
+194 │             (address signer, ECDSA.RecoverError err,) = ECDSA.tryRecover(digest, signatures[i * 65:(i + 1) * 65]);
+    │                                                                                                              ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[too-many-digits]: numeric literal with many digits is error-prone; use scientific notation, sub-denominations, or underscore separators
+   ╭▸ tests/contracts/Stateful.t.sol:42:47
+   │
+42 │         op.accountGasLimits = bytes32(uint256(3000000) << 128 | uint256(1500000));
+   │                                               ━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/too-many-digits
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ contracts/SmartAccount.sol:216:40
+    │
+216 │                     || a.data.length < 4
+    │                                        ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[too-many-digits]: numeric literal with many digits is error-prone; use scientific notation, sub-denominations, or underscore separators
+   ╭▸ tests/contracts/Stateful.t.sol:42:73
+   │
+42 │         op.accountGasLimits = bytes32(uint256(3000000) << 128 | uint256(1500000));
+   │                                                                         ━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/too-many-digits
+
+warning[locked-ether]: contract can receive ETH but has no mechanism to send it out
+  ╭▸ contracts/Counter.sol:5:10
+  │
+5 │ contract Counter {
+  │          ━━━━━━━
+  │
+  ╰ help: https://getfoundry.sh/forge/linting/locked-ether
+
+note[too-many-digits]: numeric literal with many digits is error-prone; use scientific notation, sub-denominations, or underscore separators
+   ╭▸ tests/contracts/Stateful.t.sol:43:33
+   │
+43 │         op.preVerificationGas = 100000;
+   │                                 ━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/too-many-digits
+
+note[screaming-snake-case-const]: constants should use SCREAMING_SNAKE_CASE
+   ╭▸ tests/contracts/Stateful.t.sol:78:17
+   │
+78 │     Vm constant vm = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
+   │                 ━━ help: consider using: `VM`
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/screaming-snake-case-const
+
+note[multi-contract-file]: prefer having only one contract, interface or library per file
+  ╭▸ tests/contracts/Stateful.t.sol:9:10
+  │
+9 │ contract OperationHandler {
+  │          ━━━━━━━━━━━━━━━━
+  │
+  ╰ help: https://getfoundry.sh/forge/linting/multi-contract-file
+
+note[multi-contract-file]: prefer having only one contract, interface or library per file
+   ╭▸ tests/contracts/Stateful.t.sol:77:10
+   │
+77 │ contract StatefulTest {
+   │          ━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/multi-contract-file
+
+warning[missing-events-access-control]: `_executing` is changed without an event but is used for access control
+    ╭▸ contracts/SmartAccount.sol:125:9
+    │
+125 │         _executing = false;
+    │         ━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/missing-events-access-control
+
+warning[locked-ether]: contract can receive ETH but has no mechanism to send it out
+  ╭▸ tests/contracts/Stateful.t.sol:9:10
+  │
+9 │ contract OperationHandler {
+  │          ━━━━━━━━━━━━━━━━
+  │
+  ╰ help: https://getfoundry.sh/forge/linting/locked-ether
+
+warning[missing-events-access-control]: `recoveryProposals` is changed without an event but is used for access control
+    ╭▸ contracts/SmartAccount.sol:351:9
+    │
+351 │         recoveryProposals[id] = Recovery(replacement, readyAt, 0, epoch, true);
+    │         ━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/missing-events-access-control
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Stateful.t.sol:33:43
+   │
+33 │         uint256 delta = uint256(amount) % 1000 + 1;
+   │                                           ━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+warning[missing-events-access-control]: `recoveryId` is changed without an event but is used for access control
+    ╭▸ contracts/SmartAccount.sol:353:9
+    │
+353 │         recoveryId = id;
+    │         ━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/missing-events-access-control
+
+warning[missing-events-access-control]: `recoveryVotes` is changed without an event but is used for access control
+    ╭▸ contracts/SmartAccount.sol:356:9
+    │
+356 │         recoveryVotes = 0;
+    │         ━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/missing-events-access-control
+
+warning[missing-events-access-control]: `_voted` is changed without an event but is used for access control
+    ╭▸ contracts/SmartAccount.sol:374:9
+    │
+374 │         _voted[id][msg.sender] = true;
+    │         ━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/missing-events-access-control
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Stateful.t.sol:34:76
+   │
+34 │         SmartAccount.Action[] memory a = new SmartAccount.Action[](kind == 3 ? 2 : 1);
+   │                                                                            ━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Stateful.t.sol:37:21
+   │
+37 │         if (kind == 3) a[1] = SmartAccount.Action(address(counter), 0, abi.encodeCall(Counter.fail, ()));
+   │                     ━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Stateful.t.sol:51:77
+   │
+51 │         bool mustReject = kind == 2 || (kind == 1 && sessionSpent + value > 1000);
+   │                                                                             ━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[interface-naming]: interface names should be prefixed with 'I'
+   ╭▸ tests/contracts/Account.t.sol:13:11
+   │
+13 │ interface Vm {
+   │           ━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/interface-naming
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Stateful.t.sol:54:25
+   │
+54 │             if (kind != 3) {
+   │                         ━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+warning[missing-events-access-control]: `recoveryVotes` is changed without an event but is used for access control
+    ╭▸ contracts/SmartAccount.sol:376:31
+    │
+376 │         if (id == recoveryId) recoveryVotes = proposal.votes;
+    │                               ━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/missing-events-access-control
+
+note[screaming-snake-case-immutable]: immutables should use SCREAMING_SNAKE_CASE
+   ╭▸ tests/contracts/Account.t.sol:27:35
+   │
+27 │     SmartAccount public immutable account;
+   │                                   ━━━━━━━ help: consider using: `ACCOUNT`
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/screaming-snake-case-immutable
+
+note[low-level-calls]: Low-level calls should be avoided
+   ╭▸ tests/contracts/Account.t.sol:35:22
+   │
+35 │         (bool ok,) = address(account).call(payload);
+   │                      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/low-level-calls
+
+note[screaming-snake-case-const]: constants should use SCREAMING_SNAKE_CASE
+   ╭▸ tests/contracts/Account.t.sol:41:17
+   │
+41 │     Vm constant vm = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
+   │                 ━━ help: consider using: `VM`
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/screaming-snake-case-const
+
+note[too-many-digits]: numeric literal with many digits is error-prone; use scientific notation, sub-denominations, or underscore separators
+   ╭▸ tests/contracts/Account.t.sol:86:47
+   │
+86 │         op.accountGasLimits = bytes32(uint256(3000000) << 128 | uint256(1500000));
+   │                                               ━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/too-many-digits
+
+note[too-many-digits]: numeric literal with many digits is error-prone; use scientific notation, sub-denominations, or underscore separators
+   ╭▸ tests/contracts/Account.t.sol:86:73
+   │
+86 │         op.accountGasLimits = bytes32(uint256(3000000) << 128 | uint256(1500000));
+   │                                                                         ━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/too-many-digits
+
+note[too-many-digits]: numeric literal with many digits is error-prone; use scientific notation, sub-denominations, or underscore separators
+   ╭▸ tests/contracts/Account.t.sol:87:33
+   │
+87 │         op.preVerificationGas = 100000;
+   │                                 ━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/too-many-digits
+
+note[too-many-digits]: numeric literal with many digits is error-prone; use scientific notation, sub-denominations, or underscore separators
+    ╭▸ tests/contracts/Account.t.sol:120:69
+    │
+120 │         bytes memory prefix = abi.encodePacked(address(pm), uint128(500000), uint128(0));
+    │                                                                     ━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/too-many-digits
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+   ╭▸ contracts/SmartAccount.sol:84:5
+   │
+84 │ ┏     modifier onlySelf() {
+85 │ ┃         if (msg.sender != address(this)) revert Unauthorized();
+86 │ ┃         _;
+87 │ ┃     }
+   │ ┗━━━━━┛
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/unwrapped-modifier-logic
+help: wrap modifier logic to reduce code size
+   ╭╴
+84 ±     modifier onlySelf() {
+85 +         _onlySelf();
+86 +         _;
+87 +     }
+88 + 
+89 +     function _onlySelf() internal {
+90 +         if (msg.sender != address(this)) revert Unauthorized();
+91 +     }
+   ╰╴
+
+note[mixed-case-variable]: mutable variables should use mixedCase
+    ╭▸ tests/contracts/Account.t.sol:393:38
+    │
+393 │         WebAuthn.WebAuthnAuth memory wrongRP =
+    │                                      ━━━━━━━ help: consider using: `wrongRp`
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/mixed-case-variable
+
+warning[reentrancy-events]: event emitted after an external call; reentrancy can reorder or fabricate logs that off-chain consumers rely on
+   ╭▸ contracts/AccountFactory.sol:25:9
+   │
+25 │         emit AccountCreated(address(account), owner, guardian, salt);
+   │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/reentrancy-events
+
+warning[reentrancy-no-eth]: external call can be reentered before `sessionSpent` is updated
+   ╭▸ tests/contracts/Stateful.t.sol:52:13
+   │
+52 │         try ep.handleOps(list, payable(address(this))) {
+   │             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/reentrancy-no-eth
+
+note[low-level-calls]: Low-level calls should be avoided
+    ╭▸ tests/contracts/Account.t.sol:604:22
+    │
+604 │         (bool ok,) = address(account).call{value: 1 ether}("");
+    │                      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/low-level-calls
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Stateful.t.sol:87:17
+   │
+87 │         vm.warp(1000);
+   │                 ━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Stateful.t.sol:89:48
+   │
+89 │         account = new SmartAccount(ep, vm.addr(0xa11ce), vm.addr(0xdad));
+   │                                                ━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Stateful.t.sol:95:36
+   │
+95 │         account.setSession(vm.addr(0xb0b), address(counter), Counter.increment.selector, type(uint48).max, 1000);
+   │                                    ━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Stateful.t.sol:95:108
+   │
+95 │         account.setSession(vm.addr(0xb0b), address(counter), Counter.increment.selector, type(uint48).max, 1000);
+   │                                                                                                            ━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Stateful.t.sol:109:61
+    │
+109 │         (,,, uint256 remaining,) = account.sessions(vm.addr(0xb0b));
+    │                                                             ━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[too-many-digits]: numeric literal with many digits is error-prone; use scientific notation, sub-denominations, or underscore separators
+    ╭▸ tests/contracts/Account.t.sol:679:47
+    │
+679 │         op.accountGasLimits = bytes32(uint256(20000000) << 128 | uint256(1500000));
+    │                                               ━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/too-many-digits
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Stateful.t.sol:110:43
+    │
+110 │         require(handler.sessionSpent() <= 1000);
+    │                                           ━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Stateful.t.sol:111:55
+    │
+111 │         require(remaining + handler.sessionSpent() == 1000);
+    │                                                       ━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[too-many-digits]: numeric literal with many digits is error-prone; use scientific notation, sub-denominations, or underscore separators
+    ╭▸ tests/contracts/Account.t.sol:679:74
+    │
+679 │         op.accountGasLimits = bytes32(uint256(20000000) << 128 | uint256(1500000));
+    │                                                                          ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/too-many-digits
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Stateful.t.sol:116:40
+    │
+116 │         require(account.owners(vm.addr(0xa11ce)));
+    │                                        ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+warning[arbitrary-send-eth]: ETH is sent to a user-controlled destination; restrict the destination or the caller
+   ╭▸ tests/contracts/Stateful.t.sol:92:9
+   │
+92 │         ep.depositTo{value: 10 ether}(address(account));
+   │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/arbitrary-send-eth
+
+note[multi-contract-file]: prefer having only one contract, interface or library per file
+   ╭▸ tests/contracts/Account.t.sol:13:11
+   │
+13 │ interface Vm {
+   │           ━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/multi-contract-file
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Stateful.t.sol:109:36
+    │
+109 │         (,,, uint256 remaining,) = account.sessions(vm.addr(0xb0b));
+    │                                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+note[multi-contract-file]: prefer having only one contract, interface or library per file
+   ╭▸ tests/contracts/Account.t.sol:26:10
+   │
+26 │ contract CallbackTarget {
+   │          ━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/multi-contract-file
+
+note[multi-contract-file]: prefer having only one contract, interface or library per file
+   ╭▸ tests/contracts/Account.t.sol:40:10
+   │
+40 │ contract AccountTest {
+   │          ━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/multi-contract-file
+
+warning[locked-ether]: contract can receive ETH but has no mechanism to send it out
+   ╭▸ tests/contracts/Account.t.sol:26:10
+   │
+26 │ contract CallbackTarget {
+   │          ━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/locked-ether
+
+warning[reentrancy-eth]: uncapped ETH transfer can be reentered before `_executing` is updated
+    ╭▸ contracts/SmartAccount.sol:122:46
+    │
+122 │             (bool ok, bytes memory result) = actions[i].target.call{value: actions[i].value}(actions[i].data);
+    │                                              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/reentrancy-eth
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:121:25
+    │
+121 │         for (uint256 i; i < actions.length; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[calls-loop]: external call inside a loop
+    ╭▸ contracts/SmartAccount.sol:122:46
+    │
+122 │             (bool ok, bytes memory result) = actions[i].target.call{value: actions[i].value}(actions[i].data);
+    │                                              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/calls-loop
+
+warning[reentrancy-events]: event emitted after an external call; reentrancy can reorder or fabricate logs that off-chain consumers rely on
+    ╭▸ contracts/SmartAccount.sol:126:9
+    │
+126 │         emit Executed(nonce, payload);
+    │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/reentrancy-events
+
+warning[require-revert-in-loop]: `require` or `revert` inside a loop
+    ╭▸ contracts/SmartAccount.sol:123:22
+    │
+123 │             if (!ok) revert CallFailed(i, result);
+    │                      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/require-revert-in-loop
+
+note[asm-keccak256]: use of inefficient hashing mechanism; consider using inline assembly
+    ╭▸ contracts/SmartAccount.sol:115:27
+    │
+115 │         bytes32 payload = keccak256(msg.data);
+    │                           ━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/asm-keccak256
+
+note[asm-keccak256]: use of inefficient hashing mechanism; consider using inline assembly
+   ╭▸ contracts/QuotaPaymaster.sol:43:16
+   │
+43 │           return keccak256(
+   │ ┏━━━━━━━━━━━━━━━━┛
+44 │ ┃             abi.encode(
+45 │ ┃                 "W05:SPONSOR:v1",
+46 │ ┃                 block.chainid,
+   ‡ ┃
+61 │ ┃         );
+   │ ┗━━━━━━━━━┛
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/asm-keccak256
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:186:58
+    │
+186 │         _permits[keccak256(op.callData)] = Permit(epoch, signer, mode);
+    │                                                          ━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:187:16
+    │
+187 │         return validationData;
+    │                ━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:160:13
+    │
+160 │         if (n != op.nonce || e != epoch || actions.length == 0 || actions.length > 16 || op.signature.length < 1) {
+    │             ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:160:30
+    │
+160 │         if (n != op.nonce || e != epoch || actions.length == 0 || actions.length > 16 || op.signature.length < 1) {
+    │                              ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+note[named-struct-fields]: prefer initializing structs with named fields
+    ╭▸ contracts/SmartAccount.sol:186:44
+    │
+186 │         _permits[keccak256(op.callData)] = Permit(epoch, signer, mode);
+    │                                            ━━━━━━━━━━━━━━━━━━━━━━━━━━━ help: consider using named fields: `Permit({ epoch: epoch, signer: signer, mode: mode })`
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/named-struct-fields
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:193:25
+    │
+193 │         for (uint256 i; i < threshold; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:195:64
+    │
+195 │             if (err != ECDSA.RecoverError.NoError || signer <= previous || !owners[signer]) return false;
+    │                                                                ━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+note[asm-keccak256]: use of inefficient hashing mechanism; consider using inline assembly
+    ╭▸ contracts/SmartAccount.sol:203:16
+    │
+203 │         return keccak256(abi.encode("W05:ERC1271:v1", block.chainid, address(this), address(_entryPoint), epoch, hash));
+    │                ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/asm-keccak256
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:221:67
+    │
+221 │             if (selector != s.selector || a.value > s.remaining - total) return false;
+    │                                                                   ━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:212:25
+    │
+212 │         for (uint256 i; i < actions.length; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:232:13
+    │
+232 │             total += actions[i].value;
+    │             ━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:231:25
+    │
+231 │         for (uint256 i; i < actions.length; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[block-timestamp]: usage of `block.timestamp` in a comparison may be manipulated by validators
+    ╭▸ contracts/SmartAccount.sol:229:33
+    │
+229 │         if (s.epoch != epoch || block.timestamp > s.validUntil || !_sessionAllowed(s, actions)) revert SessionDenied();
+    │                                 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/block-timestamp
+
+warning[block-timestamp]: usage of `block.timestamp` in a comparison may be manipulated by validators
+    ╭▸ contracts/SmartAccount.sol:243:20
+    │
+243 │                 || validUntil <= block.timestamp
+    │                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/block-timestamp
+
+note[named-struct-fields]: prefer initializing structs with named fields
+    ╭▸ contracts/SmartAccount.sol:246:25
+    │
+246 │         sessions[key] = Session(target, selector, validUntil, budget, epoch);
+    │                         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ help: consider using named fields: `Session({ target: target, selector: selector, validUntil: validUntil, remaining: budget, epoch: epoch })`
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/named-struct-fields
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:258:25
+    │
+258 │         for (uint256 i; i < _owners.length; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:262:25
+    │
+262 │         for (uint256 i; i < list.length; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+note[costly-loop]: storage write inside a loop
+    ╭▸ contracts/SmartAccount.sol:259:13
+    │
+259 │             delete owners[_owners[i]];
+    │             ━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/costly-loop
+
+note[costly-loop]: storage write inside a loop
+    ╭▸ contracts/SmartAccount.sol:263:13
+    │
+263 │             owners[list[i]] = true;
+    │             ━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/costly-loop
+
+note[cache-array-length]: array length read in loop condition should be cached outside the loop
+    ╭▸ contracts/SmartAccount.sol:258:29
+    │
+258 │         for (uint256 i; i < _owners.length; ++i) {
+    │                             ━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/cache-array-length
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:274:25
+    │
+274 │         for (uint256 i; i < _guardians.length; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:278:25
+    │
+278 │         for (uint256 i; i < list.length; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+note[costly-loop]: storage write inside a loop
+    ╭▸ contracts/SmartAccount.sol:275:13
+    │
+275 │             delete guardians[_guardians[i]];
+    │             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/costly-loop
+
+note[costly-loop]: storage write inside a loop
+    ╭▸ contracts/SmartAccount.sol:279:13
+    │
+279 │             guardians[list[i]] = true;
+    │             ━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/costly-loop
+
+note[cache-array-length]: array length read in loop condition should be cached outside the loop
+    ╭▸ contracts/SmartAccount.sol:274:29
+    │
+274 │         for (uint256 i; i < _guardians.length; ++i) {
+    │                             ━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/cache-array-length
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:291:25
+    │
+291 │         for (uint256 i; i < list.length; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:292:28
+    │
+292 │             if (list[i] <= previous) revert InvalidPolicy();
+    │                            ━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[require-revert-in-loop]: `require` or `revert` inside a loop
+    ╭▸ contracts/SmartAccount.sol:292:38
+    │
+292 │             if (list[i] <= previous) revert InvalidPolicy();
+    │                                      ━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/require-revert-in-loop
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:333:25
+    │
+333 │         for (uint256 i; i < prefix.length; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+    ╭▸ contracts/SmartAccount.sol:322:51
+    │
+322 │         if (auth.authenticatorData.length < 37 || bytes32(auth.authenticatorData) != rpIdHash) return false;
+    │                                                   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'bytes32' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+    ╭▸ contracts/SmartAccount.sol:337:36
+    │
+337 │         if (json[prefix.length] != bytes1("}") && json[prefix.length] != bytes1(",")) return false;
+    │                                    ━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'bytes1' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+    ╭▸ contracts/SmartAccount.sol:337:74
+    │
+337 │         if (json[prefix.length] != bytes1("}") && json[prefix.length] != bytes1(",")) return false;
+    │                                                                          ━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'bytes1' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+    ╭▸ contracts/SmartAccount.sol:350:26
+    │
+350 │         uint48 readyAt = uint48(block.timestamp) + RECOVERY_DELAY;
+    │                          ━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint48' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+note[named-struct-fields]: prefer initializing structs with named fields
+    ╭▸ contracts/SmartAccount.sol:351:33
+    │
+351 │         recoveryProposals[id] = Recovery(replacement, readyAt, 0, epoch, true);
+    │                                 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ help: consider using named fields: `Recovery({ owner: replacement, readyAt: readyAt, votes: 0, policyEpoch: epoch, active: true })`
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/named-struct-fields
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Account.t.sol:62:35
+   │
+62 │         vm.deal(address(account), 100 ether);
+   │                                   ━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Account.t.sol:63:29
+   │
+63 │         ep.depositTo{value: 10 ether}(address(account));
+   │                             ━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Account.t.sol:64:27
+   │
+64 │         pm.deposit{value: 10 ether}();
+   │                           ━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+   ╭▸ tests/contracts/Account.t.sol:86:73
+   │
+86 │         op.accountGasLimits = bytes32(uint256(3000000) << 128 | uint256(1500000));
+   │                                                                         ━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:114:107
+    │
+114 │                 (vm.addr(SESSION), address(counter), Counter.increment.selector, uint48(block.timestamp + 100), budget)
+    │                                                                                                           ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:122:49
+    │
+122 │         uint48 until = uint48(block.timestamp + 100);
+    │                                                 ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:136:94
+    │
+136 │             signed(operation(actions(address(counter), 0, abi.encodeCall(Counter.increment, (3)))), OWNER, 0);
+    │                                                                                              ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:138:37
+    │
+138 │         require(counter.number() == 3);
+    │                                     ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:146:94
+    │
+146 │             signed(operation(actions(address(counter), 0, abi.encodeCall(Counter.increment, (3)))), SESSION, 0);
+    │                                                                                              ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:157:104
+    │
+157 │         account.executeOperation(0, 1, actions(address(counter), 0, abi.encodeCall(Counter.increment, (3))));
+    │                                                                                                        ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:160:81
+    │
+160 │         account.execute(address(counter), 0, abi.encodeCall(Counter.increment, (3)));
+    │                                                                                 ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:175:20
+    │
+175 │         vm.chainId(999);
+    │                    ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:184:45
+    │
+184 │         require(account.isValidSignature(h, hex"00") == 0xffffffff);
+    │                                             ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:184:57
+    │
+184 │         require(account.isValidSignature(h, hex"00") == 0xffffffff);
+    │                                                         ━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:186:49
+    │
+186 │         require(other.isValidSignature(h, s) == 0xffffffff);
+    │                                                 ━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:187:20
+    │
+187 │         vm.chainId(999);
+    │                    ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:188:51
+    │
+188 │         require(account.isValidSignature(h, s) == 0xffffffff);
+    │                                                   ━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:192:20
+    │
+192 │         addSession(2 ether);
+    │                    ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:193:57
+    │
+193 │         send(signed(operation(actions(address(counter), 1 ether, abi.encodeCall(Counter.increment, (1)))), SESSION, 1));
+    │                                                         ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:196:56
+    │
+196 │             signed(operation(actions(address(counter), 2 ether, abi.encodeCall(Counter.increment, (1)))), SESSION, 1);
+    │                                                        ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:210:20
+    │
+210 │         addSession(1 ether);
+    │                    ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ contracts/SmartAccount.sol:407:25
+    │
+407 │         for (uint256 i; i < _owners.length; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:224:20
+    │
+224 │         addSession(1 ether);
+    │                    ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:232:92
+    │
+232 │         ops[1] = operation(actions(address(counter), 0, abi.encodeCall(Counter.increment, (100))));
+    │                                                                                            ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+warning[block-timestamp]: usage of `block.timestamp` in a comparison may be manipulated by validators
+    ╭▸ contracts/SmartAccount.sol:403:20
+    │
+403 │                 || block.timestamp < proposal.readyAt
+    │                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/block-timestamp
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:236:102
+    │
+236 │             (n + 1, account.epoch(), actions(address(counter), 0, abi.encodeCall(Counter.increment, (100))))
+    │                                                                                                      ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:273:35
+    │
+273 │         vm.warp(block.timestamp + 2 days);
+    │                                   ━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[costly-loop]: storage write inside a loop
+    ╭▸ contracts/SmartAccount.sol:408:13
+    │
+408 │             delete owners[_owners[i]];
+    │             ━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/costly-loop
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:313:46
+    │
+313 │         (bytes32 r, bytes32 s) = vm.signP256(42, sha256(abi.encodePacked(data, sha256(bytes(json)))));
+    │                                              ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[cache-array-length]: array length read in loop condition should be cached outside the loop
+    ╭▸ contracts/SmartAccount.sol:407:29
+    │
+407 │         for (uint256 i; i < _owners.length; ++i) {
+    │                             ━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/cache-array-length
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:314:73
+    │
+314 │         WebAuthn.WebAuthnAuth memory auth = WebAuthn.WebAuthnAuth(r, s, 23, 1, data, json);
+    │                                                                         ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:341:74
+    │
+341 │         bytes memory data = abi.encodePacked(sha256("localhost"), bytes1(0x05), bytes4(0));
+    │                                                                          ━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:342:46
+    │
+342 │         (bytes32 r, bytes32 s) = vm.signP256(42, sha256(abi.encodePacked(data, sha256(bytes(json)))));
+    │                                              ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:343:55
+    │
+343 │         return abi.encode(WebAuthn.WebAuthnAuth(r, s, 23, 1, data, json));
+    │                                                       ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:347:51
+    │
+347 │         (uint256 x, uint256 y) = vm.publicKeyP256(42);
+    │                                                   ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:380:51
+    │
+380 │         (uint256 x, uint256 y) = vm.publicKeyP256(42);
+    │                                                   ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:389:71
+    │
+389 │         op.signature = abi.encodePacked(uint8(2), passkeyAssertion(h, 0x05, "http://evilhostx:3155"));
+    │                                                                       ━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:394:44
+    │
+394 │             abi.decode(passkeyAssertion(h, 0x05, "http://localhost:3155"), (WebAuthn.WebAuthnAuth));
+    │                                            ━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:395:82
+    │
+395 │         wrongRP.authenticatorData = abi.encodePacked(sha256("evilhostx"), bytes1(0x05), bytes4(0));
+    │                                                                                  ━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:397:25
+    │
+397 │             vm.signP256(42, sha256(abi.encodePacked(wrongRP.authenticatorData, sha256(bytes(wrongRP.clientDataJSON)))));
+    │                         ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:399:71
+    │
+399 │         op.signature = abi.encodePacked(uint8(2), passkeyAssertion(h, 0x05, "http://evil.test"));
+    │                                                                       ━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:405:89
+    │
+405 │         op.signature = abi.encodePacked(uint8(2), passkeyAssertion(bytes32(uint256(1)), 0x05, "http://localhost:3155"));
+    │                                                                                         ━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:408:71
+    │
+408 │         op.signature = abi.encodePacked(uint8(2), passkeyAssertion(h, 0x05, "http://localhost:3155"));
+    │                                                                       ━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:412:63
+    │
+412 │         require(!account.verifyPasskey(h, passkeyAssertion(h, 0x05, "http://localhost:3155")));
+    │                                                               ━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:433:47
+    │
+433 │         address[] memory list = new address[](3);
+    │                                               ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:436:27
+    │
+436 │         list[2] = vm.addr(23);
+    │                           ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:437:29
+    │
+437 │         for (uint256 i; i < 3; ++i) {
+    │                             ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:438:41
+    │
+438 │             for (uint256 j = i + 1; j < 3; ++j) {
+    │                                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:444:41
+    │
+444 │         account.proposeRecovery(vm.addr(999));
+    │                                         ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:447:41
+    │
+447 │         account.proposeRecovery(vm.addr(888));
+    │                                         ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:448:52
+    │
+448 │         require(account.recoveryOwner() == vm.addr(888));
+    │                                                    ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:454:35
+    │
+454 │         vm.warp(block.timestamp + 2 days);
+    │                                   ━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:456:40
+    │
+456 │         require(account.owners(vm.addr(888)));
+    │                                        ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:460:20
+    │
+460 │         addSession(1 ether);
+    │                    ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:463:20
+    │
+463 │         addSession(2 ether);
+    │                    ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:470:20
+    │
+470 │         addSession(1 ether);
+    │                    ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:474:56
+    │
+474 │             signed(operation(actions(address(counter), 0.7 ether, abi.encodeCall(Counter.increment, (1)))), SESSION, 1);
+    │                                                        ━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:475:54
+    │
+475 │         ops[1] = operation(actions(address(counter), 0.7 ether, abi.encodeCall(Counter.increment, (10))));
+    │                                                      ━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:475:100
+    │
+475 │         ops[1] = operation(actions(address(counter), 0.7 ether, abi.encodeCall(Counter.increment, (10))));
+    │                                                                                                    ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:479:64
+    │
+479 │             (n + 1, account.epoch(), actions(address(counter), 0.7 ether, abi.encodeCall(Counter.increment, (10))))
+    │                                                                ━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:479:110
+    │
+479 │             (n + 1, account.epoch(), actions(address(counter), 0.7 ether, abi.encodeCall(Counter.increment, (10))))
+    │                                                                                                              ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:536:39
+    │
+536 │         pm.setQuota(address(account), 100 ether);
+    │                                       ━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:550:35
+    │
+550 │         vm.warp(block.timestamp + 2 days);
+    │                                   ━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:571:107
+    │
+571 │             (uint256(0), account.epoch(), actions(address(counter), 0, abi.encodeCall(Counter.increment, (100))))
+    │                                                                                                           ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:581:35
+    │
+581 │         vm.warp(block.timestamp + 2 days);
+    │                                   ━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:604:51
+    │
+604 │         (bool ok,) = address(account).call{value: 1 ether}("");
+    │                                                   ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:616:58
+    │
+616 │         bytes32 second = account.proposeRecovery(vm.addr(42));
+    │                                                          ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:618:35
+    │
+618 │         vm.warp(block.timestamp + 2 days);
+    │                                   ━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:622:40
+    │
+622 │         require(account.owners(vm.addr(42)));
+    │                                        ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:630:51
+    │
+630 │         (uint256 x, uint256 y) = vm.publicKeyP256(42);
+    │                                                   ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:650:90
+    │
+650 │                 (vm.addr(SESSION), address(account), bytes4(0), uint48(block.timestamp + 100), uint256(1))
+    │                                                                                          ━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:667:29
+    │
+667 │         ep.depositTo{value: 1 ether}(predicted);
+    │                             ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:668:115
+    │
+668 │         PackedUserOperation memory op = operation(actions(address(counter), 0, abi.encodeCall(Counter.increment, (5))));
+    │                                                                                                                   ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:676:102
+    │
+676 │             (uint256(0), uint256(1), actions(address(counter), 0, abi.encodeCall(Counter.increment, (5))))
+    │                                                                                                      ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:679:74
+    │
+679 │         op.accountGasLimits = bytes32(uint256(20000000) << 128 | uint256(1500000));
+    │                                                                          ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:682:37
+    │
+682 │         require(counter.number() == 5);
+    │                                     ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:687:23
+    │
+687 │         uint192 key = 42;
+    │                       ━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:712:111
+    │
+712 │             vm.addr(SESSION), address(counter), Counter.increment.selector, uint48(block.timestamp + 1 days), 1 ether
+    │                                                                                                               ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:727:20
+    │
+727 │         addSession(1 ether);
+    │                    ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+note[literal-instead-of-constant]: this literal appears multiple times in the contract; declare a named constant for it
+    ╭▸ tests/contracts/Account.t.sol:773:31
+    │
+773 │         op.paymasterAndData = hex"00";
+    │                               ━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/literal-instead-of-constant
+
+warning[arbitrary-send-eth]: ETH is sent to a user-controlled destination; restrict the destination or the caller
+   ╭▸ tests/contracts/Account.t.sol:63:9
+   │
+63 │         ep.depositTo{value: 10 ether}(address(account));
+   │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/arbitrary-send-eth
+
+warning[arbitrary-send-eth]: ETH is sent to a user-controlled destination; restrict the destination or the caller
+   ╭▸ tests/contracts/Account.t.sol:64:9
+   │
+64 │         pm.deposit{value: 10 ether}();
+   │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/arbitrary-send-eth
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+    ╭▸ tests/contracts/Account.t.sol:114:82
+    │
+114 │                 (vm.addr(SESSION), address(counter), Counter.increment.selector, uint48(block.timestamp + 100), budget)
+    │                                                                                  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint48' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+    ╭▸ tests/contracts/Account.t.sol:122:24
+    │
+122 │         uint48 until = uint48(block.timestamp + 100);
+    │                        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint48' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[encode-packed-collision]: `abi.encodePacked()` called with multiple dynamic type arguments; hash collisions possible
+    ╭▸ tests/contracts/Account.t.sol:252:24
+    │
+252 │         op.signature = abi.encodePacked(uint8(0), sig(OWNER, h), sig(OWNER, h));
+    │                        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/encode-packed-collision
+
+warning[encode-packed-collision]: `abi.encodePacked()` called with multiple dynamic type arguments; hash collisions possible
+    ╭▸ tests/contracts/Account.t.sol:255:24
+    │
+255 │         op.signature = abi.encodePacked(uint8(0), sig(a < b ? OWNER : SESSION, h), sig(a < b ? SESSION : OWNER, h));
+    │                        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/encode-packed-collision
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:263:9
+    │
+263 │         account.proposeRecovery(vm.addr(SESSION));
+    │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:272:9
+    │
+272 │         account.proposeRecovery(vm.addr(SESSION));
+    │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[uninitialized-local]: local variable is read before being initialized
+    ╭▸ tests/contracts/Account.t.sol:437:25
+    │
+437 │         for (uint256 i; i < 3; ++i) {
+    │                         ━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:444:9
+    │
+444 │         account.proposeRecovery(vm.addr(999));
+    │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:447:9
+    │
+447 │         account.proposeRecovery(vm.addr(888));
+    │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:453:9
+    │
+453 │         account.proposeRecovery(vm.addr(777));
+    │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:484:33
+    │
+484 │         (,,, uint256 budget,) = account.sessions(vm.addr(SESSION));
+    │                                 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:538:9
+    │
+538 │         pm.validatePaymasterUserOp(op, 0, 1);
+    │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:544:9
+    │
+544 │         account.proposeRecovery(vm.addr(SESSION));
+    │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:559:36
+    │
+559 │         (,,, uint256 remaining,) = account.sessions(vm.addr(SESSION));
+    │                                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:580:9
+    │
+580 │         account.proposeRecovery(vm.addr(SESSION));
+    │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[arbitrary-send-eth]: ETH is sent to a user-controlled destination; restrict the destination or the caller
+    ╭▸ tests/contracts/Account.t.sol:604:22
+    │
+604 │         (bool ok,) = address(account).call{value: 1 ether}("");
+    │                      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/arbitrary-send-eth
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+    ╭▸ tests/contracts/Account.t.sol:650:65
+    │
+650 │                 (vm.addr(SESSION), address(account), bytes4(0), uint48(block.timestamp + 100), uint256(1))
+    │                                                                 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint48' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[arbitrary-send-eth]: ETH is sent to a user-controlled destination; restrict the destination or the caller
+    ╭▸ tests/contracts/Account.t.sol:667:9
+    │
+667 │         ep.depositTo{value: 1 ether}(predicted);
+    │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/arbitrary-send-eth
+
+warning[unsafe-typecast]: typecasts that can truncate values should be checked
+    ╭▸ tests/contracts/Account.t.sol:712:77
+    │
+712 │             vm.addr(SESSION), address(counter), Counter.increment.selector, uint48(block.timestamp + 1 days), 1 ether
+    │                                                                             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint48' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:757:30
+    │
+757 │         (,,,, bool active) = account.recoveryProposals(first);
+    │                              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[unused-return]: Return value of an external call is not used
+    ╭▸ tests/contracts/Account.t.sol:776:9
+    │
+776 │         pm.sponsorshipDigest(op, 1, 0, policyEpoch);
+    │         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+No files changed, compilation skipped
+
+Ran 40 tests for tests/contracts/Account.t.sol:AccountTest
+[PASS] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 242057)
+[PASS] testCallbackCannotReenterExecutionOrFinalizeRecovery() (gas: 939896)
+[PASS] testCancelSpecificProposalDoesNotCancelIndependentThreshold() (gas: 629262)
+[PASS] testCancellingOneRecoveryDoesNotClearAnotherProposal() (gas: 473501)
+[PASS] testCounterfactualFactoryDeploymentViaEntryPoint() (gas: 3576240)
+[PASS] testCrossChainSignatureRejected() (gas: 122886)
+[PASS] testDirectAndInheritedBypassDenied() (gas: 41853)
+[PASS] testERC1271DomainAndMalformed() (gas: 3437725)
+[PASS] testEveryPolicySetterRejectsDirectExternalCallers() (gas: 200411)
+[PASS] testExpiredRotatedSponsorAndUnauthorizedPaymaster() (gas: 475255)
+[PASS] testFactoryIdempotentAndSeparated() (gas: 63132)
+[PASS] testFuzzSessionBudget(uint64) (runs: 1000, μ: 463205, ~: 463181)
+[PASS] testFuzz_AtomicRollback(uint96) (runs: 1000, μ: 231995, ~: 232393)
+[PASS] testFuzz_OwnerAmount(uint96) (runs: 1000, μ: 149631, ~: 149869)
+[PASS] testGuardianCannotLockRecoverySlot() (gas: 967951)
+[PASS] testIndependentNonceKeysAndReplayIsolation() (gas: 273761)
+[PASS] testInvalidOwnerGuardianListsAndUnauthorizedAdmin() (gas: 428558)
+[PASS] testInvalidSelectorsNonceAndEmptyBatch() (gas: 321153)
+[PASS] testListsReceiveAndDisabledBatch() (gas: 59860)
+[PASS] testMalformedPasskeyAndUnknownSignatureMode() (gas: 797610)
+[PASS] testMalformedSessionECDSAIsRejectedByEntryPoint() (gas: 280831)
+[PASS] testMultisigSortedUniqueThreshold() (gas: 398224)
+[PASS] testOwnerExecutionAndNonceReplay() (gas: 260039)
+[PASS] testPasskeyCapturedChromiumExtension() (gas: 645901)
+[PASS] testPasskeyExtensionAndPrefixBoundaries() (gas: 1311259)
+[PASS] testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation() (gas: 1359280)
+[PASS] testPaymasterConstructorAndZeroSponsorGuards() (gas: 6706)
+[PASS] testPolicyListRejectsZeroThresholdAndOversizedMembership() (gas: 83405)
+[PASS] testRecoveryDelayDuplicateVoteCancelAndEpoch() (gas: 880457)
+[PASS] testRecoveryWrongGuardianAndStalePolicy() (gas: 457884)
+[PASS] testRevocationBetweenValidationAndExecution() (gas: 424703)
+[PASS] testSessionBudgetExpiryAndRevocation() (gas: 831214)
+[PASS] testSessionCannotAdminOrWrongSelector() (gas: 394913)
+[PASS] testSessionReconfigurationInvalidatesQueuedOperation() (gas: 417710)
+[PASS] testSponsorCannotBeClearedOrConstructedWithZeroSigner() (gas: 36197)
+[PASS] testSponsorQuotaAndTamperRejected() (gas: 418163)
+[PASS] testSponsorshipDigestRejectsTruncatedPaymasterHeader() (gas: 37662)
+[PASS] testSponsorshipReservesQuotaOnRevertingExecution() (gas: 269240)
+[PASS] testTwoSessionOpsCannotOverspendOneBudget() (gas: 478218)
+[PASS] testWrongSignerAndMalformedSignature() (gas: 199994)
+Suite result: ok. 40 passed; 0 failed; 0 skipped; finished in 6.97s (20.56s CPU time)
+
+Ran 1 test for tests/contracts/Stateful.t.sol:StatefulTest
+[PASS]
+StatefulTest invariants:
+[PASS] invariant_CounterMatchesModel
+[PASS] invariant_OwnershipNeverChanges
+[PASS] invariant_SessionNeverOverspends
+ StatefulTest invariants (runs: 256, calls: 16384, reverts: 0)
+
+╭------------------+--------------+-------+---------+----------╮
+| Contract         | Selector     | Calls | Reverts | Discards |
++==============================================================+
+| OperationHandler | step         | 8179  | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| OperationHandler | unauthorized | 8205  | 0       | 0        |
+╰------------------+--------------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 91.27s (91.21s CPU time)
+
+Ran 2 test suites in 91.29s (98.24s CPU time): 41 tests passed, 0 failed, 0 skipped (41 total tests)
+No files changed, compilation skipped
+
+Ran 40 tests for tests/contracts/Account.t.sol:AccountTest
+[PASS] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 242057)
+[PASS] testCallbackCannotReenterExecutionOrFinalizeRecovery() (gas: 939896)
+[PASS] testCancelSpecificProposalDoesNotCancelIndependentThreshold() (gas: 629262)
+[PASS] testCancellingOneRecoveryDoesNotClearAnotherProposal() (gas: 473501)
+[PASS] testCounterfactualFactoryDeploymentViaEntryPoint() (gas: 3576240)
+[PASS] testCrossChainSignatureRejected() (gas: 122886)
+[PASS] testDirectAndInheritedBypassDenied() (gas: 41853)
+[PASS] testERC1271DomainAndMalformed() (gas: 3437725)
+[PASS] testEveryPolicySetterRejectsDirectExternalCallers() (gas: 200411)
+[PASS] testExpiredRotatedSponsorAndUnauthorizedPaymaster() (gas: 475255)
+[PASS] testFactoryIdempotentAndSeparated() (gas: 63132)
+[PASS] testFuzzSessionBudget(uint64) (runs: 1000, μ: 463205, ~: 463181)
+[PASS] testFuzz_AtomicRollback(uint96) (runs: 1000, μ: 231995, ~: 232393)
+[PASS] testFuzz_OwnerAmount(uint96) (runs: 1000, μ: 149631, ~: 149869)
+[PASS] testGuardianCannotLockRecoverySlot() (gas: 967951)
+[PASS] testIndependentNonceKeysAndReplayIsolation() (gas: 273761)
+[PASS] testInvalidOwnerGuardianListsAndUnauthorizedAdmin() (gas: 428558)
+[PASS] testInvalidSelectorsNonceAndEmptyBatch() (gas: 321153)
+[PASS] testListsReceiveAndDisabledBatch() (gas: 59860)
+[PASS] testMalformedPasskeyAndUnknownSignatureMode() (gas: 797610)
+[PASS] testMalformedSessionECDSAIsRejectedByEntryPoint() (gas: 280831)
+[PASS] testMultisigSortedUniqueThreshold() (gas: 398224)
+[PASS] testOwnerExecutionAndNonceReplay() (gas: 260039)
+[PASS] testPasskeyCapturedChromiumExtension() (gas: 645901)
+[PASS] testPasskeyExtensionAndPrefixBoundaries() (gas: 1311259)
+[PASS] testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation() (gas: 1359280)
+[PASS] testPaymasterConstructorAndZeroSponsorGuards() (gas: 6706)
+[PASS] testPolicyListRejectsZeroThresholdAndOversizedMembership() (gas: 83405)
+[PASS] testRecoveryDelayDuplicateVoteCancelAndEpoch() (gas: 880457)
+[PASS] testRecoveryWrongGuardianAndStalePolicy() (gas: 457884)
+[PASS] testRevocationBetweenValidationAndExecution() (gas: 424703)
+[PASS] testSessionBudgetExpiryAndRevocation() (gas: 831214)
+[PASS] testSessionCannotAdminOrWrongSelector() (gas: 394913)
+[PASS] testSessionReconfigurationInvalidatesQueuedOperation() (gas: 417710)
+[PASS] testSponsorCannotBeClearedOrConstructedWithZeroSigner() (gas: 36197)
+[PASS] testSponsorQuotaAndTamperRejected() (gas: 418163)
+[PASS] testSponsorshipDigestRejectsTruncatedPaymasterHeader() (gas: 37662)
+[PASS] testSponsorshipReservesQuotaOnRevertingExecution() (gas: 269240)
+[PASS] testTwoSessionOpsCannotOverspendOneBudget() (gas: 478218)
+[PASS] testWrongSignerAndMalformedSignature() (gas: 199994)
+Suite result: ok. 40 passed; 0 failed; 0 skipped; finished in 5.70s (15.98s CPU time)
+
+Ran 1 test suite in 5.72s (5.70s CPU time): 40 tests passed, 0 failed, 0 skipped (40 total tests)

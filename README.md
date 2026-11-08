@@ -1,5 +1,6 @@
 # Smart Account Platform · W05
 
+[Current self-assessment and release gates](docs/audit/review-2026-11-08.md) · [WSL source policy](docs/deployment/workspace-workflow.md)
 A working ERC-4337 v0.8 account workspace with immutable CREATE2 accounts, ERC-1271 signatures, atomic batches, gas sponsorship, scoped session keys, WebAuthn/P256 authorization, threshold owners and delayed guardian recovery.
 
 **Evidence boundary:** the application currently runs on an isolated Anvil chain with a local allowlisted bundler. It is not a production wallet, independent security audit, permissionless public bundler certification, or proof of public-testnet deployment. The local signer UI uses disposable session-storage keys. Never use those keys for real assets. Physical authenticators and independent human custody are separate acceptance gates.

@@ -1,3 +1,4 @@
+import { applicationOrigins, proxyToken } from "../packages/http-policy.js";
 import { openSync, closeSync, fsyncSync } from "node:fs";
 import { BaseError, HttpRequestError, TimeoutError } from "viem";
 import { concat, keccak256 } from "viem";
@@ -7,7 +8,7 @@ import {
   type IncomingMessage,
   type ServerResponse,
 } from "node:http";
-import { randomBytes } from "node:crypto";
+import { randomBytes, timingSafeEqual } from "node:crypto";
 import { readFileSync, writeFileSync, renameSync, existsSync } from "node:fs";
 import {
   createPublicClient,
@@ -47,6 +48,8 @@ const target = process.env.W05_NETWORK ?? "local";
 if (target !== "local" && target !== "sepolia")
   throw new Error("Invalid W05_NETWORK");
 const runtimeDir = target === "local" ? ".runtime" : ".runtime/sepolia";
+const trustedOrigins = applicationOrigins();
+const trustedProxyToken = proxyToken();
 if (
   target === "sepolia" &&
   process.env.W05_PUBLIC_BROADCAST_AUTHORIZED !== "sepolia-11155111"
@@ -561,6 +564,19 @@ const rpcAllowed = new Set([
   "eth_sendRawTransaction",
 ]);
 const server = createServer(async (req, res) => {
+  if (trustedProxyToken) {
+    const header = req.headers["x-w05-proxy-token"];
+    const presented =
+      typeof header === "string" ? Buffer.from(header) : Buffer.alloc(0);
+    const expected = Buffer.from(trustedProxyToken);
+    if (
+      presented.length !== expected.length ||
+      !timingSafeEqual(presented, expected)
+    ) {
+      reply(res, 403, { error: "Untrusted proxy" });
+      return;
+    }
+  }
   const started = Date.now();
   const url = new URL(req.url ?? "/", "http://127.0.0.1:4355");
   try {
@@ -577,9 +593,7 @@ const server = createServer(async (req, res) => {
     }
     if (
       req.method === "POST" &&
-      !["http://localhost:3155", "http://127.0.0.1:3155"].includes(
-        req.headers.origin ?? "",
-      )
+      !trustedOrigins.includes(req.headers.origin ?? "")
     ) {
       reply(res, 403, { error: "Untrusted origin" });
       return;

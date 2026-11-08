@@ -1,0 +1,58 @@
+No files changed, compilation skipped
+
+Ran 34 tests for tests/contracts/Account.t.sol:AccountTest
+[PASS] testAtomicBatchRollbackAndGasNonceStillConsumed() (gas: 242013)
+[PASS] testCallbackCannotReenterExecutionOrFinalizeRecovery() (gas: 939773)
+[PASS] testCancelSpecificProposalDoesNotCancelIndependentThreshold() (gas: 629177)
+[PASS] testCounterfactualFactoryDeploymentViaEntryPoint() (gas: 3576152)
+[PASS] testCrossChainSignatureRejected() (gas: 122798)
+[PASS] testDirectAndInheritedBypassDenied() (gas: 41831)
+[PASS] testERC1271DomainAndMalformed() (gas: 3437703)
+[PASS] testExpiredRotatedSponsorAndUnauthorizedPaymaster() (gas: 475189)
+[PASS] testFactoryIdempotentAndSeparated() (gas: 63132)
+[PASS] testFuzzSessionBudget(uint64) (runs: 1000, μ: 463091, ~: 463066)
+[PASS] testFuzz_AtomicRollback(uint96) (runs: 1000, μ: 231907, ~: 232305)
+[PASS] testFuzz_OwnerAmount(uint96) (runs: 1000, μ: 149587, ~: 149825)
+[PASS] testGuardianCannotLockRecoverySlot() (gas: 967954)
+[PASS] testIndependentNonceKeysAndReplayIsolation() (gas: 273673)
+[PASS] testInvalidOwnerGuardianListsAndUnauthorizedAdmin() (gas: 428514)
+[PASS] testInvalidSelectorsNonceAndEmptyBatch() (gas: 321065)
+[PASS] testListsReceiveAndDisabledBatch() (gas: 59772)
+[PASS] testMalformedPasskeyAndUnknownSignatureMode() (gas: 797478)
+[PASS] testMultisigSortedUniqueThreshold() (gas: 398224)
+[PASS] testOwnerExecutionAndNonceReplay() (gas: 259907)
+[PASS] testPasskeyCapturedChromiumExtension() (gas: 645815)
+[PASS] testPasskeyExtensionAndPrefixBoundaries() (gas: 1311251)
+[PASS] testPasskeyValidWrongOriginNoUVWrongChallengeAndRevocation() (gas: 1359262)
+[PASS] testPaymasterConstructorAndZeroSponsorGuards() (gas: 6618)
+[PASS] testRecoveryDelayDuplicateVoteCancelAndEpoch() (gas: 880395)
+[PASS] testRecoveryWrongGuardianAndStalePolicy() (gas: 457752)
+[PASS] testRevocationBetweenValidationAndExecution() (gas: 424659)
+[PASS] testSessionBudgetExpiryAndRevocation() (gas: 831126)
+[PASS] testSessionCannotAdminOrWrongSelector() (gas: 394825)
+[PASS] testSessionReconfigurationInvalidatesQueuedOperation() (gas: 417710)
+[PASS] testSponsorQuotaAndTamperRejected() (gas: 418119)
+[PASS] testSponsorshipReservesQuotaOnRevertingExecution() (gas: 269108)
+[PASS] testTwoSessionOpsCannotOverspendOneBudget() (gas: 478059)
+[PASS] testWrongSignerAndMalformedSignature() (gas: 199906)
+Suite result: ok. 34 passed; 0 failed; 0 skipped; finished in 3.50s (10.24s CPU time)
+
+Ran 1 test for tests/contracts/Stateful.t.sol:StatefulTest
+[PASS]
+StatefulTest invariants:
+[PASS] invariant_CounterMatchesModel
+[PASS] invariant_OwnershipNeverChanges
+[PASS] invariant_SessionNeverOverspends
+ StatefulTest invariants (runs: 256, calls: 16384, reverts: 0)
+
+╭------------------+--------------+-------+---------+----------╮
+| Contract         | Selector     | Calls | Reverts | Discards |
++==============================================================+
+| OperationHandler | step         | 8179  | 0       | 0        |
+|------------------+--------------+-------+---------+----------|
+| OperationHandler | unauthorized | 8205  | 0       | 0        |
+╰------------------+--------------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 51.06s (51.05s CPU time)
+
+Ran 2 test suites in 51.09s (54.55s CPU time): 35 tests passed, 0 failed, 0 skipped (35 total tests)

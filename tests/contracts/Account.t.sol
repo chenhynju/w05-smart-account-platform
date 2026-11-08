@@ -699,4 +699,80 @@ contract AccountTest {
         vm.expectRevert();
         send(op);
     }
+
+    function testEveryPolicySetterRejectsDirectExternalCallers() public {
+        address[] memory list = new address[](1);
+        list[0] = vm.addr(OWNER);
+        vm.expectRevert(SmartAccount.Unauthorized.selector);
+        account.setOwners(list, 1);
+        vm.expectRevert(SmartAccount.Unauthorized.selector);
+        account.setGuardians(list, 1);
+        vm.expectRevert(SmartAccount.Unauthorized.selector);
+        account.setSession(
+            vm.addr(SESSION), address(counter), Counter.increment.selector, uint48(block.timestamp + 1 days), 1 ether
+        );
+        vm.expectRevert(SmartAccount.Unauthorized.selector);
+        account.revokeSession(vm.addr(SESSION));
+        vm.expectRevert(SmartAccount.Unauthorized.selector);
+        account.setPasskey(bytes32(uint256(1)), bytes32(uint256(2)), keccak256("rp"), "https://wallet.example");
+        vm.expectRevert(SmartAccount.Unauthorized.selector);
+        account.revokePasskey();
+        vm.expectRevert(SmartAccount.Unauthorized.selector);
+        account.cancelRecovery();
+        vm.expectRevert(SmartAccount.Unauthorized.selector);
+        account.cancelRecovery(bytes32(0));
+    }
+
+    function testMalformedSessionECDSAIsRejectedByEntryPoint() public {
+        addSession(1 ether);
+        PackedUserOperation memory op = operation(actions(address(counter), 0, abi.encodeCall(Counter.increment, (1))));
+        op.signature = abi.encodePacked(uint8(1), bytes("malformed"));
+        vm.expectRevert();
+        send(op);
+        require(counter.number() == 0);
+    }
+
+    function testPolicyListRejectsZeroThresholdAndOversizedMembership() public {
+        address[] memory list = new address[](1);
+        list[0] = vm.addr(OWNER);
+        vm.expectRevert(SmartAccount.InvalidPolicy.selector);
+        vm.prank(address(account));
+        account.setOwners(list, 0);
+        vm.expectRevert(SmartAccount.InvalidPolicy.selector);
+        vm.prank(address(account));
+        account.setGuardians(list, 2);
+        address[] memory oversized = new address[](11);
+        vm.expectRevert(SmartAccount.InvalidPolicy.selector);
+        vm.prank(address(account));
+        account.setOwners(oversized, 1);
+    }
+
+    function testCancellingOneRecoveryDoesNotClearAnotherProposal() public {
+        vm.prank(guardian);
+        bytes32 first = account.proposeRecovery(vm.addr(51));
+        vm.prank(guardian);
+        bytes32 second = account.proposeRecovery(vm.addr(52));
+        vm.prank(address(account));
+        account.cancelRecovery(first);
+        (,,,, bool active) = account.recoveryProposals(first);
+        require(!active && account.recoveryId() == second);
+        vm.prank(address(account));
+        account.cancelRecovery(second);
+        require(account.recoveryId() == bytes32(0));
+    }
+
+    function testSponsorCannotBeClearedOrConstructedWithZeroSigner() public {
+        vm.expectRevert(QuotaPaymaster.InvalidSponsorship.selector);
+        pm.setSponsor(address(0));
+        vm.expectRevert(QuotaPaymaster.InvalidSponsorship.selector);
+        new QuotaPaymaster(ep, address(0));
+    }
+
+    function testSponsorshipDigestRejectsTruncatedPaymasterHeader() public {
+        PackedUserOperation memory op = operation(actions(address(counter), 0, abi.encodeCall(Counter.increment, (1))));
+        op.paymasterAndData = hex"00";
+        uint256 policyEpoch = pm.quotaEpoch();
+        vm.expectRevert(QuotaPaymaster.InvalidSponsorship.selector);
+        pm.sponsorshipDigest(op, 1, 0, policyEpoch);
+    }
 }

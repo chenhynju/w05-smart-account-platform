@@ -1,0 +1,11 @@
+version is set by build process
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:11PM[0m [32mINF[0m [1m24 commits scanned.[0m
+[90m3:11PM[0m [32mINF[0m [1mscanned ~4519164 bytes (4.52 MB) in 6.66s[0m
+[90m3:11PM[0m [32mINF[0m [1mno leaks found[0m

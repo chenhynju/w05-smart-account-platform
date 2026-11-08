@@ -1,0 +1,38 @@
+{
+  "reviewDate": "2026-11-08",
+  "assessment": "AI-Assisted Self-Assessment",
+  "sourceHashes": {
+    "contracts/QuotaPaymaster.sol": "840f50155cda35d6f67a15a25932be6f6c28d8a07109382802596cad7d2efc34",
+    "contracts/Counter.sol": "0522edb1f156a2c699f70d2c75217835ae29afacbf8ea7a62678acbcce3b5938",
+    "contracts/SmartAccount.sol": "638a5a23ee28db4b83027ccf0082d9972d6ce35b80aa29aa3476cffb7dd47c63",
+    "contracts/AccountFactory.sol": "e307259911cdf8bb99508ac433b9fa6d65daeea1a28fba850b949f2d3ba6a461"
+  },
+  "fingerprints": [
+    "assembly|Informational|SmartAccount._sessionAllowed(SmartAccount.Session,SmartAccount.Action[]) (contracts/SmartAccount.sol#210-225) uses assembly\n\t- INLINE ASM (contracts/SmartAccount.sol#220)\n",
+    "cache-array-length|Optimization|Loop condition i < _guardians.length (contracts/SmartAccount.sol#274) should use cached array length instead of referencing `length` member of the storage array.\n ",
+    "cache-array-length|Optimization|Loop condition i < _owners.length (contracts/SmartAccount.sol#258) should use cached array length instead of referencing `length` member of the storage array.\n ",
+    "cache-array-length|Optimization|Loop condition i < _owners.length (contracts/SmartAccount.sol#407) should use cached array length instead of referencing `length` member of the storage array.\n ",
+    "calls-loop|Low|SmartAccount.executeOperation(uint256,uint256,SmartAccount.Action[]) (contracts/SmartAccount.sol#113-127) has external calls inside a loop: (ok,result) = actions[i].target.call{value: actions[i].value}(actions[i].data) (contracts/SmartAccount.sol#122)\n",
+    "costly-loop|Informational|SmartAccount.setGuardians(address[],uint256) (contracts/SmartAccount.sol#272-286) has costly operations inside a loop:\n\t- delete guardians[_guardians[i]] (contracts/SmartAccount.sol#275)\n",
+    "costly-loop|Informational|SmartAccount.setOwners(address[],uint256) (contracts/SmartAccount.sol#256-270) has costly operations inside a loop:\n\t- delete owners[_owners[i]] (contracts/SmartAccount.sol#259)\n",
+    "locked-ether|Medium|Contract locking ether found:\n\tContract Counter (contracts/Counter.sol#5-17) has payable functions:\n\t - Counter.increment(uint256) (contracts/Counter.sol#9-12)\n\tBut does not have a function to withdraw the ether\n",
+    "low-level-calls|Informational|Low level call in SmartAccount.executeOperation(uint256,uint256,SmartAccount.Action[]) (contracts/SmartAccount.sol#113-127):\n\t- (ok,result) = actions[i].target.call{value: actions[i].value}(actions[i].data) (contracts/SmartAccount.sol#122)\n",
+    "reentrancy-eth|High|Reentrancy in SmartAccount.executeOperation(uint256,uint256,SmartAccount.Action[]) (contracts/SmartAccount.sol#113-127):\n\tExternal calls:\n\t- (ok,result) = actions[i].target.call{value: actions[i].value}(actions[i].data) (contracts/SmartAccount.sol#122)\n\tState variables written after the call(s):\n\t- _executing = false (contracts/SmartAccount.sol#125)\n\tSmartAccount._executing (contracts/SmartAccount.sol#64) can be used in cross function reentrancies:\n\t- SmartAccount._completeRecovery(bytes32) (contracts/SmartAccount.sol#399-417)\n\t- SmartAccount.executeOperation(uint256,uint256,SmartAccount.Action[]) (contracts/SmartAccount.sol#113-127)\n",
+    "reentrancy-events|Low|Reentrancy in SmartAccount.executeOperation(uint256,uint256,SmartAccount.Action[]) (contracts/SmartAccount.sol#113-127):\n\tExternal calls:\n\t- (ok,result) = actions[i].target.call{value: actions[i].value}(actions[i].data) (contracts/SmartAccount.sol#122)\n\tEvent emitted after the call(s):\n\t- Executed(nonce,payload) (contracts/SmartAccount.sol#126)\n",
+    "timestamp|Low|SmartAccount._completeRecovery(bytes32) (contracts/SmartAccount.sol#399-417) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- _executing || ! proposal.active || proposal.policyEpoch != epoch || proposal.votes < guardianThreshold || block.timestamp < proposal.readyAt (contracts/SmartAccount.sol#402-403)\n",
+    "timestamp|Low|SmartAccount._spendSession(address,SmartAccount.Action[]) (contracts/SmartAccount.sol#227-235) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- s.epoch != epoch || block.timestamp > s.validUntil || ! _sessionAllowed(s,actions) (contracts/SmartAccount.sol#229)\n",
+    "timestamp|Low|SmartAccount.setSession(address,address,bytes4,uint48,uint256) (contracts/SmartAccount.sol#237-248) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- key == address(0) || target == address(this) || target == address(_entryPoint) || target.code.length == 0 || validUntil <= block.timestamp (contracts/SmartAccount.sol#242-243)\n",
+    "too-many-digits|Informational|AccountFactory.getAddress(address,address,bytes32) (contracts/AccountFactory.sol#15-19) uses literals with too many digits:\n\t- codeHash = keccak256(bytes)(abi.encodePacked(type()(SmartAccount).creationCode,abi.encode(entryPoint,owner,guardian))) (contracts/AccountFactory.sol#16-17)\n",
+    "uninitialized-local|Medium|SmartAccount._spendSession(address,SmartAccount.Action[]).total (contracts/SmartAccount.sol#230) is a local variable never initialized\n",
+    "uninitialized-local|Medium|SmartAccount._thresholdValid(bytes32,bytes).previous (contracts/SmartAccount.sol#192) is a local variable never initialized\n",
+    "uninitialized-local|Medium|SmartAccount._validateList(address[],uint256).previous (contracts/SmartAccount.sol#290) is a local variable never initialized\n",
+    "uninitialized-local|Medium|SmartAccount._validateSignature(PackedUserOperation,bytes32).actions (contracts/SmartAccount.sol#152) is a local variable never initialized\n",
+    "uninitialized-local|Medium|SmartAccount._validateSignature(PackedUserOperation,bytes32).e (contracts/SmartAccount.sol#151) is a local variable never initialized\n",
+    "uninitialized-local|Medium|SmartAccount._validateSignature(PackedUserOperation,bytes32).n (contracts/SmartAccount.sol#150) is a local variable never initialized\n",
+    "uninitialized-local|Medium|SmartAccount._validateSignature(PackedUserOperation,bytes32).signer (contracts/SmartAccount.sol#165) is a local variable never initialized\n",
+    "uninitialized-local|Medium|SmartAccount._validateSignature(PackedUserOperation,bytes32).validationData (contracts/SmartAccount.sol#166) is a local variable never initialized\n",
+    "unused-return|Medium|QuotaPaymaster._validatePaymasterUserOp(PackedUserOperation,bytes32,uint256) (contracts/QuotaPaymaster.sol#64-82) ignores return value by (signer,err,None) = ECDSA.tryRecover(sponsorshipDigest(op,until,after_,policyEpoch),signature) (contracts/QuotaPaymaster.sol#71-72)\n",
+    "unused-return|Medium|SmartAccount._thresholdValid(bytes32,bytes) (contracts/SmartAccount.sol#190-199) ignores return value by (signer,err,None) = ECDSA.tryRecover(digest,signatures) (contracts/SmartAccount.sol#194)\n",
+    "unused-return|Medium|SmartAccount._validateSignature(PackedUserOperation,bytes32) (contracts/SmartAccount.sol#149-188) ignores return value by (recovered,err,None) = ECDSA.tryRecover(opHash,signature) (contracts/SmartAccount.sol#170)\n"
+  ]
+}

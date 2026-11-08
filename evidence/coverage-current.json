@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "instrumentation": "forge coverage --ir-minimum; source-map limitations documented",
+  "files": [
+    {
+      "SF": "contracts/AccountFactory.sol",
+      "LF": "11",
+      "LH": "11",
+      "BRF": "1",
+      "BRH": "1"
+    },
+    {
+      "SF": "contracts/Counter.sol",
+      "LF": "5",
+      "LH": "5",
+      "BRF": "0",
+      "BRH": "0"
+    },
+    {
+      "SF": "contracts/QuotaPaymaster.sol",
+      "LF": "26",
+      "LH": "26",
+      "BRF": "5",
+      "BRH": "5"
+    },
+    {
+      "SF": "contracts/SmartAccount.sol",
+      "LF": "217",
+      "LH": "203",
+      "BRF": "41",
+      "BRH": "40"
+    }
+  ]
+}
