@@ -1,7 +1,7 @@
 {
-  "sourceHash": "91a2d0ad67fdd62d52e043c3fe61a99dd9ddc0b64c4fd4d441082e8846507e60",
-  "sourceCommit": "ca2dcd329bd0153ccf9e2391dd1876d32d67cc78",
-  "checkedAtUTC": "2026-11-08T09:19:56.412248+00:00",
+  "sourceHash": "1e64755475ebf95fce069cf404ae7b304780b5d646bac7d99298c79ba55cfa68",
+  "sourceCommit": "242371af43bce3116e1b52bf74341766c55d69b1",
+  "checkedAtUTC": "2026-11-09T10:56:59.781475+00:00",
   "checks": [
     "format",
     "strict typecheck",
