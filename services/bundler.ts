@@ -22,6 +22,7 @@ import {
   type Address,
   type Hex,
 } from "viem";
+import { sepoliaDeployer } from "../packages/sepolia-signer.js";
 import { privateKeyToAccount } from "viem/accounts";
 import {
   networkFor,
@@ -74,7 +75,10 @@ const client = createPublicClient({
   chain,
   transport: http(config.rpcUrl, { timeout: 15000, retryCount: 1 }),
 });
-const admin = privateKeyToAccount(keys.deployer),
+const admin =
+    target === "sepolia"
+      ? sepoliaDeployer(keys.deployer)
+      : privateKeyToAccount(keys.deployer),
   sponsor = privateKeyToAccount(keys.sponsor);
 const wallet = createWalletClient({
   account: admin,

@@ -23,6 +23,7 @@ import {
 import { sepolia } from "viem/chains";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { paymasterAbi, json } from "../packages/protocol.js";
+import { sepoliaDeployer } from "../packages/sepolia-signer.js";
 import { validateEndpoint } from "../packages/network.js";
 // Provider URLs can contain credentials; never print an unhandled network exception.
 process.on("uncaughtException", () => {
@@ -60,8 +61,10 @@ const keys = JSON.parse(readFileSync(keyPath, "utf8")) as {
   deployer: Hex;
   sponsor: Hex;
 };
-const deployer = privateKeyToAccount(keys.deployer),
+const deployer = sepoliaDeployer(keys.deployer),
   sponsor = privateKeyToAccount(keys.sponsor);
+if (deployer.address === sponsor.address)
+  throw new Error("Sepolia deployer and sponsor must be distinct");
 if (existsSync(".runtime/keys.json")) {
   const local = JSON.parse(
     readFileSync(".runtime/keys.json", "utf8"),

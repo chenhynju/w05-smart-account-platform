@@ -34,3 +34,7 @@ Next自动生成的next-env.d.ts包含所选distDir路径，不属于手写源�
 只读验证器：`npx tsx scripts/verify-sepolia.ts`，无需签名key，核对5笔实际交易的链/nonce/from/input/value/gas/费用上限、两确认收据、构造参数与固定compiler/artifact、runtime hashes、EP与管理员/sponsor及deposit。未实际部署前该验证器为NOT RUN，不能提前生成PASS报告。源码公开验证和完整业务E2E仍另行执行。
 
 只读实测：默认PublicNode Sepolia支持chainId及pending块，但debug_traceCall返回-32601不可用。公共发布预检现在显式探测所需pending/callTracer/withLog接口并在不可用时阻止广播。用户需要配置兼容trace RPC（不在聊天中粘贴key）；不要在该阻塞未解除时花测试币部署并冒称完整应用可用。
+
+## WSL shared deployer profile
+
+A private, ignored `.env.deployment.local` can select an existing encrypted deployer. Set `DEPLOYER_ADDRESS`, `DEPLOYER_KEYSTORE`, `DEPLOYER_PASSWORD_FILE`, and `DEPLOYER_KEYSTORE_PYTHON` to an interpreter with `eth-account` installed. The release script and the Sepolia service verify the keystore address before using it. The sponsor still comes from the release key file. Without this profile, the existing isolated release keys are used. Regenerate the unsigned review plan after changing the signer.
