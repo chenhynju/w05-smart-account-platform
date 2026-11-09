@@ -38,3 +38,11 @@ Next自动生成的next-env.d.ts包含所选distDir路径，不属于手写源�
 ## WSL shared deployer profile
 
 A private, ignored `.env.deployment.local` can select an existing encrypted deployer. Set `DEPLOYER_ADDRESS`, `DEPLOYER_KEYSTORE`, `DEPLOYER_PASSWORD_FILE`, and `DEPLOYER_KEYSTORE_PYTHON` to an interpreter with `eth-account` installed. The release script and the Sepolia service verify the keystore address before using it. The sponsor still comes from the release key file. Without this profile, the existing isolated release keys are used. Regenerate the unsigned review plan after changing the signer.
+
+## 0.5352 Sepolia ETH 的来源与修改条件
+
+这笔数值由 W05 原发布方案设定，首次见于提交 `8ceee1d`。发布脚本把 Paymaster 存款和五笔交易的 Gas 预算相加。存款为 **0.5 Sepolia ETH**，Gas 上限合计 **17,600,000**，费率上限为 **2 gwei**。计算式为 `0.5 + 17,600,000 × 2 × 10⁻⁹ = 0.5352 ETH`。实际 Gas 支出由交易回执决定。该值属于项目当前发布参数，Sepolia 和 ERC-4337 均无此固定门槛。
+
+公共服务另有 **0.5 ETH** 的累计 Gas 预留上限，属于独立预算。两个上限合计 **1.0352 ETH**，表示当前方案的保守总支出上界。公共赞助分配上限与单账户额度分别为 **0.5 ETH** 和 **0.25 ETH**。
+
+可以修改。缩小演示范围时，先明确账户数、操作数及每笔 UserOperation 的最坏预付 Gas。随后同步调整发布脚本的存款与交易 Gas 上限、回执验证器预期的存款值、bundler 的赞助配额及独立 Gas 预留。预检须重新验证覆盖成功操作、额度耗尽拒绝、失败操作占用和余额不足的情形，再按目标链重新估算 Gas、生成未签名计划并审核。调试 RPC、测试 ETH 余额与目标链兼容性仍是独立发布条件。本次文档补充沿用现有预算。

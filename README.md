@@ -63,3 +63,5 @@ Source teaching was anchored at commit `4310b67aa4e1b1cee10dbeb82bece4910ad8ca7b
 Explicit chain profiles now isolate Ethereum Sepolia (11155111) from Anvil (31337), including signature domains, browser keys, service state and build output. `scripts/sepolia-release.ts --prepare` produces an unsigned plan after source-bound checks; it never signs. Public signing/broadcast is locked pending separate user authorization, test ETH and RPC capability checks. Mainnet is rejected. See [reviewable release procedure and budgets](docs/deployment/sepolia-release.md).
 
 The captured intermittent Passkey AA24 was fixed using the W3C limited client-data verification algorithm, with the original real assertion retained as a failing-before/passing-after regression. The expanded local browser suite now proves atomic batches, 13 consecutive Passkey submissions and delayed recovery with old-owner rejection. Physical authenticators and public-network operation remain unverified.
+
+[Engineering, self-review and public testnet evidence](docs/deployment/acceptance-2026-11-09.md)
