@@ -25,3 +25,15 @@ F-02的限定前缀比较循环长度受已配置origin最多200字节和固定c
 公共profile人工复核：拒绝主网和隐式网络回退；构建/服务/签名域一致；独立密钥、runtime与浏览器会话；未批准时在读key/RPC前拒绝公共服务与部署广播；public不走Anvil funding；服务gas按固定上界签名前持久预留，重启不退款；plan逐字段比较constructor calldata/value/nonce/gas/费用与artifact；未知广播状态保留签名原文/hash并停止，不重复签新交易。只读验证器不创建wallet、不读key、不签名。公共广播分支和公共业务仍NOT RUN，故不能以人工复核替代测试网实证。
 
 Gitleaks原始2条新增告警为条件表达式中的sessionStorage命名常量，逐条核对非凭据；仅允许具体历史指纹，未整体排除任何代码目录。具体见gitleaks-namespace-false-positive.md。公共发布与生产CSP、物理认证器、多浏览器、多人托管仍需单独验收。
+
+## Aderyn 独立复核（2026-11-10 重跑，aderyn 0.6.8）
+
+第三方复核在冻结源码上重跑 Aderyn：3 High / 0 Medium / 5 Low。逐条分诊如下，未静默屏蔽任何规则。
+
+|Finding|位置|复审结论|
+|---|---|---|
+|H-1 abi.encodePacked hash collision|contracts/AccountFactory.sol:17|误报。碰撞面要求两个及以上可变长参数；此处第一参数 creationCode 之后拼接的是 abi.encode(entryPoint,owner,guardian)，长度恒为 96 字节并固定在尾部，编码可唯一解码，不存在两条不同输入产生相同 digest 的路径。与 OpenZeppelin Create2.computeAddress 的惯例构造一致。保留告警不屏蔽。|
+|H-2 locks Ether without withdraw|contracts/Counter.sol|与 Slither locked-ether 同一目标：Counter 是接收 mock native value 的非生产测试目标，默认执行 value 为 0，属明确接受的测试资金沉淀；SmartAccount 本身资金不受此影响。|
+|H-3 reentrancy state change after external call|contracts/SmartAccount.sol executeOperation|与 Slither reentrancy-eth 同一族群：外部调用前已置 _executing 锁、消费一次性 Permit、扣减 session 预算；结论依赖固定 EntryPoint 可信，非任意 target 的经济语义证明。|
+
+Low 项（centralization、loop 内 require、字面量、变量遮蔽等）与上表 Slither 对应类别结论一致：自托管钱包的 owners/guardians 管理权限是设计本身，循环均有界。
